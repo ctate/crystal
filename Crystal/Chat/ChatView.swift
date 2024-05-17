@@ -252,8 +252,9 @@ struct SidebarView: View {
                 }) {
                     Text("\(conversation.messages.sorted { $0.timestamp > $1.timestamp }.first?.text ?? "(no text)")")
                         .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding()
+                        .contentShape(Rectangle())
                 }
-                .padding()
                 .background(conversationManager.selectedConversation == conversation ? Color.darkBlue : .clear)
                 .buttonStyle(PlainButtonStyle())
                 .cornerRadius(10)
