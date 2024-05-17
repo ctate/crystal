@@ -49,6 +49,7 @@ struct PromptModelsView: View {
                         }
                         .contentShape(Rectangle())
                         .onTapGesture {
+                            UserDefaults.standard.setValue(provider.id, forKey: "defaultPromptProvider")
                             UserDefaults.standard.setValue(model.id, forKey: "defaultPromptModel")
                             selectedModelId = model.id
                         }

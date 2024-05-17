@@ -65,6 +65,7 @@ struct ChatToolbarView: ToolbarContent {
                             ForEach (provider.models) { model in
                                 Button(action: {
                                     UserDefaults.standard.setValue(model.id, forKey: "defaultPromptModel")
+                                    UserDefaults.standard.setValue(provider.id, forKey: "defaultPromptProvider")
                                     selectedModelId = model.id
                                     showPopover = false
                                 }) {

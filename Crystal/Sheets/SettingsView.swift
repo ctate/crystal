@@ -42,6 +42,7 @@ struct Integration: Identifiable {
 struct ProviderWithSettings: Identifiable {
     let id: String
     var name: String
+    var isService: Bool
     var isEnabled: Bool {
         didSet {
             UserDefaults.standard.set(isEnabled, forKey: "\(id):isEnabled")
@@ -54,12 +55,19 @@ struct ProviderWithSettings: Identifiable {
             }
         }
     }
+    var host: String {
+        didSet {
+            UserDefaults.standard.set(isEnabled, forKey: "\(id):host")
+        }
+    }
     
-    init(id: String, name: String, isEnabled: Bool = false) {
+    init(id: String, name: String, isEnabled: Bool = false, isService: Bool = false) {
         self.id = id
         self.name = name
         self.isEnabled = UserDefaults.standard.bool(forKey: "\(id):isEnabled")
+        self.isService = isService
         self.apiKey = loadApiKey(key: "\(bundleIdentifier).\(name)ApiKey")
+        self.host = UserDefaults.standard.string(forKey: "\(id):host") ?? ""
     }
     
     var displayApiKey: String {
@@ -118,6 +126,7 @@ struct IntegrationDetailView: View {
             }
         }
         .navigationTitle(integration.name)
+        .padding()
     }
 }
 
@@ -132,14 +141,21 @@ struct ProviderDetailView: View {
                     UserDefaults.standard.set(provider.isEnabled, forKey: "\(provider.id):isEnabled")
                 }
             HStack {
-                TextField("API Key", text: $provider.apiKey)
-                    .disabled(!provider.apiKey.isEmpty)
-                    .onChange(of: provider.apiKey) {
-                        // Save the new value to the Keychain
-                        if let data = provider.apiKey.data(using: .utf8) {
-                            _ = save(key: "\(bundleIdentifier).\(provider.id)ApiKey", data: data)
+                if provider.isService {
+                    SecureField("API Key", text: $provider.apiKey)
+                        .disabled(!provider.apiKey.isEmpty)
+                        .onChange(of: provider.apiKey) {
+                            if let data = provider.apiKey.data(using: .utf8) {
+                                _ = save(key: "\(bundleIdentifier).\(provider.id)ApiKey", data: data)
+                            }
                         }
-                    }
+                } else {
+                    TextField("Host", text: $provider.host)
+                        .disabled(!provider.apiKey.isEmpty)
+                        .onChange(of: provider.host) {
+                            UserDefaults.standard.set(provider.host, forKey: "\(provider.id):host")
+                        }
+                }
                 
                 if !provider.apiKey.isEmpty {
                     Spacer()
@@ -159,6 +175,7 @@ struct ProviderDetailView: View {
             }
         }
         .navigationTitle(provider.name)
+        .padding()
     }
 }
 
@@ -180,9 +197,10 @@ struct ModelsSettingsView: View {
     ]
     
     @State private var providers = [
-        ProviderWithSettings(id: "OpenAI", name: "OpenAI", isEnabled: false),
-        ProviderWithSettings(id: "Groq", name: "Groq", isEnabled: false),
-        ProviderWithSettings(id: "Anthropic", name: "Anthropic", isEnabled: false)
+        ProviderWithSettings(id: "OpenAI", name: "OpenAI", isEnabled: false, isService: true),
+        ProviderWithSettings(id: "Groq", name: "Groq", isEnabled: false, isService: true),
+        ProviderWithSettings(id: "Anthropic", name: "Anthropic", isEnabled: false, isService: true),
+        ProviderWithSettings(id: "Ollama", name: "Ollama", isEnabled: false, isService: false)
     ]
     
     private func destinationView(for id: String) -> some View {

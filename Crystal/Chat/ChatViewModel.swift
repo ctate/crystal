@@ -184,9 +184,10 @@ class ChatViewModel: ObservableObject {
             }
         }
         
+        let provider = UserDefaults.standard.string(forKey: "defaultPromptProvider") ?? ""
         let model = UserDefaults.standard.string(forKey: "defaultPromptModel") ?? ""
         
-        if ["claude-3-haiku-20240307", "claude-3-sonnet-20240229", "claude-3-opus-20240229"].contains(model) {
+        if provider == "Anthropic" {
             print("AnthropicApi")
             
             if !UserDefaults.standard.bool(forKey: "Anthropic:isEnabled") {
@@ -213,7 +214,7 @@ class ChatViewModel: ObservableObject {
                 self.updateViewBasedOnLastMessage(modelContext, conversation: conversation)
             }
             
-        } else if ["llama3-8b-8192", "llama3-70b-8192", "gemma-7b-it", "mixtral-8x7b-32768"].contains(model) {
+        } else if provider == "Groq" {
             print("GroqAPI")
             
             if !UserDefaults.standard.bool(forKey: "Groq:isEnabled") {
@@ -239,7 +240,33 @@ class ChatViewModel: ObservableObject {
                 
                 self.updateViewBasedOnLastMessage(modelContext, conversation: conversation)
             }
-        } else if ["gpt-4", "gpt-4o", "gpt-4-turbo", "gpt-3.5-turbo"].contains(model) {
+        } else if provider == "Ollama" {
+            print("OllamaApi")
+            
+            if !UserDefaults.standard.bool(forKey: "Ollama:isEnabled") {
+                alertError("Ollama is not enabled")
+                return
+            }
+            
+            OllamaApi().makeCompletions(model: model, messages: messagesPayload, tools: tools) { result, content in
+                modelContext.insert(
+                    Message(
+                        text: content != nil && content!.type == "function" ? content!.function.arguments : result.message.content,
+                        role: result.message.role,
+                        timestamp: Date(),
+                        provider: "Ollama",
+                        model: model,
+                        function: content != nil && content!.type == "function" ? content!.function.name : nil,
+                        tokensIn: result.prompt_eval_count,
+                        tokensOut: result.eval_count,
+                        tokensTotal: result.prompt_eval_count + result.eval_count,
+                        conversation: conversation
+                    )
+                )
+                
+                self.updateViewBasedOnLastMessage(modelContext, conversation: conversation)
+            }
+        } else if provider == "OpenAI" {
             print("OpenAIApi")
             
             if !UserDefaults.standard.bool(forKey: "OpenAI:isEnabled") {
@@ -504,6 +531,17 @@ class ChatViewModel: ObservableObject {
                         }
                     }
                 }
+            }
+            
+        case "text":
+            struct Response: Codable {
+                let text: String
+            }
+            
+            if let result = try? JSONDecoder().decode(Response.self, from: lastMessage.text.data(using: .utf8)!) {
+                currentView = AnyView(TextCard(text: LocalizedStringKey(result.text)))
+                
+                isLoading = false
             }
             
         default:

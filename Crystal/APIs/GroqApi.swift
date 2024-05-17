@@ -64,8 +64,8 @@ class GroqApi: ObservableObject {
                 return
             }
             
-            guard let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                alertError("Invalid response or data")
+            guard let data = data else {
+                alertError("Invalid data")
                 return
             }
             
@@ -73,6 +73,11 @@ class GroqApi: ObservableObject {
                 print("Raw response: \(rawResponse)")
             }
             
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                alertError("Invalid response")
+                return
+            }
+                        
             if let result = try? JSONDecoder().decode(GroqResponse.self, from: data) {
                 DispatchQueue.main.async {
                     completion(result)

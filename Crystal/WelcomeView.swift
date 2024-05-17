@@ -146,6 +146,7 @@ struct WelcomeView: View {
             .padding(.horizontal)
             .frame(maxWidth: 400)
             Button("Next") {
+                UserDefaults.standard.setValue(selectedProvider!.id, forKey: "defaultPromptProvider")
                 UserDefaults.standard.setValue(model, forKey: "defaultPromptModel")
                 UserDefaults.standard.setValue(true, forKey: "hasCompletedOnboarding")
                 
@@ -317,6 +318,7 @@ struct WelcomeView: View {
             .padding(.horizontal)
             .frame(maxWidth: 400)
             Button("Next") {
+                UserDefaults.standard.setValue(selectedProvider!.id, forKey: "defaultPromptProvider")
                 UserDefaults.standard.setValue(model, forKey: "defaultPromptModel")
                 UserDefaults.standard.setValue(true, forKey: "hasCompletedOnboarding")
                 
