@@ -1,0 +1,910 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D72B02822BF512A300D5FEA4 /* CustomTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B02812BF512A300D5FEA4 /* CustomTextEditor.swift */; };
+		D72B02842BF5205600D5FEA4 /* CustomTextEditor2.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B02832BF5205600D5FEA4 /* CustomTextEditor2.swift */; };
+		D76D3B102BF5D8CA0017F2BA /* ConversationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D76D3B0F2BF5D8CA0017F2BA /* ConversationManager.swift */; };
+		D7C9D2A82BF2FCC500697DDE /* CrystalApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2A72BF2FCC500697DDE /* CrystalApp.swift */; };
+		D7C9D2AA2BF2FCC500697DDE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2A92BF2FCC500697DDE /* ContentView.swift */; };
+		D7C9D2AC2BF2FCC500697DDE /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2AB2BF2FCC500697DDE /* Item.swift */; };
+		D7C9D2AE2BF2FCC700697DDE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7C9D2AD2BF2FCC700697DDE /* Assets.xcassets */; };
+		D7C9D2B22BF2FCC700697DDE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7C9D2B12BF2FCC700697DDE /* Preview Assets.xcassets */; };
+		D7C9D2BC2BF2FCC700697DDE /* CrystalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2BB2BF2FCC700697DDE /* CrystalTests.swift */; };
+		D7C9D2C62BF2FCC700697DDE /* CrystalUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2C52BF2FCC700697DDE /* CrystalUITests.swift */; };
+		D7C9D2C82BF2FCC700697DDE /* CrystalUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2C72BF2FCC700697DDE /* CrystalUITestsLaunchTests.swift */; };
+		D7C9D2D62BF3160200697DDE /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2D52BF3160200697DDE /* Message.swift */; };
+		D7C9D2DA2BF3164300697DDE /* KeychainAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2D92BF3164300697DDE /* KeychainAccess.swift */; };
+		D7C9D2E42BF3165300697DDE /* AnthropicApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2DB2BF3165300697DDE /* AnthropicApi.swift */; };
+		D7C9D2E52BF3165300697DDE /* GoogleApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2DC2BF3165300697DDE /* GoogleApi.swift */; };
+		D7C9D2E62BF3165300697DDE /* GroqApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2DD2BF3165300697DDE /* GroqApi.swift */; };
+		D7C9D2E72BF3165300697DDE /* HackerNewsApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2DE2BF3165300697DDE /* HackerNewsApi.swift */; };
+		D7C9D2E82BF3165300697DDE /* OllamaApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2DF2BF3165300697DDE /* OllamaApi.swift */; };
+		D7C9D2E92BF3165300697DDE /* OpenAiApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2E02BF3165300697DDE /* OpenAiApi.swift */; };
+		D7C9D2EA2BF3165300697DDE /* WeatherAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2E12BF3165300697DDE /* WeatherAPI.swift */; };
+		D7C9D2EB2BF3165300697DDE /* WikipediaApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2E22BF3165300697DDE /* WikipediaApi.swift */; };
+		D7C9D2F52BF3166B00697DDE /* ClockCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2EC2BF3166B00697DDE /* ClockCard.swift */; };
+		D7C9D2F62BF3166B00697DDE /* DalleImageCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2ED2BF3166B00697DDE /* DalleImageCard.swift */; };
+		D7C9D2F72BF3166B00697DDE /* GoogleSearchCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2EE2BF3166B00697DDE /* GoogleSearchCard.swift */; };
+		D7C9D2F82BF3166B00697DDE /* HackerNewsCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2EF2BF3166B00697DDE /* HackerNewsCard.swift */; };
+		D7C9D2F92BF3166B00697DDE /* RecipeCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2F02BF3166B00697DDE /* RecipeCard.swift */; };
+		D7C9D2FA2BF3166B00697DDE /* TextCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2F12BF3166B00697DDE /* TextCard.swift */; };
+		D7C9D2FB2BF3166B00697DDE /* WeatherCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2F22BF3166B00697DDE /* WeatherCard.swift */; };
+		D7C9D2FC2BF3166B00697DDE /* WikipediaCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2F32BF3166B00697DDE /* WikipediaCard.swift */; };
+		D7C9D3012BF3167400697DDE /* ChatHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2FD2BF3167400697DDE /* ChatHistoryView.swift */; };
+		D7C9D3022BF3167400697DDE /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2FE2BF3167400697DDE /* ChatView.swift */; };
+		D7C9D3032BF3167400697DDE /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2FF2BF3167400697DDE /* ChatViewModel.swift */; };
+		D7C9D3072BF3168200697DDE /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D3042BF3168200697DDE /* Camera.swift */; };
+		D7C9D3082BF3168200697DDE /* OpenAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D3052BF3168200697DDE /* OpenAI.swift */; };
+		D7C9D3092BF3168200697DDE /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D3062BF3168200697DDE /* CameraView.swift */; };
+		D7C9D30B2BF3169900697DDE /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D30A2BF3169900697DDE /* KeychainService.swift */; };
+		D7C9D30D2BF316A600697DDE /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D30C2BF316A600697DDE /* Color.swift */; };
+		D7C9D30F2BF316AC00697DDE /* OrbButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D30E2BF316AC00697DDE /* OrbButton.swift */; };
+		D7C9D3132BF316B700697DDE /* SpeechRecognizerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D3122BF316B700697DDE /* SpeechRecognizerService.swift */; };
+		D7C9D3162BF3170800697DDE /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = D7C9D3152BF3170800697DDE /* SwiftSoup */; };
+		D7C9D31E2BF3172200697DDE /* DocumentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D3172BF3172200697DDE /* DocumentPicker.swift */; };
+		D7C9D31F2BF3172200697DDE /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D3182BF3172200697DDE /* ImagePicker.swift */; };
+		D7C9D3202BF3172200697DDE /* PromptModelsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D3192BF3172200697DDE /* PromptModelsView.swift */; };
+		D7C9D3212BF3172200697DDE /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D31A2BF3172200697DDE /* SettingsView.swift */; };
+		D7C9D3222BF3172200697DDE /* VisionModelsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D31B2BF3172200697DDE /* VisionModelsView.swift */; };
+		D7C9D3232BF3172200697DDE /* VoiceModelsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D31C2BF3172200697DDE /* VoiceModelsView.swift */; };
+		D7C9D3252BF3177A00697DDE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D7C9D3242BF3177A00697DDE /* LaunchScreen.storyboard */; platformFilter = ios; };
+		D7C9D3272BF31A6A00697DDE /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D3262BF31A6A00697DDE /* Globals.swift */; };
+		D7C9D3292BF3224A00697DDE /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D3282BF3224A00697DDE /* WelcomeView.swift */; };
+		D7C9D32D2BF3319100697DDE /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D32C2BF3319100697DDE /* Provider.swift */; };
+		D7C9D32F2BF345BC00697DDE /* PlainButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D32E2BF345BC00697DDE /* PlainButtonStyle.swift */; };
+		D7C9D3332BF3500700697DDE /* ForceDarkMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D3322BF3500700697DDE /* ForceDarkMode.swift */; };
+		D7C9D3372BF3A48100697DDE /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D3362BF3A48100697DDE /* Notification.swift */; };
+		D7C9D3392BF3BE5900697DDE /* ChatToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D3382BF3BE5900697DDE /* ChatToolbarView.swift */; };
+		D7C9D33B2BF3D52B00697DDE /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D33A2BF3D52B00697DDE /* Conversation.swift */; };
+		D7C9D33D2BF3DFA900697DDE /* Mappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D33C2BF3DFA900697DDE /* Mappers.swift */; };
+		D7C9D33F2BF3ECBB00697DDE /* CommitableTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D33E2BF3ECBB00697DDE /* CommitableTextEditor.swift */; };
+		D7C9D3412BF3F20C00697DDE /* AdaptiveHeightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D3402BF3F20C00697DDE /* AdaptiveHeightView.swift */; };
+		D7C9D3442BF42A5E00697DDE /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = D7C9D3432BF42A5E00697DDE /* KeychainAccess */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D7C9D2B82BF2FCC700697DDE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D7C9D29C2BF2FCC400697DDE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D7C9D2A32BF2FCC500697DDE;
+			remoteInfo = Crystal;
+		};
+		D7C9D2C22BF2FCC700697DDE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D7C9D29C2BF2FCC400697DDE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D7C9D2A32BF2FCC500697DDE;
+			remoteInfo = Crystal;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		D72B02812BF512A300D5FEA4 /* CustomTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextEditor.swift; sourceTree = "<group>"; };
+		D72B02832BF5205600D5FEA4 /* CustomTextEditor2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextEditor2.swift; sourceTree = "<group>"; };
+		D76D3B0F2BF5D8CA0017F2BA /* ConversationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationManager.swift; sourceTree = "<group>"; };
+		D7C9D2A42BF2FCC500697DDE /* Crystal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Crystal.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D7C9D2A72BF2FCC500697DDE /* CrystalApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrystalApp.swift; sourceTree = "<group>"; };
+		D7C9D2A92BF2FCC500697DDE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		D7C9D2AB2BF2FCC500697DDE /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		D7C9D2AD2BF2FCC700697DDE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D7C9D2AF2BF2FCC700697DDE /* Crystal.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Crystal.entitlements; sourceTree = "<group>"; };
+		D7C9D2B12BF2FCC700697DDE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		D7C9D2B72BF2FCC700697DDE /* CrystalTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CrystalTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D7C9D2BB2BF2FCC700697DDE /* CrystalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrystalTests.swift; sourceTree = "<group>"; };
+		D7C9D2C12BF2FCC700697DDE /* CrystalUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CrystalUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D7C9D2C52BF2FCC700697DDE /* CrystalUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrystalUITests.swift; sourceTree = "<group>"; };
+		D7C9D2C72BF2FCC700697DDE /* CrystalUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrystalUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		D7C9D2D52BF3160200697DDE /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		D7C9D2D92BF3164300697DDE /* KeychainAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainAccess.swift; sourceTree = "<group>"; };
+		D7C9D2DB2BF3165300697DDE /* AnthropicApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnthropicApi.swift; sourceTree = "<group>"; };
+		D7C9D2DC2BF3165300697DDE /* GoogleApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleApi.swift; sourceTree = "<group>"; };
+		D7C9D2DD2BF3165300697DDE /* GroqApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroqApi.swift; sourceTree = "<group>"; };
+		D7C9D2DE2BF3165300697DDE /* HackerNewsApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HackerNewsApi.swift; sourceTree = "<group>"; };
+		D7C9D2DF2BF3165300697DDE /* OllamaApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OllamaApi.swift; sourceTree = "<group>"; };
+		D7C9D2E02BF3165300697DDE /* OpenAiApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenAiApi.swift; sourceTree = "<group>"; };
+		D7C9D2E12BF3165300697DDE /* WeatherAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherAPI.swift; sourceTree = "<group>"; };
+		D7C9D2E22BF3165300697DDE /* WikipediaApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikipediaApi.swift; sourceTree = "<group>"; };
+		D7C9D2EC2BF3166B00697DDE /* ClockCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockCard.swift; sourceTree = "<group>"; };
+		D7C9D2ED2BF3166B00697DDE /* DalleImageCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DalleImageCard.swift; sourceTree = "<group>"; };
+		D7C9D2EE2BF3166B00697DDE /* GoogleSearchCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleSearchCard.swift; sourceTree = "<group>"; };
+		D7C9D2EF2BF3166B00697DDE /* HackerNewsCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HackerNewsCard.swift; sourceTree = "<group>"; };
+		D7C9D2F02BF3166B00697DDE /* RecipeCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeCard.swift; sourceTree = "<group>"; };
+		D7C9D2F12BF3166B00697DDE /* TextCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextCard.swift; sourceTree = "<group>"; };
+		D7C9D2F22BF3166B00697DDE /* WeatherCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherCard.swift; sourceTree = "<group>"; };
+		D7C9D2F32BF3166B00697DDE /* WikipediaCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikipediaCard.swift; sourceTree = "<group>"; };
+		D7C9D2FD2BF3167400697DDE /* ChatHistoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatHistoryView.swift; sourceTree = "<group>"; };
+		D7C9D2FE2BF3167400697DDE /* ChatView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		D7C9D2FF2BF3167400697DDE /* ChatViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
+		D7C9D3042BF3168200697DDE /* Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
+		D7C9D3052BF3168200697DDE /* OpenAI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenAI.swift; sourceTree = "<group>"; };
+		D7C9D3062BF3168200697DDE /* CameraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
+		D7C9D30A2BF3169900697DDE /* KeychainService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
+		D7C9D30C2BF316A600697DDE /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		D7C9D30E2BF316AC00697DDE /* OrbButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrbButton.swift; sourceTree = "<group>"; };
+		D7C9D3122BF316B700697DDE /* SpeechRecognizerService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpeechRecognizerService.swift; sourceTree = "<group>"; };
+		D7C9D3172BF3172200697DDE /* DocumentPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentPicker.swift; sourceTree = "<group>"; };
+		D7C9D3182BF3172200697DDE /* ImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		D7C9D3192BF3172200697DDE /* PromptModelsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromptModelsView.swift; sourceTree = "<group>"; };
+		D7C9D31A2BF3172200697DDE /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		D7C9D31B2BF3172200697DDE /* VisionModelsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisionModelsView.swift; sourceTree = "<group>"; };
+		D7C9D31C2BF3172200697DDE /* VoiceModelsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoiceModelsView.swift; sourceTree = "<group>"; };
+		D7C9D3242BF3177A00697DDE /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		D7C9D3262BF31A6A00697DDE /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
+		D7C9D3282BF3224A00697DDE /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
+		D7C9D32C2BF3319100697DDE /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
+		D7C9D32E2BF345BC00697DDE /* PlainButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainButtonStyle.swift; sourceTree = "<group>"; };
+		D7C9D3322BF3500700697DDE /* ForceDarkMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForceDarkMode.swift; sourceTree = "<group>"; };
+		D7C9D3362BF3A48100697DDE /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
+		D7C9D3382BF3BE5900697DDE /* ChatToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatToolbarView.swift; sourceTree = "<group>"; };
+		D7C9D33A2BF3D52B00697DDE /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
+		D7C9D33C2BF3DFA900697DDE /* Mappers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mappers.swift; sourceTree = "<group>"; };
+		D7C9D33E2BF3ECBB00697DDE /* CommitableTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitableTextEditor.swift; sourceTree = "<group>"; };
+		D7C9D3402BF3F20C00697DDE /* AdaptiveHeightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveHeightView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D7C9D2A12BF2FCC500697DDE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7C9D3442BF42A5E00697DDE /* KeychainAccess in Frameworks */,
+				D7C9D3162BF3170800697DDE /* SwiftSoup in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D7C9D2B42BF2FCC700697DDE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D7C9D2BE2BF2FCC700697DDE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D7C9D29B2BF2FCC400697DDE = {
+			isa = PBXGroup;
+			children = (
+				D7C9D2A62BF2FCC500697DDE /* Crystal */,
+				D7C9D2BA2BF2FCC700697DDE /* CrystalTests */,
+				D7C9D2C42BF2FCC700697DDE /* CrystalUITests */,
+				D7C9D2A52BF2FCC500697DDE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D7C9D2A52BF2FCC500697DDE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D7C9D2A42BF2FCC500697DDE /* Crystal.app */,
+				D7C9D2B72BF2FCC700697DDE /* CrystalTests.xctest */,
+				D7C9D2C12BF2FCC700697DDE /* CrystalUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D7C9D2A62BF2FCC500697DDE /* Crystal */ = {
+			isa = PBXGroup;
+			children = (
+				D7C9D2E32BF3165300697DDE /* APIs */,
+				D7C9D2F42BF3166B00697DDE /* Cards */,
+				D7C9D3002BF3167400697DDE /* Chat */,
+				D7C9D2D42BF315F500697DDE /* Data */,
+				D7C9D31D2BF3172200697DDE /* Sheets */,
+				D7C9D2A72BF2FCC500697DDE /* CrystalApp.swift */,
+				D7C9D32E2BF345BC00697DDE /* PlainButtonStyle.swift */,
+				D7C9D2A92BF2FCC500697DDE /* ContentView.swift */,
+				D7C9D3362BF3A48100697DDE /* Notification.swift */,
+				D76D3B0F2BF5D8CA0017F2BA /* ConversationManager.swift */,
+				D7C9D3402BF3F20C00697DDE /* AdaptiveHeightView.swift */,
+				D7C9D3262BF31A6A00697DDE /* Globals.swift */,
+				D7C9D3242BF3177A00697DDE /* LaunchScreen.storyboard */,
+				D7C9D30C2BF316A600697DDE /* Color.swift */,
+				D7C9D33E2BF3ECBB00697DDE /* CommitableTextEditor.swift */,
+				D72B02812BF512A300D5FEA4 /* CustomTextEditor.swift */,
+				D72B02832BF5205600D5FEA4 /* CustomTextEditor2.swift */,
+				D7C9D2D92BF3164300697DDE /* KeychainAccess.swift */,
+				D7C9D30A2BF3169900697DDE /* KeychainService.swift */,
+				D7C9D3282BF3224A00697DDE /* WelcomeView.swift */,
+				D7C9D3322BF3500700697DDE /* ForceDarkMode.swift */,
+				D7C9D3122BF316B700697DDE /* SpeechRecognizerService.swift */,
+				D7C9D2AB2BF2FCC500697DDE /* Item.swift */,
+				D7C9D3042BF3168200697DDE /* Camera.swift */,
+				D7C9D3062BF3168200697DDE /* CameraView.swift */,
+				D7C9D30E2BF316AC00697DDE /* OrbButton.swift */,
+				D7C9D3052BF3168200697DDE /* OpenAI.swift */,
+				D7C9D2AD2BF2FCC700697DDE /* Assets.xcassets */,
+				D7C9D2AF2BF2FCC700697DDE /* Crystal.entitlements */,
+				D7C9D2B02BF2FCC700697DDE /* Preview Content */,
+				D7C9D33C2BF3DFA900697DDE /* Mappers.swift */,
+			);
+			path = Crystal;
+			sourceTree = "<group>";
+		};
+		D7C9D2B02BF2FCC700697DDE /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				D7C9D2B12BF2FCC700697DDE /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		D7C9D2BA2BF2FCC700697DDE /* CrystalTests */ = {
+			isa = PBXGroup;
+			children = (
+				D7C9D2BB2BF2FCC700697DDE /* CrystalTests.swift */,
+			);
+			path = CrystalTests;
+			sourceTree = "<group>";
+		};
+		D7C9D2C42BF2FCC700697DDE /* CrystalUITests */ = {
+			isa = PBXGroup;
+			children = (
+				D7C9D2C52BF2FCC700697DDE /* CrystalUITests.swift */,
+				D7C9D2C72BF2FCC700697DDE /* CrystalUITestsLaunchTests.swift */,
+			);
+			path = CrystalUITests;
+			sourceTree = "<group>";
+		};
+		D7C9D2D42BF315F500697DDE /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				D7C9D2D52BF3160200697DDE /* Message.swift */,
+				D7C9D33A2BF3D52B00697DDE /* Conversation.swift */,
+				D7C9D32C2BF3319100697DDE /* Provider.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		D7C9D2E32BF3165300697DDE /* APIs */ = {
+			isa = PBXGroup;
+			children = (
+				D7C9D2DB2BF3165300697DDE /* AnthropicApi.swift */,
+				D7C9D2DC2BF3165300697DDE /* GoogleApi.swift */,
+				D7C9D2DD2BF3165300697DDE /* GroqApi.swift */,
+				D7C9D2DE2BF3165300697DDE /* HackerNewsApi.swift */,
+				D7C9D2DF2BF3165300697DDE /* OllamaApi.swift */,
+				D7C9D2E02BF3165300697DDE /* OpenAiApi.swift */,
+				D7C9D2E12BF3165300697DDE /* WeatherAPI.swift */,
+				D7C9D2E22BF3165300697DDE /* WikipediaApi.swift */,
+			);
+			path = APIs;
+			sourceTree = "<group>";
+		};
+		D7C9D2F42BF3166B00697DDE /* Cards */ = {
+			isa = PBXGroup;
+			children = (
+				D7C9D2EC2BF3166B00697DDE /* ClockCard.swift */,
+				D7C9D2ED2BF3166B00697DDE /* DalleImageCard.swift */,
+				D7C9D2EE2BF3166B00697DDE /* GoogleSearchCard.swift */,
+				D7C9D2EF2BF3166B00697DDE /* HackerNewsCard.swift */,
+				D7C9D2F02BF3166B00697DDE /* RecipeCard.swift */,
+				D7C9D2F12BF3166B00697DDE /* TextCard.swift */,
+				D7C9D2F22BF3166B00697DDE /* WeatherCard.swift */,
+				D7C9D2F32BF3166B00697DDE /* WikipediaCard.swift */,
+			);
+			path = Cards;
+			sourceTree = "<group>";
+		};
+		D7C9D3002BF3167400697DDE /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				D7C9D2FD2BF3167400697DDE /* ChatHistoryView.swift */,
+				D7C9D2FE2BF3167400697DDE /* ChatView.swift */,
+				D7C9D2FF2BF3167400697DDE /* ChatViewModel.swift */,
+				D7C9D3382BF3BE5900697DDE /* ChatToolbarView.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		D7C9D31D2BF3172200697DDE /* Sheets */ = {
+			isa = PBXGroup;
+			children = (
+				D7C9D3172BF3172200697DDE /* DocumentPicker.swift */,
+				D7C9D3182BF3172200697DDE /* ImagePicker.swift */,
+				D7C9D3192BF3172200697DDE /* PromptModelsView.swift */,
+				D7C9D31A2BF3172200697DDE /* SettingsView.swift */,
+				D7C9D31B2BF3172200697DDE /* VisionModelsView.swift */,
+				D7C9D31C2BF3172200697DDE /* VoiceModelsView.swift */,
+			);
+			path = Sheets;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D7C9D2A32BF2FCC500697DDE /* Crystal */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D7C9D2CB2BF2FCC700697DDE /* Build configuration list for PBXNativeTarget "Crystal" */;
+			buildPhases = (
+				D7C9D2A02BF2FCC500697DDE /* Sources */,
+				D7C9D2A12BF2FCC500697DDE /* Frameworks */,
+				D7C9D2A22BF2FCC500697DDE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Crystal;
+			packageProductDependencies = (
+				D7C9D3152BF3170800697DDE /* SwiftSoup */,
+				D7C9D3432BF42A5E00697DDE /* KeychainAccess */,
+			);
+			productName = Crystal;
+			productReference = D7C9D2A42BF2FCC500697DDE /* Crystal.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D7C9D2B62BF2FCC700697DDE /* CrystalTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D7C9D2CE2BF2FCC700697DDE /* Build configuration list for PBXNativeTarget "CrystalTests" */;
+			buildPhases = (
+				D7C9D2B32BF2FCC700697DDE /* Sources */,
+				D7C9D2B42BF2FCC700697DDE /* Frameworks */,
+				D7C9D2B52BF2FCC700697DDE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D7C9D2B92BF2FCC700697DDE /* PBXTargetDependency */,
+			);
+			name = CrystalTests;
+			productName = CrystalTests;
+			productReference = D7C9D2B72BF2FCC700697DDE /* CrystalTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		D7C9D2C02BF2FCC700697DDE /* CrystalUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D7C9D2D12BF2FCC700697DDE /* Build configuration list for PBXNativeTarget "CrystalUITests" */;
+			buildPhases = (
+				D7C9D2BD2BF2FCC700697DDE /* Sources */,
+				D7C9D2BE2BF2FCC700697DDE /* Frameworks */,
+				D7C9D2BF2BF2FCC700697DDE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D7C9D2C32BF2FCC700697DDE /* PBXTargetDependency */,
+			);
+			name = CrystalUITests;
+			productName = CrystalUITests;
+			productReference = D7C9D2C12BF2FCC700697DDE /* CrystalUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D7C9D29C2BF2FCC400697DDE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1530;
+				LastUpgradeCheck = 1530;
+				TargetAttributes = {
+					D7C9D2A32BF2FCC500697DDE = {
+						CreatedOnToolsVersion = 15.3;
+					};
+					D7C9D2B62BF2FCC700697DDE = {
+						CreatedOnToolsVersion = 15.3;
+						TestTargetID = D7C9D2A32BF2FCC500697DDE;
+					};
+					D7C9D2C02BF2FCC700697DDE = {
+						CreatedOnToolsVersion = 15.3;
+						TestTargetID = D7C9D2A32BF2FCC500697DDE;
+					};
+				};
+			};
+			buildConfigurationList = D7C9D29F2BF2FCC500697DDE /* Build configuration list for PBXProject "Crystal" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D7C9D29B2BF2FCC400697DDE;
+			packageReferences = (
+				D7C9D3142BF3170800697DDE /* XCRemoteSwiftPackageReference "SwiftSoup" */,
+				D7C9D3422BF42A5D00697DDE /* XCRemoteSwiftPackageReference "KeychainAccess" */,
+			);
+			productRefGroup = D7C9D2A52BF2FCC500697DDE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D7C9D2A32BF2FCC500697DDE /* Crystal */,
+				D7C9D2B62BF2FCC700697DDE /* CrystalTests */,
+				D7C9D2C02BF2FCC700697DDE /* CrystalUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D7C9D2A22BF2FCC500697DDE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7C9D3252BF3177A00697DDE /* LaunchScreen.storyboard in Resources */,
+				D7C9D2B22BF2FCC700697DDE /* Preview Assets.xcassets in Resources */,
+				D7C9D2AE2BF2FCC700697DDE /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D7C9D2B52BF2FCC700697DDE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D7C9D2BF2BF2FCC700697DDE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D7C9D2A02BF2FCC500697DDE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7C9D2FA2BF3166B00697DDE /* TextCard.swift in Sources */,
+				D7C9D2F72BF3166B00697DDE /* GoogleSearchCard.swift in Sources */,
+				D7C9D3202BF3172200697DDE /* PromptModelsView.swift in Sources */,
+				D7C9D2E92BF3165300697DDE /* OpenAiApi.swift in Sources */,
+				D7C9D2E62BF3165300697DDE /* GroqApi.swift in Sources */,
+				D7C9D31E2BF3172200697DDE /* DocumentPicker.swift in Sources */,
+				D7C9D3212BF3172200697DDE /* SettingsView.swift in Sources */,
+				D7C9D3022BF3167400697DDE /* ChatView.swift in Sources */,
+				D7C9D2FC2BF3166B00697DDE /* WikipediaCard.swift in Sources */,
+				D7C9D3222BF3172200697DDE /* VisionModelsView.swift in Sources */,
+				D7C9D3012BF3167400697DDE /* ChatHistoryView.swift in Sources */,
+				D7C9D30F2BF316AC00697DDE /* OrbButton.swift in Sources */,
+				D7C9D30B2BF3169900697DDE /* KeychainService.swift in Sources */,
+				D7C9D2E52BF3165300697DDE /* GoogleApi.swift in Sources */,
+				D7C9D33B2BF3D52B00697DDE /* Conversation.swift in Sources */,
+				D7C9D2E72BF3165300697DDE /* HackerNewsApi.swift in Sources */,
+				D7C9D3392BF3BE5900697DDE /* ChatToolbarView.swift in Sources */,
+				D7C9D32D2BF3319100697DDE /* Provider.swift in Sources */,
+				D7C9D3072BF3168200697DDE /* Camera.swift in Sources */,
+				D76D3B102BF5D8CA0017F2BA /* ConversationManager.swift in Sources */,
+				D7C9D2FB2BF3166B00697DDE /* WeatherCard.swift in Sources */,
+				D7C9D3082BF3168200697DDE /* OpenAI.swift in Sources */,
+				D7C9D3412BF3F20C00697DDE /* AdaptiveHeightView.swift in Sources */,
+				D7C9D3232BF3172200697DDE /* VoiceModelsView.swift in Sources */,
+				D72B02822BF512A300D5FEA4 /* CustomTextEditor.swift in Sources */,
+				D7C9D2DA2BF3164300697DDE /* KeychainAccess.swift in Sources */,
+				D72B02842BF5205600D5FEA4 /* CustomTextEditor2.swift in Sources */,
+				D7C9D31F2BF3172200697DDE /* ImagePicker.swift in Sources */,
+				D7C9D2E42BF3165300697DDE /* AnthropicApi.swift in Sources */,
+				D7C9D3332BF3500700697DDE /* ForceDarkMode.swift in Sources */,
+				D7C9D3372BF3A48100697DDE /* Notification.swift in Sources */,
+				D7C9D3092BF3168200697DDE /* CameraView.swift in Sources */,
+				D7C9D3032BF3167400697DDE /* ChatViewModel.swift in Sources */,
+				D7C9D2F92BF3166B00697DDE /* RecipeCard.swift in Sources */,
+				D7C9D2E82BF3165300697DDE /* OllamaApi.swift in Sources */,
+				D7C9D33D2BF3DFA900697DDE /* Mappers.swift in Sources */,
+				D7C9D2AA2BF2FCC500697DDE /* ContentView.swift in Sources */,
+				D7C9D3272BF31A6A00697DDE /* Globals.swift in Sources */,
+				D7C9D2D62BF3160200697DDE /* Message.swift in Sources */,
+				D7C9D2EB2BF3165300697DDE /* WikipediaApi.swift in Sources */,
+				D7C9D33F2BF3ECBB00697DDE /* CommitableTextEditor.swift in Sources */,
+				D7C9D3292BF3224A00697DDE /* WelcomeView.swift in Sources */,
+				D7C9D30D2BF316A600697DDE /* Color.swift in Sources */,
+				D7C9D2F52BF3166B00697DDE /* ClockCard.swift in Sources */,
+				D7C9D2EA2BF3165300697DDE /* WeatherAPI.swift in Sources */,
+				D7C9D3132BF316B700697DDE /* SpeechRecognizerService.swift in Sources */,
+				D7C9D2AC2BF2FCC500697DDE /* Item.swift in Sources */,
+				D7C9D32F2BF345BC00697DDE /* PlainButtonStyle.swift in Sources */,
+				D7C9D2F62BF3166B00697DDE /* DalleImageCard.swift in Sources */,
+				D7C9D2F82BF3166B00697DDE /* HackerNewsCard.swift in Sources */,
+				D7C9D2A82BF2FCC500697DDE /* CrystalApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D7C9D2B32BF2FCC700697DDE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7C9D2BC2BF2FCC700697DDE /* CrystalTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D7C9D2BD2BF2FCC700697DDE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7C9D2C62BF2FCC700697DDE /* CrystalUITests.swift in Sources */,
+				D7C9D2C82BF2FCC700697DDE /* CrystalUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D7C9D2B92BF2FCC700697DDE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D7C9D2A32BF2FCC500697DDE /* Crystal */;
+			targetProxy = D7C9D2B82BF2FCC700697DDE /* PBXContainerItemProxy */;
+		};
+		D7C9D2C32BF2FCC700697DDE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D7C9D2A32BF2FCC500697DDE /* Crystal */;
+			targetProxy = D7C9D2C22BF2FCC700697DDE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		D7C9D2C92BF2FCC700697DDE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		D7C9D2CA2BF2FCC700697DDE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		D7C9D2CC2BF2FCC700697DDE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Crystal/Crystal.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Crystal/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Crystal;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Need camera access to take photos";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Used for speech recognition";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Need access to save photos";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Used for speech with the AI";
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.ctate.Crystal;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D7C9D2CD2BF2FCC700697DDE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Crystal/Crystal.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Crystal/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Crystal;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Need camera access to take photos";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Used for speech recognition";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Need access to save photos";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Used for speech with the AI";
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.ctate.Crystal;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		D7C9D2CF2BF2FCC700697DDE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.ctate.CrystalTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Crystal.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Crystal";
+			};
+			name = Debug;
+		};
+		D7C9D2D02BF2FCC700697DDE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.ctate.CrystalTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Crystal.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Crystal";
+			};
+			name = Release;
+		};
+		D7C9D2D22BF2FCC700697DDE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.ctate.CrystalUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Crystal;
+			};
+			name = Debug;
+		};
+		D7C9D2D32BF2FCC700697DDE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.ctate.CrystalUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Crystal;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D7C9D29F2BF2FCC500697DDE /* Build configuration list for PBXProject "Crystal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D7C9D2C92BF2FCC700697DDE /* Debug */,
+				D7C9D2CA2BF2FCC700697DDE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D7C9D2CB2BF2FCC700697DDE /* Build configuration list for PBXNativeTarget "Crystal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D7C9D2CC2BF2FCC700697DDE /* Debug */,
+				D7C9D2CD2BF2FCC700697DDE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D7C9D2CE2BF2FCC700697DDE /* Build configuration list for PBXNativeTarget "CrystalTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D7C9D2CF2BF2FCC700697DDE /* Debug */,
+				D7C9D2D02BF2FCC700697DDE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D7C9D2D12BF2FCC700697DDE /* Build configuration list for PBXNativeTarget "CrystalUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D7C9D2D22BF2FCC700697DDE /* Debug */,
+				D7C9D2D32BF2FCC700697DDE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D7C9D3142BF3170800697DDE /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scinfu/SwiftSoup.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.7.2;
+			};
+		};
+		D7C9D3422BF42A5D00697DDE /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.2.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D7C9D3152BF3170800697DDE /* SwiftSoup */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D7C9D3142BF3170800697DDE /* XCRemoteSwiftPackageReference "SwiftSoup" */;
+			productName = SwiftSoup;
+		};
+		D7C9D3432BF42A5E00697DDE /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D7C9D3422BF42A5D00697DDE /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = D7C9D29C2BF2FCC400697DDE /* Project object */;
+}
