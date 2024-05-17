@@ -108,7 +108,7 @@ class OllamaApi: ObservableObject {
             }
             
             guard let content = try? JSONDecoder().decode(OllamaContent.self, from: result.message.content.data(using: .utf8)!) else {
-                alertError("Failed to decode content")
+                print("Failed to decode content")
                 DispatchQueue.main.async {
                     completion(result, nil)
                 }
