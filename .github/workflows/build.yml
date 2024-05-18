@@ -1,0 +1,21 @@
+name: Build Xcode Project
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Set up Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: "latest"
+
+      - name: Build macOS Project
+        run: xcodebuild -scheme Crystal -project Crystal.xcodeproj -sdk macosx -configuration Debug clean build
+
+      - name: Build iOS Project
+        run: xcodebuild -scheme Crystal -project Crystal.xcodeproj -sdk iphonesimulator -configuration Debug clean build
