@@ -31,7 +31,7 @@ struct CrystalApp: App {
         .windowToolbarStyle(UnifiedCompactWindowToolbarStyle(showsTitle: false))
 #endif
         
-        MenuBarExtra("Crystal", systemImage: "diamond") {
+        MenuBarExtra("Crystal", image: "MenuBarIcon") {
             Button("Open Crystal") {
                 openWindow(id: "main-window")
                 NSApplication.shared.windows.forEach { window in
