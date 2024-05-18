@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		D72B02822BF512A300D5FEA4 /* CustomTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B02812BF512A300D5FEA4 /* CustomTextEditor.swift */; };
-		D72B02842BF5205600D5FEA4 /* CustomTextEditor2.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B02832BF5205600D5FEA4 /* CustomTextEditor2.swift */; };
 		D76D3B102BF5D8CA0017F2BA /* ConversationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D76D3B0F2BF5D8CA0017F2BA /* ConversationManager.swift */; };
 		D7C9D2A82BF2FCC500697DDE /* CrystalApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2A72BF2FCC500697DDE /* CrystalApp.swift */; };
 		D7C9D2AA2BF2FCC500697DDE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2A92BF2FCC500697DDE /* ContentView.swift */; };
@@ -87,7 +86,6 @@
 
 /* Begin PBXFileReference section */
 		D72B02812BF512A300D5FEA4 /* CustomTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextEditor.swift; sourceTree = "<group>"; };
-		D72B02832BF5205600D5FEA4 /* CustomTextEditor2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextEditor2.swift; sourceTree = "<group>"; };
 		D76D3B0F2BF5D8CA0017F2BA /* ConversationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationManager.swift; sourceTree = "<group>"; };
 		D7C9D2A42BF2FCC500697DDE /* Crystal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Crystal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7C9D2A72BF2FCC500697DDE /* CrystalApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrystalApp.swift; sourceTree = "<group>"; };
@@ -215,7 +213,6 @@
 				D7C9D30C2BF316A600697DDE /* Color.swift */,
 				D7C9D33E2BF3ECBB00697DDE /* CommitableTextEditor.swift */,
 				D72B02812BF512A300D5FEA4 /* CustomTextEditor.swift */,
-				D72B02832BF5205600D5FEA4 /* CustomTextEditor2.swift */,
 				D7C9D2D92BF3164300697DDE /* KeychainAccess.swift */,
 				D7C9D30A2BF3169900697DDE /* KeychainService.swift */,
 				D7C9D3282BF3224A00697DDE /* WelcomeView.swift */,
@@ -488,7 +485,6 @@
 				D7C9D3232BF3172200697DDE /* VoiceModelsView.swift in Sources */,
 				D72B02822BF512A300D5FEA4 /* CustomTextEditor.swift in Sources */,
 				D7C9D2DA2BF3164300697DDE /* KeychainAccess.swift in Sources */,
-				D72B02842BF5205600D5FEA4 /* CustomTextEditor2.swift in Sources */,
 				D7C9D31F2BF3172200697DDE /* ImagePicker.swift in Sources */,
 				D7C9D2E42BF3165300697DDE /* AnthropicApi.swift in Sources */,
 				D7C9D3332BF3500700697DDE /* ForceDarkMode.swift in Sources */,

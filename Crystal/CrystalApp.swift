@@ -20,17 +20,25 @@ struct CrystalApp: App {
     }()
     
     var body: some Scene {
+#if os(macOS)
         Window("Crystal", id: "main-window") {
             ContentView()
                 .preferredColorScheme(.dark)
         }
         .environmentObject(ConversationManager())
         .modelContainer(sharedModelContainer)
-#if os(macOS)
         .windowStyle(HiddenTitleBarWindowStyle())
         .windowToolbarStyle(UnifiedCompactWindowToolbarStyle(showsTitle: false))
+#else
+        WindowGroup("Crystal", id: "main-window") {
+            ContentView()
+                .preferredColorScheme(.dark)
+        }
+        .environmentObject(ConversationManager())
+        .modelContainer(sharedModelContainer)
 #endif
-        
+
+#if os(macOS)
         MenuBarExtra("Crystal", image: "MenuBarIcon") {
             Button("Open Crystal") {
                 openWindow(id: "main-window")
@@ -57,6 +65,7 @@ struct CrystalApp: App {
             }
             .keyboardShortcut("q")
         }
+#endif
         
 #if os(macOS)
         Settings {
