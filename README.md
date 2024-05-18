@@ -1,6 +1,17 @@
-# Crystal
+<h1 align="center">Crystal</h1>
 
-Open-source AI client for iOS and macOS, enabling developers, AI enthusiasts and tinkerers to create their own personal, customizable AI experience.
+<p align="center"><img src="app-icon.png"></p>
+
+<p align="center">Open-source AI client for Ollama, Groq, Anthropic and OpenAI</p>
+
+<p align="center">
+  <a href="https://x.com/ctatedev" target="_blank">
+    <img src="https://img.shields.io/twitter/follow/ctatedev" alt="X (formerly Twitter) Follow" />
+  </a>
+  <a href="https://github.com/ctate/crystal" target="_blank">
+    <img src="https://img.shields.io/github/stars/ctate/crystal" alt="GitHub Repo stars" />
+  </a>
+</p>
 
 ## Features
 
