@@ -15,7 +15,7 @@ jobs:
           xcode-version: "latest"
 
       - name: Build macOS Project
-        run: xcodebuild -scheme Crystal -project Crystal.xcodeproj -sdk macosx -configuration Debug clean build
+        run: xcodebuild -scheme Crystal -project platforms/apple/Crystal.xcodeproj -sdk macosx -configuration Debug clean build
 
       - name: Build iOS Project
-        run: xcodebuild -scheme Crystal -project Crystal.xcodeproj -sdk iphonesimulator -configuration Debug clean build
+        run: xcodebuild -scheme Crystal -project platforms/apple/Crystal.xcodeproj -sdk iphonesimulator -configuration Debug clean build
