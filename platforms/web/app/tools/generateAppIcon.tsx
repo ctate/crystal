@@ -3,8 +3,6 @@ import GenerateAppIconCard from "@/components/cards/GenerateAppIconCard";
 import OpenAI from "openai";
 import { z } from "zod";
 
-const openai = new OpenAI();
-
 export default function generateAppIcon({ aiState }: any) {
   return {
     description:

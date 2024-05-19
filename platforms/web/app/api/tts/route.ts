@@ -5,7 +5,9 @@ import { mkdir, readFile, writeFile } from "fs/promises";
 import OpenAI from "openai";
 import { dirname } from "path";
 
-const openai = new OpenAI();
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY || "",
+});
 
 function md5(string: string) {
   return createHash("md5").update(string).digest("hex");

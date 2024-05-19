@@ -4,8 +4,6 @@ import OpenAI from "openai";
 import { google } from "googleapis";
 import { z } from "zod";
 
-const openai = new OpenAI();
-
 export default function searchWeb({ aiState }: any) {
   return {
     description: "Search web",

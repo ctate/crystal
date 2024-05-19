@@ -5,8 +5,6 @@ import Markdown from "react-markdown";
 import sharp from "sharp";
 import { z } from "zod";
 
-const openai = new OpenAI();
-
 interface WebPageInfo {
   url: string;
 }

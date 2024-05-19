@@ -3,7 +3,9 @@ import RenderAppIconCard from "@/components/cards/RenderAppIconCard";
 import OpenAI from "openai";
 import { z } from "zod";
 
-const openai = new OpenAI();
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY || "",
+});
 
 export default function renderAppIcon({ aiState }: any) {
   return {

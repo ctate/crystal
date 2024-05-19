@@ -5,7 +5,9 @@ import Markdown from "react-markdown";
 import sharp from "sharp";
 import { z } from "zod";
 
-const openai = new OpenAI();
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY || "",
+});
 
 interface SummaryInfo {
   summary: string;
