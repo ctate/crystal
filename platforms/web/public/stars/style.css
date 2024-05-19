@@ -1,0 +1,36 @@
+body,
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  cursor: none;
+}
+
+.star-field {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+
+.star {
+  position: absolute;
+  width: 1px; /* Breite eines Sterns */
+  height: 1px; /* Höhe eines Sterns */
+  background-color: #766396; /* Farbe der Sterne (weiß) */
+  border-radius: 50%; /* Rundung für Sterneffekt */
+  animation: twinkling 3s infinite; /* Twinkle-Animation */
+}
+
+/* Keyframes für das Twinkling */
+@keyframes twinkling {
+  0% {
+    opacity: 0; /* Anfangsopazität auf 0 */
+  }
+  50% {
+    opacity: 1; /* Halbzeit mit voller Opazität */
+  }
+  100% {
+    opacity: 0; /* Endet mit 0 Opazität */
+  }
+}

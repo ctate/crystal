@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #000000;
+  background-image: radial-gradient(circle farthest-corner, #060a33, #000000);
+  background-repeat: no-repeat;
+  color: white;
+}
+
+nextjs-portal {
+  display: none;
+}
