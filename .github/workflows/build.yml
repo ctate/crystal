@@ -22,6 +22,9 @@ jobs:
 
   build-web:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: platforms/web
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
@@ -33,9 +36,6 @@ jobs:
 
       - name: Install pnpm
         run: npm install -g pnpm
-
-      - name: Change directory to web project
-        run: cd platforms/web
 
       - name: Install dependencies
         run: pnpm install
