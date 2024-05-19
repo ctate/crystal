@@ -1,9 +1,9 @@
-name: Build Xcode Project
+name: Build Crystal for Apple and Web Platforms
 
 on: [push, pull_request]
 
 jobs:
-  build:
+  build-apple:
     runs-on: macos-latest
     steps:
       - name: Checkout Code
@@ -19,3 +19,23 @@ jobs:
 
       - name: Build iOS Project
         run: xcodebuild -scheme Crystal -project platforms/apple/Crystal.xcodeproj -sdk iphonesimulator -configuration Debug clean build
+
+  build-web:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "20"
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install dependencies with pnpm
+        run: pnpm install --prefix platforms/web
+
+      - name: Build Web Project
+        run: pnpm run build --prefix platforms/web
