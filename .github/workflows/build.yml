@@ -34,8 +34,11 @@ jobs:
       - name: Install pnpm
         run: npm install -g pnpm
 
-      - name: Install dependencies with pnpm
-        run: pnpm install --prefix platforms/web
+      - name: Change directory to web project
+        run: cd platforms/web
+
+      - name: Install dependencies
+        run: pnpm install
 
       - name: Build Web Project
-        run: pnpm run build --prefix platforms/web
+        run: pnpm run build
