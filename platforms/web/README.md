@@ -16,7 +16,7 @@ pnpm install
 OPENAI_API_KEY=""
 OPENWEATHER_API_KEY=""
 GOOGLE_API_KEY=""
-GOOGLE_SEARCH_API_KEY=""
+GOOGLE_SEARCH_ENGINE_ID=""
 ```
 
 ### Run Development Server

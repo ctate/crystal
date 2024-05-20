@@ -22,8 +22,8 @@ export default function searchWeb({ aiState }: any) {
       );
 
       const res = await google.customsearch("v1").cse.list({
-        auth: process.env.GOOGLE_SEARCH_API_KEY!,
-        cx: "17486b203b6a74b0a",
+        auth: process.env.GOOGLE_API_KEY!,
+        cx: process.env.GOOGLE_SEARCH_ENGINE_ID!,
         q: query,
       });
 

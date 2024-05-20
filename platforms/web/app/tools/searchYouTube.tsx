@@ -39,7 +39,7 @@ export default function searchYouTube({ aiState }: any) {
       );
 
       const res = await google.youtube("v3").search.list({
-        auth: process.env.GOOGLE_SEARCH_API_KEY!,
+        auth: process.env.GOOGLE_API_KEY!,
         q: query,
         part: ["snippet"],
       });
