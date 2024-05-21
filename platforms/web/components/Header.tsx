@@ -14,7 +14,7 @@ export default function Header() {
   const [showPopover, setShowPopover] = useState(false);
 
   return (
-    <header className="flex justify-center p-4">
+    <header className="fixed flex justify-center p-4 left-0 right-0 top-0">
       <button
         className="flex gap-2 items-center"
         onClick={() => setShowPopover(!showPopover)}

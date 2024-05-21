@@ -67,7 +67,7 @@ function Content() {
   }, [cursorVisible]);
 
   return (
-    <AppContextProvider>
+    <>
       <Header />
       <div
         className={classNames(
@@ -193,7 +193,7 @@ function Content() {
         <WebcamSwitcher onSnap={(imageUrl) => setImageUrl(imageUrl)} />
       )}
       <audio ref={audioRef} />
-    </AppContextProvider>
+    </>
   );
 }
 
