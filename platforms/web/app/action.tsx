@@ -20,10 +20,18 @@ import changeVoice from "./tools/changeVoice";
 import saveVoiceSetting from "./tools/saveVoiceSetting";
 import pokedex from "./tools/pokedex";
 import makeRecipe from "./tools/recipe";
+import getSettings from "@/utils/getSettings";
+import saveSettings from "@/utils/saveSettings";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY || "",
 });
+
+export async function saveSetting(key: string, value: string): Promise<void> {
+  "use server";
+
+  await saveSettings(key, value);
+}
 
 async function submitUserImage(
   input: string,
@@ -134,8 +142,10 @@ async function submitUserMessage(input: string): Promise<UIState> {
     },
   ]);
 
+  const { model } = await getSettings();
+
   const ui = render({
-    model: "gpt-3.5-turbo-0125",
+    model,
     provider: openai,
     messages: [
       {

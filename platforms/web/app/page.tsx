@@ -9,8 +9,10 @@ import AudioRecorder from "@/components/AudioRecorder";
 import classNames from "@/utils/classNames";
 import WebcamSwitcher from "@/components/Webcam";
 import { useIdleCursor } from "@/hooks/useIdleCursor";
+import Header from "@/components/Header";
+import { AppContextProvider } from "@/context/AppContext";
 
-export default function Page() {
+function Content() {
   const cursorVisible = useIdleCursor();
 
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -65,7 +67,8 @@ export default function Page() {
   }, [cursorVisible]);
 
   return (
-    <>
+    <AppContextProvider>
+      <Header />
       <div
         className={classNames(
           "flex flex-col items-center justify-center min-h-dvh",
@@ -190,6 +193,14 @@ export default function Page() {
         <WebcamSwitcher onSnap={(imageUrl) => setImageUrl(imageUrl)} />
       )}
       <audio ref={audioRef} />
-    </>
+    </AppContextProvider>
+  );
+}
+
+export default function Page() {
+  return (
+    <AppContextProvider>
+      <Content />
+    </AppContextProvider>
   );
 }
