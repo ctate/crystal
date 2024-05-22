@@ -19,6 +19,7 @@ struct ChatContentView: View {
     @State private var animate = false
     @ObservedObject var speechRecognizer = SpeechRecognizerService()
     @State private var isSheetPresented = false
+    @State private var keyboardHeight: CGFloat = 0
     @State var presentSheet = ""
     @State private var showPopover = false
     @State private var showRecorder = false
@@ -38,16 +39,15 @@ struct ChatContentView: View {
             }
             
             HStack(alignment: .bottom) {
-                VStack {
-                    Button(action: {
-                        presentSheet = "camera"
-                    }) {
-                        Image(systemName: "camera")
-                            .imageScale(.large)
-                            .foregroundColor(.white)
-                    }
-                    .buttonStyle(PlainButtonStyle())
+                Button(action: {
+                    presentSheet = "camera"
+                }) {
+                    Image(systemName: "camera")
+                        .imageScale(.large)
+                        .foregroundColor(.white)
                 }
+                .buttonStyle(PlainButtonStyle())
+                .padding(.bottom, 20)
                 
                 Spacer()
                 
@@ -98,23 +98,6 @@ struct ChatContentView: View {
                 
                 Spacer()
                 
-#if os(iOS)
-                Menu {
-                    Button(action: { presentSheet = "image" }) {
-                        Label("Select Image", systemImage: "photo")
-                    }
-                    Button(action: { presentSheet = "document" }) {
-                        Label("Select File", systemImage: "folder")
-                    }
-                } label: {
-                    Image(systemName: "paperclip")
-                        .imageScale(.large)
-                        .foregroundColor(.white)
-                }
-                .padding(.bottom, 36)
-#endif
-                
-#if os(macOS)
                 Button(action: {
                     viewModel.sendMessage(
                         userInput,
@@ -141,7 +124,7 @@ struct ChatContentView: View {
                     .padding()
                 }
                 .keyboardShortcut(.return, modifiers: [.command])
-#endif
+                .padding(.bottom, 20)
             }
             .padding()
             
@@ -208,6 +191,24 @@ struct ChatContentView: View {
                 conversationManager.selectedConversation = nil
             })
         }
+#if os(iOS)
+        .padding(.bottom, keyboardHeight)
+        .onAppear {
+            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { notification in
+                let value = notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
+                let height = value.height
+                keyboardHeight = 1
+            }
+            
+            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { _ in
+                keyboardHeight = 0
+            }
+        }
+        .onDisappear {
+            NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+            NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        }
+#endif
     }
 }
 

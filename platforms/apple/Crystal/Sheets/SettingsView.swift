@@ -126,7 +126,9 @@ struct IntegrationDetailView: View {
             }
         }
         .navigationTitle(integration.name)
+#if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
+#endif
     }
 }
 
@@ -170,7 +172,9 @@ struct ProviderDetailView: View {
             }
         }
         .navigationTitle(provider.name)
+#if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
+#endif
         .toolbar {
             Button(action: {
                 UserDefaults.standard.set(isEnabled, forKey: "\(provider.id):isEnabled")
