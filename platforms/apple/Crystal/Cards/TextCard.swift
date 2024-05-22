@@ -6,7 +6,6 @@ struct TextCard: View {
     var body: some View {
         AdaptiveHeightView {
             Text(text)
-                .font(.system(size: 18))
                 .padding(.horizontal, 20)
                 .foregroundColor(.white)
                 .textSelection(.enabled)

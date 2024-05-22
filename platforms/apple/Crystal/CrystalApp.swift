@@ -18,7 +18,7 @@ struct CrystalApp: App {
             fatalError("Could not create ModelContainer: \(error)")
         }
     }()
-    
+
     var body: some Scene {
 #if os(macOS)
         Window("Crystal", id: "main-window") {
@@ -32,7 +32,9 @@ struct CrystalApp: App {
 #else
         WindowGroup("Crystal", id: "main-window") {
             ContentView()
-                .preferredColorScheme(.dark)
+                .environment(\.font, Font.custom(UserDefaults.standard.string(forKey: UserDefaults.Keys.font) ?? "San Francisco", size: 14))
+//                .forceDarkMode()
+//                .preferredColorScheme(.dark)
         }
         .environmentObject(ConversationManager())
         .modelContainer(sharedModelContainer)

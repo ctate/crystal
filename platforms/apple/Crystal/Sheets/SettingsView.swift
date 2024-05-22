@@ -126,37 +126,31 @@ struct IntegrationDetailView: View {
             }
         }
         .navigationTitle(integration.name)
-        .padding()
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
 struct ProviderDetailView: View {
+    @Environment(\.presentationMode) var presentationMode
+    
     @Binding var provider: ProviderWithSettings
     @State private var showAlert = false
     
+    @State private var apiKey = ""
+    @State private var host = ""
+    @State private var isEnabled = false
+
     var body: some View {
         Form {
-            Toggle("Enabled", isOn: $provider.isEnabled)
-                .onChange(of: provider.isEnabled) {
-                    UserDefaults.standard.set(provider.isEnabled, forKey: "\(provider.id):isEnabled")
-                }
+            Toggle("Enabled", isOn: $isEnabled)
             HStack {
                 if provider.isService {
-                    SecureField("API Key", text: $provider.apiKey)
+                    SecureField("API Key", text: $apiKey)
                         .disabled(!provider.apiKey.isEmpty)
-                        .onChange(of: provider.apiKey) {
-                            if let data = provider.apiKey.data(using: .utf8) {
-                                _ = save(key: "\(bundleIdentifier).\(provider.id)ApiKey", data: data)
-                            }
-                        }
                 } else {
-                    TextField("Host", text: $provider.host)
-                        .disabled(!provider.apiKey.isEmpty)
-                        .onChange(of: provider.host) {
-                            UserDefaults.standard.set(provider.host, forKey: "\(provider.id):host")
-                        }
+                    TextField("Host", text: $host)
                 }
-                
+
                 if !provider.apiKey.isEmpty {
                     Spacer()
                     Button(action: {
@@ -167,6 +161,7 @@ struct ProviderDetailView: View {
                     }
                     .alert("Are you sure you want to clear the API key?", isPresented: $showAlert) {
                         Button("Clear", role: .destructive) {
+                            apiKey = ""
                             provider.clearApiKey()
                         }
                         Button("Cancel", role: .cancel) {}
@@ -175,16 +170,81 @@ struct ProviderDetailView: View {
             }
         }
         .navigationTitle(provider.name)
-        .padding()
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            Button(action: {
+                UserDefaults.standard.set(isEnabled, forKey: "\(provider.id):isEnabled")
+                
+                provider.isEnabled = isEnabled
+                
+                if provider.isService {
+                    if let data = apiKey.data(using: .utf8) {
+                        _ = save(key: "\(bundleIdentifier).\(provider.id)ApiKey", data: data)
+                    }
+                    
+                    provider.apiKey = apiKey
+                } else {
+                    UserDefaults.standard.set(host, forKey: UserDefaults.Keys.ollamaHost)
+                    
+                    provider.host = host
+                }
+                                
+                presentationMode.wrappedValue.dismiss()
+            }) {
+                Text("Save")
+            }
+        }
+        .onAppear {
+            self.apiKey = provider.apiKey
+            self.host = provider.host
+            self.isEnabled = provider.isEnabled
+        }
     }
 }
 
 struct GeneralSettingsView: View {
-    @State private var darkMode = false
+    @State private var selectedAppearance: String = "Option 1"
+    let appearanceOptions = ["Light Mode", "Dark Mode", "System"]
+    
+    @State private var selectedFont: String = "Arial"
+    let fonts = [
+        "San Francisco (Default)",
+        "Arial",
+        "Helvetica",
+        "Times New Roman",
+        "Courier",
+        "Verdana",
+        "Trebuchet MS",
+        "Georgia",
+        "Palatino",
+        "Gill Sans",
+        "Futura",
+        "Optima"
+    ]
     
     var body: some View {
-        Form {
-            Toggle("Dark Mode", isOn: $darkMode)
+        NavigationView {
+            Form {
+                Picker("Appearance", selection: $selectedAppearance) {
+                    ForEach(appearanceOptions, id: \.self) { appearance in
+                        Text(appearance)
+                    }
+                }
+                Picker("Primary Font", selection: $selectedFont) {
+                    ForEach(fonts, id: \.self) { font in
+                        Text(font).font(Font.custom(font, size: 18))
+                    }
+                }
+            }
+            .navigationTitle("General")
+            .toolbar {
+                Button(action: {
+                    UserDefaults.standard.setValue(selectedAppearance, forKey: UserDefaults.Keys.appearance)
+                    UserDefaults.standard.setValue(selectedFont, forKey: UserDefaults.Keys.font)
+                }) {
+                    Text("Save")
+                }
+            }
         }
     }
 }
@@ -197,10 +257,10 @@ struct ModelsSettingsView: View {
     ]
     
     @State private var providers = [
-        ProviderWithSettings(id: "OpenAI", name: "OpenAI", isEnabled: false, isService: true),
-        ProviderWithSettings(id: "Groq", name: "Groq", isEnabled: false, isService: true),
-        ProviderWithSettings(id: "Anthropic", name: "Anthropic", isEnabled: false, isService: true),
-        ProviderWithSettings(id: "Ollama", name: "Ollama", isEnabled: false, isService: false)
+        ProviderWithSettings(id: "OpenAI", name: "OpenAI", isService: true),
+        ProviderWithSettings(id: "Groq", name: "Groq", isService: true),
+        ProviderWithSettings(id: "Anthropic", name: "Anthropic", isService: true),
+        ProviderWithSettings(id: "Ollama", name: "Ollama", isService: false)
     ]
     
     private func destinationView(for id: String) -> some View {
@@ -361,25 +421,21 @@ struct SettingsView: View {
     var body: some View {
         TabView {
             GeneralSettingsView()
-                .navigationTitle("General")
                 .tabItem {
                     Label("General", systemImage: "gear")
                 }
             
             ModelsSettingsView()
-                .navigationTitle("Models")
                 .tabItem {
                     Label("Models", systemImage: "diamond")
                 }
             
             IntegrationsSettingsView()
-                .navigationTitle("Integrations")
                 .tabItem {
                     Label("Integrations", systemImage: "glowplug")
                 }
             
             DataSettingsView()
-                .navigationTitle("Data")
                 .tabItem {
                     Label("Data", systemImage: "externaldrive")
                 }

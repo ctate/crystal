@@ -78,7 +78,21 @@ struct ChatContentView: View {
                         .padding(.bottom, 40)
                 } else {
                     VStack(alignment: .trailing) {
+#if os(iOS)
+                        TextField("Say something...", text: $userInput, axis: .vertical)
+                            .onSubmit {
+                                viewModel.sendMessage(
+                                    userInput,
+                                    conversationManager: conversationManager,
+                                    modelContext: modelContext
+                                )
+                                userInput = ""
+                            }
+                            .textFieldStyle(.roundedBorder)
+                            .padding()
+#else
                         CustomTextEditor(text: $userInput)
+#endif
                     }
                 }
                 
@@ -198,19 +212,15 @@ struct ChatContentView: View {
 }
 
 struct ChatView: View {
-#if os(iOS)
-    init() {
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithTransparentBackground()
-        appearance.backgroundColor = .clear
-        UINavigationBar.appearance().standardAppearance = appearance
-        UINavigationBar.appearance().compactAppearance = appearance
-        UINavigationBar.appearance().scrollEdgeAppearance = appearance
-    }
-#endif
-    
     @State private var isSidebarVisible: Bool = false
-    private let sidebarWidth: CGFloat = 300
+    @State private var dragOffset: CGFloat = 0
+    private var sidebarWidth: CGFloat {
+#if os(macOS)
+        return 300
+#else
+        return UIScreen.main.bounds.width * 0.75
+#endif
+    }
     
     var body: some View {
 #if os(macOS)
@@ -230,14 +240,59 @@ struct ChatView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         
 #else
-        NavigationView {
-            ChatContentView()
+        GeometryReader { geometry in
+            HStack(alignment: .top, spacing: 0) {
+                SidebarView(sidebarAction: {
+                    withAnimation {
+                        isSidebarVisible = false
+                        dragOffset = 0
+                    }
+                })
+                    .frame(width: sidebarWidth)
+                
+                NavigationView {
+                    ChatContentView(sidebarAction: {
+                        withAnimation {
+                            isSidebarVisible.toggle()
+                            if isSidebarVisible {
+                                dragOffset = sidebarWidth
+                            } else {
+                                dragOffset = 0
+                            }
+                        }
+                    })
+                }
+                .frame(width: geometry.size.width)
+                .background(Color.white)
+            }
+            .frame(width: geometry.size.width + sidebarWidth)
+            .offset(x: -sidebarWidth + dragOffset)
+            .animation(.interactiveSpring(), value: dragOffset)
+            .gesture(
+                DragGesture().onChanged { gesture in
+                    let newOffset = gesture.translation.width + (isSidebarVisible ? sidebarWidth : 0)
+                    if newOffset > 0 {
+                        dragOffset = min(newOffset, sidebarWidth)
+                    }
+                }
+                .onEnded { gesture in
+                    let threshold = sidebarWidth / 2
+                    if dragOffset > threshold {
+                        isSidebarVisible = true
+                    } else {
+                        isSidebarVisible = false
+                    }
+                    dragOffset = isSidebarVisible ? sidebarWidth : 0
+                }
+            )
         }
 #endif
     }
 }
 
 struct SidebarView: View {
+    var sidebarAction: (() -> Void)? = {}
+    
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject var conversationManager: ConversationManager
     @Query private var conversations: [Conversation]
@@ -249,9 +304,15 @@ struct SidebarView: View {
             ForEach(conversations.sorted { $0.createdAt > $1.createdAt }, id: \.self) { conversation in
                 Button(action: {
                     conversationManager.selectedConversation = conversation
+                    if sidebarAction != nil {
+                        sidebarAction!()
+                    }
                 }) {
                     Text("\(conversation.messages.sorted { $0.timestamp > $1.timestamp }.first?.text ?? "(no text)")")
                         .frame(maxWidth: .infinity, alignment: .leading)
+                        .foregroundColor(conversationManager.selectedConversation == conversation ? .white : .black)
+                        .lineLimit(1)
+                        .truncationMode(.tail)
                         .padding()
                         .contentShape(Rectangle())
                 }
@@ -274,7 +335,7 @@ struct SidebarView: View {
                         }),
                         secondaryButton: .default(Text("Cancel"))
                     )
-
+                    
                 }
             }
         }

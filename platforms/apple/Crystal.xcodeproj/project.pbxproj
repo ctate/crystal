@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		D72B02822BF512A300D5FEA4 /* CustomTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B02812BF512A300D5FEA4 /* CustomTextEditor.swift */; };
 		D76D3B102BF5D8CA0017F2BA /* ConversationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D76D3B0F2BF5D8CA0017F2BA /* ConversationManager.swift */; };
+		D7B415792BFD8EF800D2C131 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B415782BFD8EF800D2C131 /* UserDefaults.swift */; };
 		D7C9D2A82BF2FCC500697DDE /* CrystalApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2A72BF2FCC500697DDE /* CrystalApp.swift */; };
 		D7C9D2AA2BF2FCC500697DDE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2A92BF2FCC500697DDE /* ContentView.swift */; };
 		D7C9D2AC2BF2FCC500697DDE /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2AB2BF2FCC500697DDE /* Item.swift */; };
@@ -87,6 +88,7 @@
 /* Begin PBXFileReference section */
 		D72B02812BF512A300D5FEA4 /* CustomTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextEditor.swift; sourceTree = "<group>"; };
 		D76D3B0F2BF5D8CA0017F2BA /* ConversationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationManager.swift; sourceTree = "<group>"; };
+		D7B415782BFD8EF800D2C131 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		D7C9D2A42BF2FCC500697DDE /* Crystal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Crystal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7C9D2A72BF2FCC500697DDE /* CrystalApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrystalApp.swift; sourceTree = "<group>"; };
 		D7C9D2A92BF2FCC500697DDE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -206,6 +208,7 @@
 				D7C9D32E2BF345BC00697DDE /* PlainButtonStyle.swift */,
 				D7C9D2A92BF2FCC500697DDE /* ContentView.swift */,
 				D7C9D3362BF3A48100697DDE /* Notification.swift */,
+				D7B415782BFD8EF800D2C131 /* UserDefaults.swift */,
 				D76D3B0F2BF5D8CA0017F2BA /* ConversationManager.swift */,
 				D7C9D3402BF3F20C00697DDE /* AdaptiveHeightView.swift */,
 				D7C9D3262BF31A6A00697DDE /* Globals.swift */,
@@ -464,6 +467,7 @@
 				D7C9D3202BF3172200697DDE /* PromptModelsView.swift in Sources */,
 				D7C9D2E92BF3165300697DDE /* OpenAiApi.swift in Sources */,
 				D7C9D2E62BF3165300697DDE /* GroqApi.swift in Sources */,
+				D7B415792BFD8EF800D2C131 /* UserDefaults.swift in Sources */,
 				D7C9D31E2BF3172200697DDE /* DocumentPicker.swift in Sources */,
 				D7C9D3212BF3172200697DDE /* SettingsView.swift in Sources */,
 				D7C9D3022BF3167400697DDE /* ChatView.swift in Sources */,

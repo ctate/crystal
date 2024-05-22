@@ -115,7 +115,6 @@ struct WelcomeView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 24, height: 24)
-                        .forceDarkMode()
                     Text(provider.name)
                         .foregroundColor(.white)
                         .padding()

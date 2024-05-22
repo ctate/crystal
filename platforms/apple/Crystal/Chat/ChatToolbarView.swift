@@ -32,7 +32,6 @@ struct ChatToolbarView: ToolbarContent {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 16, height: 16)
-                    .forceDarkMode()
                 Text(selectedModelId)
             }
         }
