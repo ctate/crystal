@@ -27,19 +27,20 @@ struct ChatToolbarView: ToolbarContent {
             .keyboardShortcut("/", modifiers: .command)
         }
         ToolbarItem(placement: .principal) {
-            HStack {
-                Image(findProviderByModelId(selectedModelId)?.image ?? "")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 16, height: 16)
-                Text(selectedModelId)
-            }
-        }
-        ToolbarItem(placement: .confirmationAction) {
             Button(action: {
                 showPopover = true
             }) {
-                Image(systemName: showPopover ? "chevron.down" : "chevron.right")
+                HStack(alignment: .center) {
+                    Image(findProviderByModelId(selectedModelId)?.image ?? "")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 16, height: 16)
+                    
+                    Text(selectedModelId)
+                        .foregroundColor(.white)
+                    
+                    Image(systemName: showPopover ? "chevron.down" : "chevron.right")
+                }
             }
             .popover(isPresented: $showPopover, arrowEdge: .bottom) {
                 ScrollView {

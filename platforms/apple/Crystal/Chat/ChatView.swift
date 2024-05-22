@@ -99,14 +99,18 @@ struct ChatContentView: View {
                 Spacer()
                 
                 Button(action: {
-                    viewModel.sendMessage(
-                        userInput,
-                        conversationManager: conversationManager,
-                        modelContext: modelContext
-                    )
-                    userInput = ""
+                    if userInput.isEmpty {
+                        showRecorder.toggle()
+                    } else {
+                        viewModel.sendMessage(
+                            userInput,
+                            conversationManager: conversationManager,
+                            modelContext: modelContext
+                        )
+                        userInput = ""
+                    }
                 }) {
-                    Image(systemName: "arrow.up")
+                    Image(systemName: userInput.isEmpty ? "mic" : "arrow.up")
                         .imageScale(.large)
                         .foregroundColor(.white)
                 }
@@ -286,6 +290,13 @@ struct ChatView: View {
                     dragOffset = isSidebarVisible ? sidebarWidth : 0
                 }
             )
+            .onChange(of: isSidebarVisible) {
+                if isSidebarVisible {
+                    let generator = UINotificationFeedbackGenerator()
+                    generator.prepare()
+                    generator.notificationOccurred(.success)
+                }
+            }
         }
 #endif
     }
