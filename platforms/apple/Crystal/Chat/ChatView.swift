@@ -21,6 +21,7 @@ struct ChatContentView: View {
     @State private var isSheetPresented = false
     @State private var keyboardHeight: CGFloat = 0
     @State var presentSheet = ""
+    @State private var defaultSettingsTab = "general"
     @State private var showPopover = false
     @State private var showRecorder = false
     @State private var textHeight: CGFloat = 30
@@ -171,7 +172,9 @@ struct ChatContentView: View {
                 ChatHistoryView()
 #endif
             case "settings":
-                SettingsView()
+                NavigationView {
+                    SettingsView(selectedTab: defaultSettingsTab)
+                }
             default:
                 Text("No sheet")
             }
@@ -188,7 +191,8 @@ struct ChatContentView: View {
                 }
             }, historyAction: {
                 presentSheet = "history"
-            }, settingsAction: {
+            }, settingsAction: { tab in
+                defaultSettingsTab = tab
                 presentSheet = "settings"
             }, newAction: {
                 viewModel.currentView = AnyView(TextCard(text: "How can I help?"))

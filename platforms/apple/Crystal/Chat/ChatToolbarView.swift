@@ -5,7 +5,7 @@ struct ChatToolbarView: ToolbarContent {
     
     var sidebarAction: (() -> Void)? = {}
     var historyAction: (() -> Void)? = {}
-    var settingsAction: (() -> Void)? = {}
+    var settingsAction: ((_ name: String) -> Void)? = { _ in }
     var newAction: (() -> Void)? = {}
     
     @State private var functionsDisabled = UserDefaults.standard.bool(forKey: "functionsDisabled")
@@ -26,7 +26,7 @@ struct ChatToolbarView: ToolbarContent {
             }
             .keyboardShortcut("/", modifiers: .command)
         }
-        ToolbarItem(placement: .principal) {
+        ToolbarItem(placement: .navigation) {
             Button(action: {
                 showPopover = true
             }) {
@@ -58,6 +58,19 @@ struct ChatToolbarView: ToolbarContent {
                                 
                                 Text(provider.name)
                                     .bold()
+                                
+                                if !UserDefaults.standard.bool(forKey: "\(provider.id):isEnabled") {
+                                    Text("(Disabled)")
+                                        .bold()
+                                    Spacer()
+                                    Button(action: {
+                                        if settingsAction != nil {
+                                            settingsAction!("models")
+                                        }
+                                    }) {
+                                        Text("Settings")
+                                    }
+                                }
                             }
                             .padding(.horizontal, 20)
                             .padding(.vertical, 5)
@@ -71,15 +84,16 @@ struct ChatToolbarView: ToolbarContent {
                                 }) {
                                     HStack {
                                         Text(model.name)
+                                            .foregroundColor(!UserDefaults.standard.bool(forKey: "\(provider.id):isEnabled") ? .gray : .black)
                                         Spacer()
                                         if selectedModelId == model.id {
                                             Image(systemName: "checkmark")
                                         }
                                     }
                                 }
+                                .disabled(!UserDefaults.standard.bool(forKey: "\(provider.id):isEnabled"))
                                 .padding(.horizontal, 20)
                                 .padding(.vertical, 5)
-                                .foregroundColor(.black)
                                 .buttonStyle(PlainButtonStyle())
                             }
                         }
@@ -105,7 +119,7 @@ struct ChatToolbarView: ToolbarContent {
 #if os(iOS)
             Button(action: {
                 if settingsAction != nil {
-                    settingsAction!()
+                    settingsAction!("general")
                 }
             }) {
                 Image(systemName: "gear")

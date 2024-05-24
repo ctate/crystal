@@ -79,8 +79,14 @@ class OpenAiApi: ObservableObject {
             return
         }
         
-        guard let loadedData = load(key: "\(bundleIdentifier).OpenAIApiKey") else { return }
-        guard let apiKey = String(data: loadedData, encoding: .utf8) else { return }
+        guard let loadedData = load(key: "\(bundleIdentifier).OpenAIApiKey") else {
+            alertError("No API key found")
+            return
+        }
+        guard let apiKey = String(data: loadedData, encoding: .utf8) else {
+            alertError("Failed to load API key")
+            return
+        }
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"

@@ -71,7 +71,7 @@ struct CrystalApp: App {
         
 #if os(macOS)
         Settings {
-            SettingsView()
+            SettingsView(selectedTab: "general")
         }
 #endif
     }

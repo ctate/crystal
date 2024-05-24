@@ -417,32 +417,38 @@ struct DataSettingsView: View {
 }
 
 struct SettingsView: View {
+    @State var selectedTab: String
+    
 #if os(macOS)
     let screenWidth = NSScreen.main?.visibleFrame.width ?? 800
     let screenHeight = NSScreen.main?.visibleFrame.height ?? 600
 #endif
     
     var body: some View {
-        TabView {
+        TabView(selection: $selectedTab) {
             GeneralSettingsView()
                 .tabItem {
                     Label("General", systemImage: "gear")
                 }
+                .tag("general")
             
             ModelsSettingsView()
                 .tabItem {
                     Label("Models", systemImage: "diamond")
                 }
+                .tag("models")
             
             IntegrationsSettingsView()
                 .tabItem {
                     Label("Integrations", systemImage: "glowplug")
                 }
+                .tag("integrations")
             
             DataSettingsView()
                 .tabItem {
                     Label("Data", systemImage: "externaldrive")
                 }
+                .tag("data")
         }
 #if os(macOS)
         .frame(width: screenWidth/2, height: screenHeight/2)
@@ -453,5 +459,5 @@ struct SettingsView: View {
 
 // Preview for the SwiftUI canvas
 #Preview {
-    SettingsView()
+    SettingsView(selectedTab: "general")
 }
