@@ -207,10 +207,12 @@ struct ProviderDetailView: View {
 }
 
 struct GeneralSettingsView: View {
-    @State private var selectedAppearance: String = "Option 1"
+    @State private var isMuted = UserDefaults.standard.bool(forKey: UserDefaults.Keys.isMuted)
+    
+    @State private var selectedAppearance = UserDefaults.standard.string(forKey: UserDefaults.Keys.appearance) ?? "Option 1"
     let appearanceOptions = ["Light Mode", "Dark Mode", "System"]
     
-    @State private var selectedFont: String = "Arial"
+    @State private var selectedFont = UserDefaults.standard.string(forKey: UserDefaults.Keys.font) ?? "Arial"
     let fonts = [
         "San Francisco (Default)",
         "Arial",
@@ -234,21 +236,25 @@ struct GeneralSettingsView: View {
                         Text(appearance)
                     }
                 }
+                .onChange(of: selectedAppearance) {
+                    UserDefaults.standard.setValue(selectedAppearance, forKey: UserDefaults.Keys.appearance)
+                }
+                
                 Picker("Primary Font", selection: $selectedFont) {
                     ForEach(fonts, id: \.self) { font in
                         Text(font).font(Font.custom(font, size: 18))
                     }
                 }
+                .onChange(of: selectedFont) {
+                    UserDefaults.standard.setValue(selectedAppearance, forKey: UserDefaults.Keys.appearance)
+                }
+                
+                Toggle("Mute", isOn: $isMuted)
+                    .onChange(of: isMuted) {
+                        UserDefaults.standard.set(isMuted, forKey: UserDefaults.Keys.isMuted)
+                    }
             }
             .navigationTitle("General")
-            .toolbar {
-                Button(action: {
-                    UserDefaults.standard.setValue(selectedAppearance, forKey: UserDefaults.Keys.appearance)
-                    UserDefaults.standard.setValue(selectedFont, forKey: UserDefaults.Keys.font)
-                }) {
-                    Text("Save")
-                }
-            }
         }
     }
 }

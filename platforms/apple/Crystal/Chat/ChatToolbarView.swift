@@ -84,7 +84,7 @@ struct ChatToolbarView: ToolbarContent {
                                 }) {
                                     HStack {
                                         Text(model.name)
-                                            .foregroundColor(!UserDefaults.standard.bool(forKey: "\(provider.id):isEnabled") ? .gray : .black)
+                                            .foregroundColor(!UserDefaults.standard.bool(forKey: "\(provider.id):isEnabled") ? .gray : .primary)
                                         Spacer()
                                         if selectedModelId == model.id {
                                             Image(systemName: "checkmark")

@@ -38,7 +38,7 @@ struct ChatHistoryView: View {
                                                 .buttonStyle(PlainButtonStyle())
                                         }
                                         Spacer()
-                                        Text("\(message.tokensTotal!) tokens: \(message.tokensIn!) in / \(message.tokensOut!) out • \(message.model ?? "unknown")")
+                                        Text("\(message.tokensTotal!) tokens • \(message.model ?? "unknown")")
                                             .foregroundColor(.gray)
                                             .font(.footnote)
                                     }

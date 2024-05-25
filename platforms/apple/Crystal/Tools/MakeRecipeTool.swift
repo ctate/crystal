@@ -1,13 +1,14 @@
+import Foundation
 import SwiftUI
 
 class RecipeModel: ObservableObject {
-    struct Ingredient: Identifiable {
+    struct Ingredient: Codable, Identifiable {
         var id: Int
         var name: String
         var isChecked: Bool
     }
     
-    struct Direction: Identifiable {
+    struct Direction: Codable, Identifiable {
         var id: Int
         var content: String
         var part: String
@@ -71,5 +72,66 @@ struct RecipeCard: View {
         .listStyle(GroupedListStyle())
 #endif
         .scrollContentBackground(.hidden)
+    }
+}
+
+#Preview {
+    RecipeCard(
+        recipeModel: RecipeModel(
+            ingredients: [
+                RecipeModel.Ingredient(
+                    id: 1,
+                    name: "1 cup water",
+                    isChecked: false
+                ),
+                RecipeModel.Ingredient(
+                    id: 2,
+                    name: "1 cup water",
+                    isChecked: false
+                )
+            ],
+            directions: []
+        )
+    )
+}
+
+class MakeRecipeTool {
+    static let name = "make_recipe"
+    
+    static let function = [
+        "type": "function",
+        "function": [
+            "name": name,
+            "description": "Find a recipe and return it",
+            "parameters": [
+                "type": "object",
+                "properties": [
+                    "name": [
+                        "type": "string",
+                        "description": "The name of the recipe"
+                    ]
+                ],
+                "required": [
+                    "name"
+                ]
+            ]
+        ]
+    ] as [String: Any]
+    
+    static func render(_ message: Message) -> AnyView {
+        struct Props: Codable {
+            let ingredients: [RecipeModel.Ingredient]
+            let directions: [RecipeModel.Direction]
+        }
+        
+        guard let result = try? JSONDecoder().decode(Props.self, from: (message.props ?? "{}").data(using: .utf8)!) else {
+            return AnyView(TextCard(text: LocalizedStringKey("Failed")))
+        }
+        
+        return AnyView(
+            RecipeCard(
+                recipeModel: RecipeModel(ingredients: result.ingredients, directions: result.directions)
+            )
+        )
     }
 }

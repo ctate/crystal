@@ -37,6 +37,9 @@ struct ChatContentView: View {
             } else {
                 viewModel.currentView
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                    .onTapGesture {
+                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                    }
             }
             
             HStack(alignment: .bottom) {
@@ -181,7 +184,15 @@ struct ChatContentView: View {
         })
         .onChange(of: conversationManager.selectedConversation, {
             if conversationManager.selectedConversation != nil {
-                viewModel.updateViewBasedOnLastMessage(modelContext, conversation: conversationManager.selectedConversation!)
+                let messages = conversationManager.selectedConversation!.messages.sorted { $0.timestamp < $1.timestamp }
+                
+                guard let lastMessage = messages.last, lastMessage.role == "assistant" else {
+                    return
+                }
+                
+                viewModel.updateViewBasedOnLastMessage(
+                    lastMessage: lastMessage
+                )
             }
         })
         .toolbar {
@@ -272,7 +283,6 @@ struct ChatView: View {
                     })
                 }
                 .frame(width: geometry.size.width)
-                .background(Color.white)
             }
             .frame(width: geometry.size.width + sidebarWidth)
             .offset(x: -sidebarWidth + dragOffset)
@@ -316,7 +326,7 @@ struct SidebarView: View {
     @State private var showAlert = false
     
     var body: some View {
-        List {
+        ScrollView {
             ForEach(conversations.sorted { $0.createdAt > $1.createdAt }, id: \.self) { conversation in
                 Button(action: {
                     conversationManager.selectedConversation = conversation
@@ -326,7 +336,7 @@ struct SidebarView: View {
                 }) {
                     Text("\(conversation.messages.sorted { $0.timestamp > $1.timestamp }.first?.text ?? "(no text)")")
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .foregroundColor(conversationManager.selectedConversation == conversation ? .white : .black)
+                        .foregroundColor(conversationManager.selectedConversation == conversation ? .white : .primary)
                         .lineLimit(1)
                         .truncationMode(.tail)
                         .padding()
@@ -355,10 +365,6 @@ struct SidebarView: View {
                 }
             }
         }
-        .listStyle(SidebarListStyle())
-        .onAppear(perform: {
-            print(conversations)
-        })
     }
 }
 

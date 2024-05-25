@@ -28,7 +28,7 @@ class ChatViewModel: ObservableObject {
     private let speechSynthesizer = AVSpeechSynthesizer()
     
     func sendMessage(_ text: String, conversationManager: ConversationManager, modelContext: ModelContext) {
-        let newMessage = Message(text: text, role: "user", timestamp: Date(), provider: nil, model: nil,  function: nil, tokensIn: nil, tokensOut: nil, tokensTotal: nil)
+        let newMessage = Message(text: text, role: "user", timestamp: Date(), provider: nil, model: nil, function: nil, arguments: nil, props: nil, tokensIn: nil, tokensOut: nil, tokensTotal: nil)
         
         if conversationManager.selectedConversation == nil {
             let newConversation = Conversation(messages: [newMessage])
@@ -56,131 +56,24 @@ class ChatViewModel: ObservableObject {
         
         if !UserDefaults.standard.bool(forKey: "functionsDisabled") {
             tools = [
-                [
-                    "type": "function",
-                    "function": [
-                        "name": "generate_image",
-                        "description": "This function generates images based on specific user-provided text descriptions. Do NOT use this function unless the user provides an explicit request for image generation.",
-                        "parameters": [
-                            "type": "object",
-                            "properties": [
-                                "subject": [
-                                    "type": "string"
-                                ]
-                            ],
-                            "required": [
-                                "subject"
-                            ]
-                        ]
-                    ]
-                ],
-                [
-                    "type": "function",
-                    "function": [
-                        "name": "make_recipe",
-                        "description": "Find a recipe and return it",
-                        "parameters": [
-                            "type": "object",
-                            "properties": [
-                                "name": [
-                                    "type": "string",
-                                    "description": "The name of the recipe"
-                                ]
-                            ],
-                            "required": [
-                                "name"
-                            ]
-                        ]
-                    ]
-                ]
+                GenerateImageTool.function,
+                MakeRecipeTool.function
             ]
             
             if UserDefaults.standard.bool(forKey: "Google:isEnabled") {
-                tools!.append([
-                    "type": "function",
-                    "function": [
-                        "name": "search_web",
-                        "description": "Search web",
-                        "parameters": [
-                            "type": "object",
-                            "properties": [
-                                "query": [
-                                    "type": "string"
-                                ]
-                            ],
-                            "required": [
-                                "query"
-                            ]
-                        ]
-                    ]
-                ])
+                tools!.append(GoogleTool.function)
             }
             
             if UserDefaults.standard.bool(forKey: "HackerNews:isEnabled") {
-                tools!.append([
-                    "type": "function",
-                    "function": [
-                        "name": "get_hacker_news",
-                        "description": "Get Hacker News",
-                        "parameters": [
-                            "type": "object",
-                            "properties": [
-                                "type": [
-                                    "type": "string",
-                                    "enum": ["top", "new", "best"],
-                                    "description": "type of news stories",
-                                    "default": "top"
-                                ]
-                            ],
-                            "required": [
-                                "type"
-                            ]
-                        ]
-                    ]
-                ])
+                tools!.append(HackerNewsTool.function)
             }
             
             if UserDefaults.standard.bool(forKey: "WeatherGov:isEnabled") {
-                tools!.append([
-                    "type": "function",
-                    "function": [
-                        "name": "get_current_weather",
-                        "description": "Get weather",
-                        "parameters": [
-                            "type": "object",
-                            "properties": [
-                                "location": [
-                                    "type": "string",
-                                    "description": "The city and state, e.g. San Francisco, CA"
-                                ]
-                            ],
-                            "required": [
-                                "location"
-                            ]
-                        ]
-                    ]
-                ])
+                tools!.append(WeatherTool.function)
             }
             
             if UserDefaults.standard.bool(forKey: "Wikipedia:isEnabled") {
-                tools!.append([
-                    "type": "function",
-                    "function": [
-                        "name": "search_wikipedia",
-                        "description": "Search Wikipedia for biography",
-                        "parameters": [
-                            "type": "object",
-                            "properties": [
-                                "query": [
-                                    "type": "string"
-                                ]
-                            ],
-                            "required": [
-                                "query"
-                            ]
-                        ]
-                    ]
-                ])
+                tools!.append(WikipediaTool.function)
             }
         }
         
@@ -196,22 +89,20 @@ class ChatViewModel: ObservableObject {
             }
             
             AnthropicApi().makeCompletions(model: model, messages: messagesPayload, tools: tools) { result in
-                modelContext.insert(
-                    Message(
-                        text: (result.content.last?.type == "tool_use" ? String(data: try! JSONSerialization.data(withJSONObject: result.content.last!.input!), encoding: .utf8) : result.content.first?.text ?? "") ?? "",
-                        role: result.role,
-                        timestamp: Date(),
-                        provider: "Anthropic",
-                        model: model,
-                        function: result.content.last?.type == "tool_use" ? result.content.last!.name : nil,
-                        tokensIn: 0,
-                        tokensOut: 0,
-                        tokensTotal: 0,
-                        conversation: conversation
-                    )
-                )
-                
-                self.updateViewBasedOnLastMessage(modelContext, conversation: conversation)
+                self.updateViewBasedOnNewMessage(modelContext, conversation: conversation, newMessage: Message(
+                    text: result.content.first?.text ?? "",
+                    role: result.role,
+                    timestamp: Date(),
+                    provider: "Anthropic",
+                    model: model,
+                    function: result.content.last?.type == "tool_use" ? result.content.last!.name : nil,
+                    arguments: result.content.last?.type == "tool_use" ? String(data: try! JSONSerialization.data(withJSONObject: result.content.last!.input!), encoding: .utf8) : nil,
+                    props: nil,
+                    tokensIn: 0,
+                    tokensOut: 0,
+                    tokensTotal: 0,
+                    conversation: conversation
+                ))
             }
             
         } else if provider == "Groq" {
@@ -223,22 +114,20 @@ class ChatViewModel: ObservableObject {
             }
             
             GroqApi().makeCompletions(model: model, messages: messagesPayload, tools: tools) { result in
-                modelContext.insert(
-                    Message(
-                        text: result.choices.first?.message.tool_calls?.first?.function.arguments ?? result.choices.first?.message.content ?? "",
-                        role: result.choices.first?.message.role ?? "unknown",
-                        timestamp: Date(),
-                        provider: "Groq",
-                        model: model,
-                        function: result.choices.first?.message.tool_calls?.first?.function.name ?? nil,
-                        tokensIn: result.usage.prompt_tokens,
-                        tokensOut: result.usage.completion_tokens,
-                        tokensTotal: result.usage.total_tokens,
-                        conversation: conversation
-                    )
-                )
-                
-                self.updateViewBasedOnLastMessage(modelContext, conversation: conversation)
+                self.updateViewBasedOnNewMessage(modelContext, conversation: conversation, newMessage: Message(
+                    text: result.choices.first?.message.content ?? "",
+                    role: result.choices.first?.message.role ?? "unknown",
+                    timestamp: Date(),
+                    provider: "Groq",
+                    model: model,
+                    function: result.choices.first?.message.tool_calls?.first?.function.name ?? nil,
+                    arguments: result.choices.first?.message.tool_calls?.first?.function.arguments ?? nil,
+                    props: nil,
+                    tokensIn: result.usage.prompt_tokens,
+                    tokensOut: result.usage.completion_tokens,
+                    tokensTotal: result.usage.total_tokens,
+                    conversation: conversation
+                ))
             }
         } else if provider == "Ollama" {
             print("OllamaApi")
@@ -249,22 +138,20 @@ class ChatViewModel: ObservableObject {
             }
             
             OllamaApi().makeCompletions(model: model, messages: messagesPayload, tools: tools) { result, content in
-                modelContext.insert(
-                    Message(
-                        text: content != nil && content!.type == "function" ? content!.function.arguments : result.message.content,
-                        role: result.message.role,
-                        timestamp: Date(),
-                        provider: "Ollama",
-                        model: model,
-                        function: content != nil && content!.type == "function" ? content!.function.name : nil,
-                        tokensIn: result.prompt_eval_count,
-                        tokensOut: result.eval_count,
-                        tokensTotal: result.prompt_eval_count + result.eval_count,
-                        conversation: conversation
-                    )
-                )
-                
-                self.updateViewBasedOnLastMessage(modelContext, conversation: conversation)
+                self.updateViewBasedOnNewMessage(modelContext, conversation: conversation, newMessage: Message(
+                    text: result.message.content,
+                    role: result.message.role,
+                    timestamp: Date(),
+                    provider: "Ollama",
+                    model: model,
+                    function: content != nil && content!.type == "function" ? content!.function.name : nil,
+                    arguments: content != nil && content!.type == "function" ? content!.function.arguments : nil,
+                    props: nil,
+                    tokensIn: result.prompt_eval_count,
+                    tokensOut: result.eval_count,
+                    tokensTotal: result.prompt_eval_count + result.eval_count,
+                    conversation: conversation
+                ))
             }
         } else if provider == "OpenAI" {
             print("OpenAIApi")
@@ -275,22 +162,20 @@ class ChatViewModel: ObservableObject {
             }
             
             OpenAiApi().makeCompletions(model: model, messages: messagesPayload, tools: tools) { result in
-                modelContext.insert(
-                    Message(
-                        text: result.choices.first?.message.tool_calls?.first?.function.arguments ?? result.choices.first?.message.content ?? "",
-                        role: result.choices.first?.message.role ?? "unknown",
-                        timestamp: Date(),
-                        provider: "OpenAI",
-                        model: model,
-                        function: result.choices.first?.message.tool_calls?.first?.function.name ?? nil,
-                        tokensIn: result.usage.prompt_tokens,
-                        tokensOut: result.usage.completion_tokens,
-                        tokensTotal: result.usage.total_tokens,
-                        conversation: conversation
-                    )
-                )
-                
-                self.updateViewBasedOnLastMessage(modelContext, conversation: conversation)
+                self.updateViewBasedOnNewMessage(modelContext, conversation: conversation, newMessage: Message(
+                    text: result.choices.first?.message.content ?? "",
+                    role: result.choices.first?.message.role ?? "unknown",
+                    timestamp: Date(),
+                    provider: "OpenAI",
+                    model: model,
+                    function: result.choices.first?.message.tool_calls?.first?.function.name ?? nil,
+                    arguments: result.choices.first?.message.tool_calls?.first?.function.arguments ?? nil,
+                    props: nil,
+                    tokensIn: result.usage.prompt_tokens,
+                    tokensOut: result.usage.completion_tokens,
+                    tokensTotal: result.usage.total_tokens,
+                    conversation: conversation
+                ))
             }
         } else {
             alertError("Unknown model")
@@ -298,15 +183,37 @@ class ChatViewModel: ObservableObject {
         }
     }
     
-    func updateViewBasedOnLastMessage(_ modelContext: ModelContext, conversation: Conversation) {
-        let messages = conversation.messages.sorted { $0.timestamp < $1.timestamp }
-        
-        guard let lastMessage = messages.last, lastMessage.role == "assistant" else {
-            currentView = AnyView(Text("No new messages from assistant"))
-            return
-        }
-        
+    func updateViewBasedOnLastMessage(lastMessage: Message) {
         switch lastMessage.function {
+        case "generate_image":
+            currentView = GenerateImageTool.render(lastMessage)
+        case "get_current_weather":
+            currentView = WeatherTool.render(lastMessage)
+        case "get_hacker_news":
+            currentView = HackerNewsTool.render(lastMessage)
+        case "make_recipe":
+            currentView = MakeRecipeTool.render(lastMessage)
+        case "search_web":
+            currentView = GoogleTool.render(lastMessage)
+        case "search_wikipedia":
+            currentView = WikipediaTool.render(lastMessage)
+        case "text":
+            struct Props: Codable {
+                let text: String
+            }
+            
+            guard let result = try? JSONDecoder().decode(Props.self, from: (lastMessage.props ?? "{}").data(using: .utf8)!) else {
+                return
+            }
+            
+            currentView = AnyView(TextCard(text: LocalizedStringKey(result.text)))
+        default:
+            currentView = AnyView(TextCard(text: LocalizedStringKey(lastMessage.text)))
+        }
+    }
+    
+    func updateViewBasedOnNewMessage(_ modelContext: ModelContext, conversation: Conversation, newMessage: Message) {
+        switch newMessage.function {
         case "generate_image":
             currentView = AnyView(DalleImageCardSkeleton())
             isLoading = false
@@ -315,52 +222,37 @@ class ChatViewModel: ObservableObject {
                 let subject: String
             }
             
-            if let result = try? JSONDecoder().decode(Response.self, from: lastMessage.text.data(using: .utf8)!) {
+            if let result = try? JSONDecoder().decode(Response.self, from: (newMessage.arguments ?? "{}").data(using: .utf8)!) {
                 OpenAiApi().generateImage(prompt: result.subject) { result in
                     DispatchQueue.main.async {
                         self.currentView = AnyView(DalleImageCard(images: result))
+                        
+                        newMessage.text = "Generate Image"
+                        newMessage.props = String(data: try! JSONSerialization.data(withJSONObject: [
+                            "images": [],
+                        ]), encoding: .utf8)
+                        modelContext.insert(newMessage)
+                        
                         self.isLoading = false
                     }
                 }
             }
             
         case "get_current_weather":
-            let geocoder = CLGeocoder()
-            
-            if let result = try? JSONDecoder().decode(OpenAIGetWeatherResponse.self, from: lastMessage.text.data(using: .utf8)!) {
-                geocoder.geocodeAddressString(result.location) { (placemarks, error) in
-                    guard error == nil else {
-                        print("Geocoding error: \(error!.localizedDescription)")
-                        return
-                    }
+            WeatherTool.fetch(newMessage) { result in
+                switch result {
+                case .success(let response):
+                    self.currentView = response.view
                     
-                    if let placemark = placemarks?.first {
-                        let location = placemark.location
-                        WeatherAPI().getWeatherPoints(
-                            lat: "\(location?.coordinate.latitude ?? 0)",
-                            lng: "\(location?.coordinate.longitude ?? 0)"
-                        ) { forecast, forecastHourly, forecastGridData in
-                            WeatherAPI().getWeatherForecast(forecastUrl: forecast) { temperature, shortForecast in
-                                DispatchQueue.main.async {
-                                    self.currentView = AnyView(WeatherCard(
-                                        temperature: temperature,
-                                        forecast: shortForecast
-                                    ))
-                                    
-                                    self.isLoading = false
-                                    
-                                    let utterance = AVSpeechUtterance(string: "It is \(temperature) degrees and \(shortForecast)")
-                                    utterance.voice = AVSpeechSynthesisVoice(language: "en-GB")
-                                    utterance.rate = 0.5
-                                    utterance.volume = 1.0
-                                    self.speechSynthesizer.speak(utterance)
-                                }
-                            }
-                        }
-                    }
+                    newMessage.text = response.text
+                    newMessage.props = response.props
+                    modelContext.insert(newMessage)
+                    
+                case .failure:
+                    self.currentView = AnyView(TextCard(text: LocalizedStringKey("Failed")))
                 }
-            } else {
-                print("Failed to decode location")
+                
+                self.isLoading = false
             }
             
         case "get_current_time":
@@ -369,25 +261,24 @@ class ChatViewModel: ObservableObject {
             isLoading = false
             
         case "get_hacker_news":
-            struct Response: Codable {
-                let type: String
-            }
-            
-            if let result = try? JSONDecoder().decode(Response.self, from: lastMessage.text.data(using: .utf8)!) {
-                HackerNewsApi().getNewsIds(type: result.type) { result in
-                    HackerNewsApi().getArticleDetails(for: result) { result in
-                        print(result)
-                        
-                        DispatchQueue.main.async {
-                            self.currentView = AnyView(HackerNewsCard(articles: result))
-                            self.isLoading = false
-                        }
-                    }
+            HackerNewsTool.fetch(newMessage) { result in
+                switch result {
+                case .success(let response):
+                    self.currentView = response.view
+                    
+                    newMessage.text = response.text
+                    newMessage.props = response.props
+                    modelContext.insert(newMessage)
+                    
+                case .failure:
+                    self.currentView = AnyView(TextCard(text: LocalizedStringKey("Failed")))
                 }
+                
+                self.isLoading = false
             }
             
         case "make_recipe":
-            if let result = try? JSONDecoder().decode(OpenAIMakeRecipeResponse.self, from: lastMessage.text.data(using: .utf8)!) {
+            if let result = try? JSONDecoder().decode(OpenAIMakeRecipeResponse.self, from: (newMessage.arguments ?? "{}").data(using: .utf8)!) {
                 let messagesPayload: [[String: String]] = [
                     [
                         "role": "system",
@@ -484,6 +375,13 @@ class ChatViewModel: ObservableObject {
                             )
                         )
                         
+                        newMessage.text = "Make Recipe"
+                        newMessage.props = String(data: try! JSONSerialization.data(withJSONObject: [
+                            "ingredients": mappedIngredients,
+                            "directions": []
+                        ]), encoding: .utf8)
+                        modelContext.insert(newMessage)
+                        
                         self.isLoading = false
                     } else {
                         print("Failed to decode recipe")
@@ -497,12 +395,19 @@ class ChatViewModel: ObservableObject {
                 let query: String
             }
             
-            if let result = try? JSONDecoder().decode(Response.self, from: lastMessage.text.data(using: .utf8)!) {
+            if let result = try? JSONDecoder().decode(Response.self, from: (newMessage.arguments ?? "{}").data(using: .utf8)!) {
                 GoogleApi().fetchSearchResults(query: result.query) { result in
                     print(result)
                     
                     DispatchQueue.main.async {
                         self.currentView = AnyView(GoogleSearchCard(results: result))
+                        
+                        newMessage.text = "Search Web"
+                        newMessage.props = String(data: try! JSONSerialization.data(withJSONObject: [
+                            "results": [],
+                        ]), encoding: .utf8)
+                        modelContext.insert(newMessage)
+                        
                         self.isLoading = false
                     }
                 }
@@ -513,7 +418,7 @@ class ChatViewModel: ObservableObject {
                 let query: String
             }
             
-            if let result = try? JSONDecoder().decode(Response.self, from: lastMessage.text.data(using: .utf8)!) {
+            if let result = try? JSONDecoder().decode(Response.self, from: (newMessage.arguments ?? "{}").data(using: .utf8)!) {
                 WikipediaApi().fetchSearchResults(query: result.query) { result in
                     print(result)
                     
@@ -521,13 +426,22 @@ class ChatViewModel: ObservableObject {
                         
                         DispatchQueue.main.async {
                             self.currentView = AnyView(WikipediaCard(article: result!))
+                            
+                            newMessage.text = "Search Wikipedia"
+                            newMessage.props = String(data: try! JSONSerialization.data(withJSONObject: [
+                                "article": "Test",
+                            ]), encoding: .utf8)
+                            modelContext.insert(newMessage)
+                            
                             self.isLoading = false
                             
-                            let utterance = AVSpeechUtterance(string: result!.content)
-                            utterance.voice = AVSpeechSynthesisVoice(language: "en-GB")
-                            utterance.rate = 0.5
-                            utterance.volume = 1.0
-                            self.speechSynthesizer.speak(utterance)
+                            if !UserDefaults.standard.bool(forKey: UserDefaults.Keys.isMuted) {
+                                let utterance = AVSpeechUtterance(string: result!.content)
+                                utterance.voice = AVSpeechSynthesisVoice(language: "en-GB")
+                                utterance.rate = 0.5
+                                utterance.volume = 1.0
+                                self.speechSynthesizer.speak(utterance)
+                            }
                         }
                     }
                 }
@@ -538,24 +452,32 @@ class ChatViewModel: ObservableObject {
                 let text: String
             }
             
-            if let result = try? JSONDecoder().decode(Response.self, from: lastMessage.text.data(using: .utf8)!) {
+            if let result = try? JSONDecoder().decode(Response.self, from: (newMessage.arguments ?? "{}").data(using: .utf8)!) {
                 currentView = AnyView(TextCard(text: LocalizedStringKey(result.text)))
+                
+                newMessage.text = "Text"
+                newMessage.props = String(data: try! JSONSerialization.data(withJSONObject: [
+                    "text": result.text,
+                ]), encoding: .utf8)
+                modelContext.insert(newMessage)
                 
                 isLoading = false
             }
             
         default:
-            currentView = AnyView(TextCard(text: LocalizedStringKey(lastMessage.text)))
+            currentView = AnyView(TextCard(text: LocalizedStringKey(newMessage.text)))
             
-            let utterance = AVSpeechUtterance(string: lastMessage.text)
-            utterance.voice = AVSpeechSynthesisVoice(language: "en-GB")
-            utterance.rate = 0.5
-            utterance.volume = 1.0
-            speechSynthesizer.speak(utterance)
+            modelContext.insert(newMessage)
+            
+            if !UserDefaults.standard.bool(forKey: UserDefaults.Keys.isMuted) {
+                let utterance = AVSpeechUtterance(string: newMessage.text)
+                utterance.voice = AVSpeechSynthesisVoice(language: "en-GB")
+                utterance.rate = 0.5
+                utterance.volume = 1.0
+                speechSynthesizer.speak(utterance)
+            }
             
             isLoading = false
         }
-        
-        
     }
 }
