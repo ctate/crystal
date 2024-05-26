@@ -14,7 +14,6 @@
 		D73C37582C024D3900BD37E3 /* GoogleTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = D73C37572C024D3900BD37E3 /* GoogleTool.swift */; };
 		D73C375A2C024D7500BD37E3 /* GenerateImageTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = D73C37592C024D7500BD37E3 /* GenerateImageTool.swift */; };
 		D73C375C2C024DAC00BD37E3 /* MakeRecipeTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = D73C375B2C024DAC00BD37E3 /* MakeRecipeTool.swift */; };
-		D73C375F2C02EC9F00BD37E3 /* Config.xcconfig.sample in Resources */ = {isa = PBXBuildFile; fileRef = D73C375E2C02EC9F00BD37E3 /* Config.xcconfig.sample */; };
 		D76D3B102BF5D8CA0017F2BA /* ConversationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D76D3B0F2BF5D8CA0017F2BA /* ConversationManager.swift */; };
 		D7B415792BFD8EF800D2C131 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B415782BFD8EF800D2C131 /* UserDefaults.swift */; };
 		D7C9D2A82BF2FCC500697DDE /* CrystalApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2A72BF2FCC500697DDE /* CrystalApp.swift */; };
@@ -96,8 +95,12 @@
 		D73C37572C024D3900BD37E3 /* GoogleTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleTool.swift; sourceTree = "<group>"; };
 		D73C37592C024D7500BD37E3 /* GenerateImageTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateImageTool.swift; sourceTree = "<group>"; };
 		D73C375B2C024DAC00BD37E3 /* MakeRecipeTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeRecipeTool.swift; sourceTree = "<group>"; };
-		D73C375D2C02EADF00BD37E3 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
-		D73C375E2C02EC9F00BD37E3 /* Config.xcconfig.sample */ = {isa = PBXFileReference; lastKnownFileType = text; path = Config.xcconfig.sample; sourceTree = "<group>"; };
+		D73C375D2C02EADF00BD37E3 /* Crystal.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Crystal.xcconfig; sourceTree = "<group>"; };
+		D73C375E2C02EC9F00BD37E3 /* Crystal.xcconfig.sample */ = {isa = PBXFileReference; lastKnownFileType = text; path = Crystal.xcconfig.sample; sourceTree = "<group>"; };
+		D73C37642C03DF6100BD37E3 /* CrystalTests.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = CrystalTests.xcconfig; sourceTree = "<group>"; };
+		D73C37652C03DF6D00BD37E3 /* CrystalUITests.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = CrystalUITests.xcconfig; sourceTree = "<group>"; };
+		D73C37662C03DF9300BD37E3 /* CrystalTests.xcconfig.sample */ = {isa = PBXFileReference; lastKnownFileType = text; path = CrystalTests.xcconfig.sample; sourceTree = "<group>"; };
+		D73C37682C03DF9F00BD37E3 /* CrystalUITests.xcconfig.sample */ = {isa = PBXFileReference; lastKnownFileType = text; path = CrystalUITests.xcconfig.sample; sourceTree = "<group>"; };
 		D76D3B0F2BF5D8CA0017F2BA /* ConversationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationManager.swift; sourceTree = "<group>"; };
 		D7B415782BFD8EF800D2C131 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		D7C9D2A42BF2FCC500697DDE /* Crystal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Crystal.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -225,8 +228,12 @@
 				D7C9D2D42BF315F500697DDE /* Data */,
 				D7C9D31D2BF3172200697DDE /* Sheets */,
 				D73C37502C02435800BD37E3 /* Tools */,
-				D73C375D2C02EADF00BD37E3 /* Config.xcconfig */,
-				D73C375E2C02EC9F00BD37E3 /* Config.xcconfig.sample */,
+				D73C375D2C02EADF00BD37E3 /* Crystal.xcconfig */,
+				D73C37642C03DF6100BD37E3 /* CrystalTests.xcconfig */,
+				D73C37652C03DF6D00BD37E3 /* CrystalUITests.xcconfig */,
+				D73C375E2C02EC9F00BD37E3 /* Crystal.xcconfig.sample */,
+				D73C37662C03DF9300BD37E3 /* CrystalTests.xcconfig.sample */,
+				D73C37682C03DF9F00BD37E3 /* CrystalUITests.xcconfig.sample */,
 				D7C9D2A72BF2FCC500697DDE /* CrystalApp.swift */,
 				D7C9D32E2BF345BC00697DDE /* PlainButtonStyle.swift */,
 				D7C9D2A92BF2FCC500697DDE /* ContentView.swift */,
@@ -457,7 +464,6 @@
 				D7C9D3252BF3177A00697DDE /* LaunchScreen.storyboard in Resources */,
 				D7C9D2B22BF2FCC700697DDE /* Preview Assets.xcassets in Resources */,
 				D7C9D2AE2BF2FCC700697DDE /* Assets.xcassets in Resources */,
-				D73C375F2C02EC9F00BD37E3 /* Config.xcconfig.sample in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -573,7 +579,6 @@
 /* Begin XCBuildConfiguration section */
 		D7C9D2C92BF2FCC700697DDE /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D73C375D2C02EADF00BD37E3 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -636,7 +641,6 @@
 		};
 		D7C9D2CA2BF2FCC700697DDE /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D73C375D2C02EADF00BD37E3 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -691,6 +695,7 @@
 		};
 		D7C9D2CC2BF2FCC700697DDE /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D73C375D2C02EADF00BD37E3 /* Crystal.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -734,6 +739,7 @@
 		};
 		D7C9D2CD2BF2FCC700697DDE /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D73C375D2C02EADF00BD37E3 /* Crystal.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -777,6 +783,7 @@
 		};
 		D7C9D2CF2BF2FCC700697DDE /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D73C37642C03DF6100BD37E3 /* CrystalTests.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -787,7 +794,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				MACOSX_DEPLOYMENT_TARGET = 14.4;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = dev.ctate.CrystalTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -800,6 +806,7 @@
 		};
 		D7C9D2D02BF2FCC700697DDE /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D73C37642C03DF6100BD37E3 /* CrystalTests.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -810,7 +817,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				MACOSX_DEPLOYMENT_TARGET = 14.4;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = dev.ctate.CrystalTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -823,6 +829,7 @@
 		};
 		D7C9D2D22BF2FCC700697DDE /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D73C37652C03DF6D00BD37E3 /* CrystalUITests.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -832,7 +839,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				MACOSX_DEPLOYMENT_TARGET = 14.4;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = dev.ctate.CrystalUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -845,6 +851,7 @@
 		};
 		D7C9D2D32BF2FCC700697DDE /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D73C37652C03DF6D00BD37E3 /* CrystalUITests.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -854,7 +861,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				MACOSX_DEPLOYMENT_TARGET = 14.4;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = dev.ctate.CrystalUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
