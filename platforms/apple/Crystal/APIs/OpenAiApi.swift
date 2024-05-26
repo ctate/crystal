@@ -41,7 +41,7 @@ class OpenAiApi: ObservableObject {
     func generateImage(prompt: String) async throws -> [GeneratedImage] {
         guard let loadedData = load(key: "\(bundleIdentifier).OpenAIApiKey"),
               let apiKey = String(data: loadedData, encoding: .utf8) else {
-            throw NSError(domain: "com.yourapp.error", code: 1, userInfo: [NSLocalizedDescriptionKey: "API key loading failed"])
+            throw NSError(domain: "OpenAiApi", code: 1, userInfo: [NSLocalizedDescriptionKey: "API key loading failed"])
         }
         
         guard let url = URL(string: "https://api.openai.com/v1/images/generations") else {
@@ -66,7 +66,7 @@ class OpenAiApi: ObservableObject {
         let (data, response) = try await URLSession.shared.data(for: request)
         
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-            throw NSError(domain: "com.yourapp.error", code: 2, userInfo: [NSLocalizedDescriptionKey: "Server responded with an error"])
+            throw NSError(domain: "OpenAiApi", code: 2, userInfo: [NSLocalizedDescriptionKey: "Server responded with an error"])
         }
         
         let decodedResponse = try JSONDecoder().decode(OpenAIDalleResponse.self, from: data)
@@ -76,7 +76,7 @@ class OpenAiApi: ObservableObject {
     func makeCompletions(model: String, messages: [[String: String]], tools: [[String: Any]]?) async throws -> OpenAIResponse {
         guard let loadedData = load(key: "\(bundleIdentifier).OpenAIApiKey"),
               let apiKey = String(data: loadedData, encoding: .utf8) else {
-            throw NSError(domain: "com.yourapp.error", code: 1, userInfo: [NSLocalizedDescriptionKey: "API key loading failed"])
+            throw NSError(domain: "OpenAiApi", code: 1, userInfo: [NSLocalizedDescriptionKey: "API key loading failed"])
         }
         
         guard let url = URL(string: "https://api.openai.com/v1/chat/completions") else {
