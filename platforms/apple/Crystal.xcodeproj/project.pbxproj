@@ -199,6 +199,19 @@
 			path = Tools;
 			sourceTree = "<group>";
 		};
+		D73C376A2C03E07C00BD37E3 /* Configs */ = {
+			isa = PBXGroup;
+			children = (
+				D73C375D2C02EADF00BD37E3 /* Crystal.xcconfig */,
+				D73C37642C03DF6100BD37E3 /* CrystalTests.xcconfig */,
+				D73C37652C03DF6D00BD37E3 /* CrystalUITests.xcconfig */,
+				D73C375E2C02EC9F00BD37E3 /* Crystal.xcconfig.sample */,
+				D73C37662C03DF9300BD37E3 /* CrystalTests.xcconfig.sample */,
+				D73C37682C03DF9F00BD37E3 /* CrystalUITests.xcconfig.sample */,
+			);
+			path = Configs;
+			sourceTree = "<group>";
+		};
 		D7C9D29B2BF2FCC400697DDE = {
 			isa = PBXGroup;
 			children = (
@@ -225,15 +238,10 @@
 				D7C9D2E32BF3165300697DDE /* APIs */,
 				D7C9D2F42BF3166B00697DDE /* Cards */,
 				D7C9D3002BF3167400697DDE /* Chat */,
+				D73C376A2C03E07C00BD37E3 /* Configs */,
 				D7C9D2D42BF315F500697DDE /* Data */,
 				D7C9D31D2BF3172200697DDE /* Sheets */,
 				D73C37502C02435800BD37E3 /* Tools */,
-				D73C375D2C02EADF00BD37E3 /* Crystal.xcconfig */,
-				D73C37642C03DF6100BD37E3 /* CrystalTests.xcconfig */,
-				D73C37652C03DF6D00BD37E3 /* CrystalUITests.xcconfig */,
-				D73C375E2C02EC9F00BD37E3 /* Crystal.xcconfig.sample */,
-				D73C37662C03DF9300BD37E3 /* CrystalTests.xcconfig.sample */,
-				D73C37682C03DF9F00BD37E3 /* CrystalUITests.xcconfig.sample */,
 				D7C9D2A72BF2FCC500697DDE /* CrystalApp.swift */,
 				D7C9D32E2BF345BC00697DDE /* PlainButtonStyle.swift */,
 				D7C9D2A92BF2FCC500697DDE /* ContentView.swift */,
