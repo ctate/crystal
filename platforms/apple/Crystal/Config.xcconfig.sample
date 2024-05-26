@@ -1,1 +1,2 @@
 DEVELOPMENT_TEAM = YOUR_TEAM_ID_HERE // Replace with your actual team ID
+PRODUCT_BUNDLE_IDENTIFIER = YOUR_BUNDLE_IDENTIFIER_HERE // Replace with your actual bundle identifier (ie. org.example.AppName)
