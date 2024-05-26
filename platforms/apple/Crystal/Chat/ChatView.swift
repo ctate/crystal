@@ -37,9 +37,11 @@ struct ChatContentView: View {
             } else {
                 viewModel.currentView
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+#if os(iOS)
                     .onTapGesture {
                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                     }
+#endif
             }
             
             HStack(alignment: .bottom) {
