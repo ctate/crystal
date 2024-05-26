@@ -63,6 +63,8 @@ class GoogleTool {
         ]
     ] as [String : Any]
     
+    
+    
     static func render(_ message: Message) -> AnyView {
         struct Props: Codable {
             let results: [SearchResult]

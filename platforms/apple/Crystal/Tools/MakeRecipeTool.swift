@@ -1,6 +1,10 @@
 import Foundation
 import SwiftUI
 
+struct OpenAIMakeRecipeResponse: Codable {
+    let name: String
+}
+
 class RecipeModel: ObservableObject {
     struct Ingredient: Codable, Identifiable {
         var id: Int

@@ -4,14 +4,6 @@ import Foundation
 import SwiftUI
 import SwiftData
 
-struct OpenAIGetWeatherResponse: Codable {
-    let location: String
-}
-
-struct OpenAIMakeRecipeResponse: Codable {
-    let name: String
-}
-
 struct Usage: Codable {
     let prompt_tokens: Int
     let completion_tokens: Int

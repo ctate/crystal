@@ -2,11 +2,6 @@ import CoreLocation
 import Foundation
 import SwiftUI
 
-struct WeatherData: Codable {
-    let temperature: Int
-    let forecast: String
-}
-
 struct WeatherCard: View {
     var temperature: Int
     var forecast: String
@@ -57,7 +52,11 @@ class WeatherTool {
     static func fetch(_ newMessage: Message, completion: @escaping (Result<ToolResponse, Error>) -> Void) {
         let geocoder = CLGeocoder()
         
-        if let result = try? JSONDecoder().decode(OpenAIGetWeatherResponse.self, from: (newMessage.arguments ?? "{}").data(using: .utf8)!) {
+        struct Response: Codable {
+            let location: String
+        }
+        
+        if let result = try? JSONDecoder().decode(Response.self, from: (newMessage.arguments ?? "{}").data(using: .utf8)!) {
             geocoder.geocodeAddressString(result.location) { (placemarks, error) in
                 guard error == nil else {
                     print("Geocoding error: \(error!.localizedDescription)")
@@ -78,7 +77,7 @@ class WeatherTool {
                                         "forecast": shortForecast
                                     ]), encoding: .utf8)!,
                                     text: "Get current weather",
-                                    view: render(WeatherData(
+                                    view: AnyView(WeatherCard(
                                         temperature: temperature,
                                         forecast: shortForecast
                                     ))
@@ -94,20 +93,18 @@ class WeatherTool {
     }
     
     static func render(_ message: Message) -> AnyView {
-        guard let result = try? JSONDecoder().decode(WeatherData.self, from: (message.props ?? "{}").data(using: .utf8)!) else {
+        struct Props: Codable {
+            let temperature: Int
+            let forecast: String
+        }
+        
+        guard let result = try? JSONDecoder().decode(Props.self, from: (message.props ?? "{}").data(using: .utf8)!) else {
             return AnyView(TextCard(text: LocalizedStringKey("Unable to retrieve the weather")))
         }
         
         return AnyView(WeatherCard(
             temperature: result.temperature,
             forecast: result.forecast
-        ))
-    }
-    
-    static func render(_ data: WeatherData) -> AnyView {
-        return AnyView(WeatherCard(
-            temperature: data.temperature,
-            forecast: data.forecast
         ))
     }
 }

@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		D72B02822BF512A300D5FEA4 /* CustomTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B02812BF512A300D5FEA4 /* CustomTextEditor.swift */; };
+		D73C37522C02437800BD37E3 /* WeatherTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = D73C37512C02437700BD37E3 /* WeatherTool.swift */; };
+		D73C37542C024B6600BD37E3 /* HackerNewsTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = D73C37532C024B6600BD37E3 /* HackerNewsTool.swift */; };
+		D73C37562C024CFF00BD37E3 /* WikipediaTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = D73C37552C024CFF00BD37E3 /* WikipediaTool.swift */; };
+		D73C37582C024D3900BD37E3 /* GoogleTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = D73C37572C024D3900BD37E3 /* GoogleTool.swift */; };
+		D73C375A2C024D7500BD37E3 /* GenerateImageTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = D73C37592C024D7500BD37E3 /* GenerateImageTool.swift */; };
+		D73C375C2C024DAC00BD37E3 /* MakeRecipeTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = D73C375B2C024DAC00BD37E3 /* MakeRecipeTool.swift */; };
+		D73C375F2C02EC9F00BD37E3 /* Config.xcconfig.sample in Resources */ = {isa = PBXBuildFile; fileRef = D73C375E2C02EC9F00BD37E3 /* Config.xcconfig.sample */; };
 		D76D3B102BF5D8CA0017F2BA /* ConversationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D76D3B0F2BF5D8CA0017F2BA /* ConversationManager.swift */; };
 		D7B415792BFD8EF800D2C131 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B415782BFD8EF800D2C131 /* UserDefaults.swift */; };
 		D7C9D2A82BF2FCC500697DDE /* CrystalApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2A72BF2FCC500697DDE /* CrystalApp.swift */; };
@@ -30,11 +37,7 @@
 		D7C9D2EB2BF3165300697DDE /* WikipediaApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2E22BF3165300697DDE /* WikipediaApi.swift */; };
 		D7C9D2F52BF3166B00697DDE /* ClockCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2EC2BF3166B00697DDE /* ClockCard.swift */; };
 		D7C9D2F62BF3166B00697DDE /* DalleImageCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2ED2BF3166B00697DDE /* DalleImageCard.swift */; };
-		D7C9D2F72BF3166B00697DDE /* GoogleSearchCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2EE2BF3166B00697DDE /* GoogleSearchCard.swift */; };
-		D7C9D2F82BF3166B00697DDE /* HackerNewsCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2EF2BF3166B00697DDE /* HackerNewsCard.swift */; };
-		D7C9D2F92BF3166B00697DDE /* RecipeCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2F02BF3166B00697DDE /* RecipeCard.swift */; };
 		D7C9D2FA2BF3166B00697DDE /* TextCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2F12BF3166B00697DDE /* TextCard.swift */; };
-		D7C9D2FB2BF3166B00697DDE /* WeatherCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2F22BF3166B00697DDE /* WeatherCard.swift */; };
 		D7C9D2FC2BF3166B00697DDE /* WikipediaCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2F32BF3166B00697DDE /* WikipediaCard.swift */; };
 		D7C9D3012BF3167400697DDE /* ChatHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2FD2BF3167400697DDE /* ChatHistoryView.swift */; };
 		D7C9D3022BF3167400697DDE /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2FE2BF3167400697DDE /* ChatView.swift */; };
@@ -87,6 +90,14 @@
 
 /* Begin PBXFileReference section */
 		D72B02812BF512A300D5FEA4 /* CustomTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextEditor.swift; sourceTree = "<group>"; };
+		D73C37512C02437700BD37E3 /* WeatherTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherTool.swift; sourceTree = "<group>"; };
+		D73C37532C024B6600BD37E3 /* HackerNewsTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HackerNewsTool.swift; sourceTree = "<group>"; };
+		D73C37552C024CFF00BD37E3 /* WikipediaTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WikipediaTool.swift; sourceTree = "<group>"; };
+		D73C37572C024D3900BD37E3 /* GoogleTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleTool.swift; sourceTree = "<group>"; };
+		D73C37592C024D7500BD37E3 /* GenerateImageTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateImageTool.swift; sourceTree = "<group>"; };
+		D73C375B2C024DAC00BD37E3 /* MakeRecipeTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeRecipeTool.swift; sourceTree = "<group>"; };
+		D73C375D2C02EADF00BD37E3 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		D73C375E2C02EC9F00BD37E3 /* Config.xcconfig.sample */ = {isa = PBXFileReference; lastKnownFileType = text; path = Config.xcconfig.sample; sourceTree = "<group>"; };
 		D76D3B0F2BF5D8CA0017F2BA /* ConversationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationManager.swift; sourceTree = "<group>"; };
 		D7B415782BFD8EF800D2C131 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		D7C9D2A42BF2FCC500697DDE /* Crystal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Crystal.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -113,11 +124,7 @@
 		D7C9D2E22BF3165300697DDE /* WikipediaApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikipediaApi.swift; sourceTree = "<group>"; };
 		D7C9D2EC2BF3166B00697DDE /* ClockCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockCard.swift; sourceTree = "<group>"; };
 		D7C9D2ED2BF3166B00697DDE /* DalleImageCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DalleImageCard.swift; sourceTree = "<group>"; };
-		D7C9D2EE2BF3166B00697DDE /* GoogleSearchCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleSearchCard.swift; sourceTree = "<group>"; };
-		D7C9D2EF2BF3166B00697DDE /* HackerNewsCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HackerNewsCard.swift; sourceTree = "<group>"; };
-		D7C9D2F02BF3166B00697DDE /* RecipeCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeCard.swift; sourceTree = "<group>"; };
 		D7C9D2F12BF3166B00697DDE /* TextCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextCard.swift; sourceTree = "<group>"; };
-		D7C9D2F22BF3166B00697DDE /* WeatherCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherCard.swift; sourceTree = "<group>"; };
 		D7C9D2F32BF3166B00697DDE /* WikipediaCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikipediaCard.swift; sourceTree = "<group>"; };
 		D7C9D2FD2BF3167400697DDE /* ChatHistoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatHistoryView.swift; sourceTree = "<group>"; };
 		D7C9D2FE2BF3167400697DDE /* ChatView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
@@ -176,6 +183,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D73C37502C02435800BD37E3 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				D73C37592C024D7500BD37E3 /* GenerateImageTool.swift */,
+				D73C37572C024D3900BD37E3 /* GoogleTool.swift */,
+				D73C37532C024B6600BD37E3 /* HackerNewsTool.swift */,
+				D73C375B2C024DAC00BD37E3 /* MakeRecipeTool.swift */,
+				D73C37512C02437700BD37E3 /* WeatherTool.swift */,
+				D73C37552C024CFF00BD37E3 /* WikipediaTool.swift */,
+			);
+			path = Tools;
+			sourceTree = "<group>";
+		};
 		D7C9D29B2BF2FCC400697DDE = {
 			isa = PBXGroup;
 			children = (
@@ -204,6 +224,9 @@
 				D7C9D3002BF3167400697DDE /* Chat */,
 				D7C9D2D42BF315F500697DDE /* Data */,
 				D7C9D31D2BF3172200697DDE /* Sheets */,
+				D73C37502C02435800BD37E3 /* Tools */,
+				D73C375D2C02EADF00BD37E3 /* Config.xcconfig */,
+				D73C375E2C02EC9F00BD37E3 /* Config.xcconfig.sample */,
 				D7C9D2A72BF2FCC500697DDE /* CrystalApp.swift */,
 				D7C9D32E2BF345BC00697DDE /* PlainButtonStyle.swift */,
 				D7C9D2A92BF2FCC500697DDE /* ContentView.swift */,
@@ -289,11 +312,7 @@
 			children = (
 				D7C9D2EC2BF3166B00697DDE /* ClockCard.swift */,
 				D7C9D2ED2BF3166B00697DDE /* DalleImageCard.swift */,
-				D7C9D2EE2BF3166B00697DDE /* GoogleSearchCard.swift */,
-				D7C9D2EF2BF3166B00697DDE /* HackerNewsCard.swift */,
-				D7C9D2F02BF3166B00697DDE /* RecipeCard.swift */,
 				D7C9D2F12BF3166B00697DDE /* TextCard.swift */,
-				D7C9D2F22BF3166B00697DDE /* WeatherCard.swift */,
 				D7C9D2F32BF3166B00697DDE /* WikipediaCard.swift */,
 			);
 			path = Cards;
@@ -438,6 +457,7 @@
 				D7C9D3252BF3177A00697DDE /* LaunchScreen.storyboard in Resources */,
 				D7C9D2B22BF2FCC700697DDE /* Preview Assets.xcassets in Resources */,
 				D7C9D2AE2BF2FCC700697DDE /* Assets.xcassets in Resources */,
+				D73C375F2C02EC9F00BD37E3 /* Config.xcconfig.sample in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -463,13 +483,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				D7C9D2FA2BF3166B00697DDE /* TextCard.swift in Sources */,
-				D7C9D2F72BF3166B00697DDE /* GoogleSearchCard.swift in Sources */,
 				D7C9D3202BF3172200697DDE /* PromptModelsView.swift in Sources */,
 				D7C9D2E92BF3165300697DDE /* OpenAiApi.swift in Sources */,
 				D7C9D2E62BF3165300697DDE /* GroqApi.swift in Sources */,
 				D7B415792BFD8EF800D2C131 /* UserDefaults.swift in Sources */,
 				D7C9D31E2BF3172200697DDE /* DocumentPicker.swift in Sources */,
 				D7C9D3212BF3172200697DDE /* SettingsView.swift in Sources */,
+				D73C375A2C024D7500BD37E3 /* GenerateImageTool.swift in Sources */,
 				D7C9D3022BF3167400697DDE /* ChatView.swift in Sources */,
 				D7C9D2FC2BF3166B00697DDE /* WikipediaCard.swift in Sources */,
 				D7C9D3222BF3172200697DDE /* VisionModelsView.swift in Sources */,
@@ -483,11 +503,11 @@
 				D7C9D32D2BF3319100697DDE /* Provider.swift in Sources */,
 				D7C9D3072BF3168200697DDE /* Camera.swift in Sources */,
 				D76D3B102BF5D8CA0017F2BA /* ConversationManager.swift in Sources */,
-				D7C9D2FB2BF3166B00697DDE /* WeatherCard.swift in Sources */,
 				D7C9D3082BF3168200697DDE /* OpenAI.swift in Sources */,
 				D7C9D3412BF3F20C00697DDE /* AdaptiveHeightView.swift in Sources */,
 				D7C9D3232BF3172200697DDE /* VoiceModelsView.swift in Sources */,
 				D72B02822BF512A300D5FEA4 /* CustomTextEditor.swift in Sources */,
+				D73C37562C024CFF00BD37E3 /* WikipediaTool.swift in Sources */,
 				D7C9D2DA2BF3164300697DDE /* KeychainAccess.swift in Sources */,
 				D7C9D31F2BF3172200697DDE /* ImagePicker.swift in Sources */,
 				D7C9D2E42BF3165300697DDE /* AnthropicApi.swift in Sources */,
@@ -495,10 +515,12 @@
 				D7C9D3372BF3A48100697DDE /* Notification.swift in Sources */,
 				D7C9D3092BF3168200697DDE /* CameraView.swift in Sources */,
 				D7C9D3032BF3167400697DDE /* ChatViewModel.swift in Sources */,
-				D7C9D2F92BF3166B00697DDE /* RecipeCard.swift in Sources */,
+				D73C375C2C024DAC00BD37E3 /* MakeRecipeTool.swift in Sources */,
 				D7C9D2E82BF3165300697DDE /* OllamaApi.swift in Sources */,
 				D7C9D33D2BF3DFA900697DDE /* Mappers.swift in Sources */,
+				D73C37582C024D3900BD37E3 /* GoogleTool.swift in Sources */,
 				D7C9D2AA2BF2FCC500697DDE /* ContentView.swift in Sources */,
+				D73C37542C024B6600BD37E3 /* HackerNewsTool.swift in Sources */,
 				D7C9D3272BF31A6A00697DDE /* Globals.swift in Sources */,
 				D7C9D2D62BF3160200697DDE /* Message.swift in Sources */,
 				D7C9D2EB2BF3165300697DDE /* WikipediaApi.swift in Sources */,
@@ -511,8 +533,8 @@
 				D7C9D2AC2BF2FCC500697DDE /* Item.swift in Sources */,
 				D7C9D32F2BF345BC00697DDE /* PlainButtonStyle.swift in Sources */,
 				D7C9D2F62BF3166B00697DDE /* DalleImageCard.swift in Sources */,
-				D7C9D2F82BF3166B00697DDE /* HackerNewsCard.swift in Sources */,
 				D7C9D2A82BF2FCC500697DDE /* CrystalApp.swift in Sources */,
+				D73C37522C02437800BD37E3 /* WeatherTool.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -551,6 +573,7 @@
 /* Begin XCBuildConfiguration section */
 		D7C9D2C92BF2FCC700697DDE /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D73C375D2C02EADF00BD37E3 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -612,6 +635,7 @@
 		};
 		D7C9D2CA2BF2FCC700697DDE /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D73C375D2C02EADF00BD37E3 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
