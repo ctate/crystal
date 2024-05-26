@@ -24,70 +24,37 @@ struct WeatherPointsResponse: Codable {
 }
 
 class WeatherAPI: ObservableObject {
-    func getWeatherForecast(forecastUrl: String, completion: @escaping (Int, String) -> Void) {
+    static func getWeatherForecast(forecastUrl: String) async throws -> (Int, String) {
         guard let url = URL(string: forecastUrl) else {
-            alertError("Invalid URL")
-            return
+            throw URLError(.badURL)
         }
 
         var request = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy)
         request.httpMethod = "GET"
 
-        print(url)
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                alertError(error.localizedDescription)
-                return
-            }
-
-            guard let data = data else {
-                alertError("No data received")
-                return
-            }
-                        
-            do {
-                let weatherForecastResponse = try JSONDecoder().decode(WeatherForecastResponse.self, from: data)
-                
-                print(weatherForecastResponse)
-                
-                completion(weatherForecastResponse.properties.periods.first?.temperature ?? 0, weatherForecastResponse.properties.periods.first?.shortForecast ?? "")
-            } catch {
-                alertError("Error parsing JSON: \(error.localizedDescription)")
-            }
+        let (data, response) = try await URLSession.shared.data(for: request)
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            throw URLError(.badServerResponse)
         }
 
-        task.resume()
+        let weatherForecastResponse = try JSONDecoder().decode(WeatherForecastResponse.self, from: data)
+        return (weatherForecastResponse.properties.periods.first?.temperature ?? 0, weatherForecastResponse.properties.periods.first?.shortForecast ?? "")
     }
     
-    func getWeatherPoints(lat: String, lng: String, completion: @escaping (String, String, String) -> Void) {
-        print("https://api.weather.gov/points/\(lat),\(lng)")
+    static func getWeatherPoints(lat: String, lng: String) async throws -> (String, String, String) {
         guard let url = URL(string: "https://api.weather.gov/points/\(lat),\(lng)") else {
-            print("Invalid URL")
-            return
+            throw URLError(.badURL)
         }
 
         var request = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy)
         request.httpMethod = "GET"
 
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                print("Error: \(error.localizedDescription)")
-                return
-            }
-
-            guard let data = data else {
-                print("No data received")
-                return
-            }
-
-            do {
-                let weatherPointsResponse = try JSONDecoder().decode(WeatherPointsResponse.self, from: data)
-                completion(weatherPointsResponse.properties.forecast, weatherPointsResponse.properties.forecastHourly, weatherPointsResponse.properties.forecastGridData)
-            } catch {
-                print("Error parsing JSON: \(error.localizedDescription)")
-            }
+        let (data, response) = try await URLSession.shared.data(for: request)
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            throw URLError(.badServerResponse)
         }
 
-        task.resume()
+        let weatherPointsResponse = try JSONDecoder().decode(WeatherPointsResponse.self, from: data)
+        return (weatherPointsResponse.properties.forecast, weatherPointsResponse.properties.forecastHourly, weatherPointsResponse.properties.forecastGridData)
     }
 }

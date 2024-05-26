@@ -17,14 +17,18 @@ struct AnthropicResponse: Codable {
 
 
 class AnthropicApi: ObservableObject {
-    func makeCompletions(model: String, messages: [[String: String]], tools: [[String: Any]]?, completion: @escaping (AnthropicResponse) -> Void) {
+    func makeCompletions(model: String, messages: [[String: String]], tools: [[String: Any]]?) async throws -> AnthropicResponse {
         guard let url = URL(string: "https://api.anthropic.com/v1/messages") else {
-            print("Invalid URL")
-            return
+            throw NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])
         }
         
-        guard let loadedData = load(key: "\(bundleIdentifier).AnthropicApiKey") else { return }
-        guard let apiKey = String(data: loadedData, encoding: .utf8) else { return }
+        guard let loadedData = load(key: "\(bundleIdentifier).AnthropicApiKey") else {
+            throw NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "API key not found"])
+        }
+        
+        guard let apiKey = String(data: loadedData, encoding: .utf8) else {
+            throw NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to decode API key"])
+        }
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -42,41 +46,14 @@ class AnthropicApi: ObservableObject {
             requestBody["tools"] = encodeFunctions(functions: parseFunctions(from: tools!))
         }
         
-        request.httpBody = try? JSONSerialization.data(withJSONObject: requestBody)
+        request.httpBody = try JSONSerialization.data(withJSONObject: requestBody)
         
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                alertError(error.localizedDescription)
-                return
-            }
-            
-            guard let data = data else {
-                alertError("Invalid data")
-                return
-            }
-            if let rawResponse = String(data: data, encoding: .utf8) {
-                print("Raw response: \(rawResponse)")
-            }
-            
-            guard let response = response as? HTTPURLResponse else {
-                alertError("Invalid response")
-                return
-            }
-            
-            guard response.statusCode == 200 else {
-                alertError("Invalid response")
-                return
-            }
-            
-            if let result = try? JSONDecoder().decode(AnthropicResponse.self, from: data) {
-                DispatchQueue.main.async {
-                    completion(result)
-                }
-            } else {
-                alertError("Failed to decode response")
-            }
+        let (data, response) = try await URLSession.shared.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            throw NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "HTTP request failed with response: \(response)"])
         }
         
-        task.resume()
+        return try JSONDecoder().decode(AnthropicResponse.self, from: data)
     }
 }

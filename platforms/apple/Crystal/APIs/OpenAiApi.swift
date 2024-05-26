@@ -38,54 +38,49 @@ struct OpenAIResponse: Codable {
 }
 
 class OpenAiApi: ObservableObject {
-    func generateImage(prompt: String, completion: @escaping ([GeneratedImage]) -> Void) {
-        guard let loadedData = load(key: "\(bundleIdentifier).OpenAIApiKey") else { return }
-        guard let apiKey = String(data: loadedData, encoding: .utf8) else { return }
+    func generateImage(prompt: String) async throws -> [GeneratedImage] {
+        guard let loadedData = load(key: "\(bundleIdentifier).OpenAIApiKey"),
+              let apiKey = String(data: loadedData, encoding: .utf8) else {
+            throw NSError(domain: "com.yourapp.error", code: 1, userInfo: [NSLocalizedDescriptionKey: "API key loading failed"])
+        }
         
-        let url = URL(string: "https://api.openai.com/v1/images/generations")!
+        guard let url = URL(string: "https://api.openai.com/v1/images/generations") else {
+            throw URLError(.badURL)
+        }
+        
         var request = URLRequest(url: url)
         request.addValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        let requestBody: [String : Any] = ["prompt": prompt, "model": "dall-e-3", "quality": "standard", "n": 1, "size": "1024x1024"]
+        let requestBody: [String: Any] = [
+            "prompt": prompt,
+            "model": "dall-e-3",
+            "quality": "standard",
+            "n": 1,
+            "size": "1024x1024"
+        ]
         
-        request.httpBody = try? JSONSerialization.data(withJSONObject: requestBody)
+        request.httpBody = try JSONSerialization.data(withJSONObject: requestBody)
         
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            if let data = data {
-                if let rawResponse = String(data: data, encoding: .utf8) {
-                    print("Raw response: \(rawResponse)")
-                }
-                
-                do {
-                    let decodedResponse = try JSONDecoder().decode(OpenAIDalleResponse.self, from: data)
-                    let images = decodedResponse.data.map { GeneratedImage(url: $0.url) }
-                    DispatchQueue.main.async {
-                        completion(images)
-                    }
-                } catch {
-                    print("Decode failed: \(error.localizedDescription)")
-                }
-            } else {
-                print("Fetch failed: \(error?.localizedDescription ?? "Unknown error")")
-            }
-        }.resume()
+        let (data, response) = try await URLSession.shared.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            throw NSError(domain: "com.yourapp.error", code: 2, userInfo: [NSLocalizedDescriptionKey: "Server responded with an error"])
+        }
+        
+        let decodedResponse = try JSONDecoder().decode(OpenAIDalleResponse.self, from: data)
+        return decodedResponse.data.map { GeneratedImage(url: $0.url) }
     }
     
-    func makeCompletions(model: String, messages: [[String: String]], tools: [[String: Any]]?, completion: @escaping (OpenAIResponse) -> Void) {
-        guard let url = URL(string: "https://api.openai.com/v1/chat/completions") else {
-            alertError("Invalid URL")
-            return
+    func makeCompletions(model: String, messages: [[String: String]], tools: [[String: Any]]?) async throws -> OpenAIResponse {
+        guard let loadedData = load(key: "\(bundleIdentifier).OpenAIApiKey"),
+              let apiKey = String(data: loadedData, encoding: .utf8) else {
+            throw NSError(domain: "com.yourapp.error", code: 1, userInfo: [NSLocalizedDescriptionKey: "API key loading failed"])
         }
         
-        guard let loadedData = load(key: "\(bundleIdentifier).OpenAIApiKey") else {
-            alertError("No API key found")
-            return
-        }
-        guard let apiKey = String(data: loadedData, encoding: .utf8) else {
-            alertError("Failed to load API key")
-            return
+        guard let url = URL(string: "https://api.openai.com/v1/chat/completions") else {
+            throw URLError(.badURL)
         }
         
         var request = URLRequest(url: url)
@@ -93,45 +88,19 @@ class OpenAiApi: ObservableObject {
         request.addValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        var requestBody: [String: Any] = [
-            "model": model,
-            "messages": messages,
-        ]
-        if tools != nil {
-            requestBody["tools"] = tools
+        var requestBody: [String: Any] = ["model": model, "messages": messages]
+        if let toolsData = tools {
+            requestBody["tools"] = toolsData
         }
         
-        request.httpBody = try? JSONSerialization.data(withJSONObject: requestBody)
+        request.httpBody = try JSONSerialization.data(withJSONObject: requestBody)
         
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                alertError(error.localizedDescription)
-                return
-            }
-            
-            guard let data = data else {
-                alertError("Invalid data")
-                return
-            }
-            
-            if let rawResponse = String(data: data, encoding: .utf8) {
-                print("Raw response: \(rawResponse)")
-            }
-            
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                alertError("Invalid response")
-                return
-            }
-            
-            if let result = try? JSONDecoder().decode(OpenAIResponse.self, from: data) {
-                DispatchQueue.main.async {
-                    completion(result)
-                }
-            } else {
-                alertError("Failed to decode response")
-            }
+        let (data, response) = try await URLSession.shared.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            throw NSError(domain: "OpenAiApi", code: 2, userInfo: [NSLocalizedDescriptionKey: "Server responded with an error"])
         }
         
-        task.resume()
+        return try JSONDecoder().decode(OpenAIResponse.self, from: data)
     }
 }

@@ -49,47 +49,38 @@ class WeatherTool {
         ]
     ] as [String : Any]
     
-    static func fetch(_ newMessage: Message, completion: @escaping (Result<ToolResponse, Error>) -> Void) {
+    static func fetch(_ newMessage: Message) async throws -> ToolResponse {
         let geocoder = CLGeocoder()
         
         struct Response: Codable {
             let location: String
         }
         
-        if let result = try? JSONDecoder().decode(Response.self, from: (newMessage.arguments ?? "{}").data(using: .utf8)!) {
-            geocoder.geocodeAddressString(result.location) { (placemarks, error) in
-                guard error == nil else {
-                    print("Geocoding error: \(error!.localizedDescription)")
-                    return
-                }
-                
-                if let placemark = placemarks?.first {
-                    let location = placemark.location
-                    WeatherAPI().getWeatherPoints(
-                        lat: "\(location?.coordinate.latitude ?? 0)",
-                        lng: "\(location?.coordinate.longitude ?? 0)"
-                    ) { forecast, forecastHourly, forecastGridData in
-                        WeatherAPI().getWeatherForecast(forecastUrl: forecast) { temperature, shortForecast in
-                            DispatchQueue.main.async {
-                                completion(.success(ToolResponse(
-                                    props: String(data: try! JSONSerialization.data(withJSONObject: [
-                                        "temperature": temperature,
-                                        "forecast": shortForecast
-                                    ]), encoding: .utf8)!,
-                                    text: "Get current weather",
-                                    view: AnyView(WeatherCard(
-                                        temperature: temperature,
-                                        forecast: shortForecast
-                                    ))
-                                )))
-                            }
-                        }
-                    }
-                }
-            }
-        } else {
-            print("Failed to decode location")
+        guard let response = try? JSONDecoder().decode(Response.self, from: (newMessage.arguments ?? "{}").data(using: .utf8)!) else {
+            throw NSError(domain: "WeatherToolError", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to decode location"])
         }
+        
+        let placemarks = try await geocoder.geocodeAddressString(response.location)
+        guard let placemark = placemarks.first, let location = placemark.location else {
+            throw NSError(domain: "WeatherToolError", code: 1, userInfo: [NSLocalizedDescriptionKey: "Geocoding failed"])
+        }
+        
+        let (forecast, _, _) = try await WeatherAPI.getWeatherPoints(lat: "\(location.coordinate.latitude)", lng: "\(location.coordinate.longitude)")
+        let (temperature, shortForecast) = try await WeatherAPI.getWeatherForecast(forecastUrl: forecast)
+        
+        let propsData = try JSONSerialization.data(withJSONObject: [
+            "temperature": temperature,
+            "forecast": shortForecast
+        ])
+        
+        return ToolResponse(
+            props: String(data: propsData, encoding: .utf8)!,
+            text: "Get current weather",
+            view: AnyView(WeatherCard(
+                temperature: temperature,
+                forecast: shortForecast
+            ))
+        )
     }
     
     static func render(_ message: Message) -> AnyView {

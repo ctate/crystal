@@ -21,15 +21,13 @@ struct OllamaResponse: Codable {
 }
 
 class OllamaApi: ObservableObject {
-    func makeCompletions(model: String, messages: [[String: String]], tools: [[String: Any]]?, completion: @escaping (OllamaResponse, OllamaContent?) -> Void) {
+    func makeCompletions(model: String, messages: [[String: String]], tools: [[String: Any]]?) async throws -> (OllamaResponse, OllamaContent?) {
         guard let host = UserDefaults.standard.string(forKey: "Ollama:host") else {
-            alertError("Host not configured")
-            return
+            throw NSError(domain: "OllamaError", code: 1, userInfo: [NSLocalizedDescriptionKey: "Host not configured"])
         }
         
         guard let url = URL(string: host) else {
-            alertError("Invalid URL")
-            return
+            throw URLError(.badURL)
         }
         
         var request = URLRequest(url: url)
@@ -45,7 +43,7 @@ class OllamaApi: ObservableObject {
 
                     When the user sends you a prompt, look through these Available Functions and choose the best match:
 
-                    \(String(data: try! JSONSerialization.data(withJSONObject: tools!), encoding: .utf8)! )
+                    \(String(data: try JSONSerialization.data(withJSONObject: tools!), encoding: .utf8)!)
                 
                     Each function has "parameters" written as a JSON Schema.
 
@@ -80,46 +78,24 @@ class OllamaApi: ObservableObject {
             "stream": false
         ]
         
-        request.httpBody = try? JSONSerialization.data(withJSONObject: requestBody)
+        request.httpBody = try JSONSerialization.data(withJSONObject: requestBody)
         
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                alertError(error.localizedDescription)
-                return
-            }
-            
-            guard let data = data else {
-                alertError("Invalid data")
-                return
-            }
-            
-            if let rawResponse = String(data: data, encoding: .utf8) {
-                print("Raw response: \(rawResponse)")
-            }
-            
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                alertError("Invalid response")
-                return
-            }
-            
-            guard let result = try? JSONDecoder().decode(OllamaResponse.self, from: data) else {
-                alertError("Failed to decode response")
-                return
-            }
-            
-            guard let content = try? JSONDecoder().decode(OllamaContent.self, from: result.message.content.data(using: .utf8)!) else {
-                print("Failed to decode content")
-                DispatchQueue.main.async {
-                    completion(result, nil)
-                }
-                return
-            }
-            
-            DispatchQueue.main.async {
-                completion(result, content)
-            }
+        let (data, response) = try await URLSession.shared.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            throw NSError(domain: "OllamaError", code: 2, userInfo: [NSLocalizedDescriptionKey: "Server responded with an error"])
         }
         
-        task.resume()
+        let result = try JSONDecoder().decode(OllamaResponse.self, from: data)
+        
+        if let contentData = result.message.content.data(using: .utf8) {
+            if let content = try? JSONDecoder().decode(OllamaContent.self, from: contentData) {
+                return (result, content)
+            } else {
+                return (result, nil)
+            }
+        } else {
+            return (result, nil)
+        }
     }
 }

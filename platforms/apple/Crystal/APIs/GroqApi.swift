@@ -34,14 +34,15 @@ struct GroqResponse: Codable {
 }
 
 class GroqApi: ObservableObject {
-    func makeCompletions(model: String, messages: [[String: String]], tools: [[String: Any]]?, completion: @escaping (GroqResponse) -> Void) {
+    func makeCompletions(model: String, messages: [[String: String]], tools: [[String: Any]]?) async throws -> GroqResponse {
         guard let url = URL(string: "https://api.groq.com/openai/v1/chat/completions") else {
-            print("Invalid URL")
-            return
+            throw URLError(.badURL)
         }
         
-        guard let loadedData = load(key: "\(bundleIdentifier).GroqApiKey") else { return }
-        guard let apiKey = String(data: loadedData, encoding: .utf8) else { return }
+        guard let loadedData = load(key: "\(bundleIdentifier).GroqApiKey"),
+              let apiKey = String(data: loadedData, encoding: .utf8) else {
+            throw NSError(domain: "com.yourapp.error", code: 1, userInfo: [NSLocalizedDescriptionKey: "API key loading failed"])
+        }
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -52,41 +53,19 @@ class GroqApi: ObservableObject {
             "model": model,
             "messages": messages,
         ]
-        if tools != nil {
+        if let tools = tools {
             requestBody["tools"] = tools
         }
         
-        request.httpBody = try? JSONSerialization.data(withJSONObject: requestBody)
+        request.httpBody = try JSONSerialization.data(withJSONObject: requestBody)
         
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                alertError(error.localizedDescription)
-                return
-            }
-            
-            guard let data = data else {
-                alertError("Invalid data")
-                return
-            }
-            
-            if let rawResponse = String(data: data, encoding: .utf8) {
-                print("Raw response: \(rawResponse)")
-            }
-            
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                alertError("Invalid response")
-                return
-            }
-                        
-            if let result = try? JSONDecoder().decode(GroqResponse.self, from: data) {
-                DispatchQueue.main.async {
-                    completion(result)
-                }
-            } else {
-                alertError("Failed to decode response")
-            }
+        let (data, response) = try await URLSession.shared.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            throw NSError(domain: "GroqApi", code: 2, userInfo: [NSLocalizedDescriptionKey: "Invalid server response"])
         }
         
-        task.resume()
+        let decoder = JSONDecoder()
+        return try decoder.decode(GroqResponse.self, from: data)
     }
 }
