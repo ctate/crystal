@@ -12,8 +12,6 @@ struct Usage: Codable {
 
 
 class ChatViewModel: ObservableObject {
-    @Environment(\.modelContext) private var modelContext
-    
     @Published var currentView: AnyView = AnyView(TextCard(text: "How can I help?"))
     @Published var prompt = ""
     @Published var isLoading = false
@@ -30,7 +28,7 @@ class ChatViewModel: ObservableObject {
             conversationManager.selectedConversation?.messages.append(newMessage)
         }
         
-        func fetchData(completion: @escaping ((Message, AnyView)?, Error?) -> Void) {
+        func fetchData(completion: @escaping ((Message, ToolResponse?)?, Error?) -> Void) {
             Task {
                 do {
                     let result = try await fetchAiResponse(text, conversation: conversationManager.selectedConversation!)
@@ -53,13 +51,26 @@ class ChatViewModel: ObservableObject {
             DispatchQueue.main.async {
                 modelContext.insert(result!.0)
                 
-                self.currentView = result!.1
+                if result!.1 != nil {
+                    result!.0.text = result!.1!.text
+                    result!.0.props = result!.1!.props
+                }
+                
+                self.currentView = result!.1?.view ?? AnyView(TextCard(text: LocalizedStringKey(result!.0.text)))
                 self.isLoading = false
+                
+                if !UserDefaults.standard.bool(forKey: UserDefaults.Keys.isMuted) {
+                    let utterance = AVSpeechUtterance(string: newMessage.text)
+                    utterance.voice = AVSpeechSynthesisVoice(language: "en-GB")
+                    utterance.rate = 0.5
+                    utterance.volume = 1.0
+                    self.speechSynthesizer.speak(utterance)
+                }
             }
         }
     }
     
-    private func fetchAiResponse(_ text: String, conversation: Conversation) async throws -> (Message, AnyView) {
+    private func fetchAiResponse(_ text: String, conversation: Conversation) async throws -> (Message, ToolResponse?) {
         var messagesPayload: [[String: String]] = [["role": "system", "content": "You are a helpful assistant."]]
         messagesPayload
             .append(contentsOf: conversation.messages
@@ -102,7 +113,7 @@ class ChatViewModel: ObservableObject {
                 throw NSError(domain: "ChatViewModel", code: -3, userInfo: [NSLocalizedDescriptionKey: "Anthropic is not enabled."])
             }
             
-            let result = try await AnthropicApi().makeCompletions(model: model, messages: messagesPayload, tools: tools)
+            let result = try await AnthropicApi.makeCompletions(model: model, messages: messagesPayload, tools: tools)
             
             return try await updateViewBasedOnNewMessage(conversation: conversation, newMessage: Message(
                 text: result.content.first?.text ?? "",
@@ -126,7 +137,7 @@ class ChatViewModel: ObservableObject {
                 throw NSError(domain: "ChatViewModel", code: -3, userInfo: [NSLocalizedDescriptionKey: "Groq is not enabled."])
             }
             
-            let result = try await GroqApi().makeCompletions(model: model, messages: messagesPayload, tools: tools)
+            let result = try await GroqApi.makeCompletions(model: model, messages: messagesPayload, tools: tools)
             return try await self.updateViewBasedOnNewMessage(conversation: conversation, newMessage: Message(
                 text: result.choices.first?.message.content ?? "",
                 role: result.choices.first?.message.role ?? "unknown",
@@ -148,7 +159,7 @@ class ChatViewModel: ObservableObject {
                 throw NSError(domain: "ChatViewModel", code: -3, userInfo: [NSLocalizedDescriptionKey: "Ollama is not enabled."])
             }
             
-            let (result, content) = try await OllamaApi().makeCompletions(model: model, messages: messagesPayload, tools: tools)
+            let (result, content) = try await OllamaApi.makeCompletions(model: model, messages: messagesPayload, tools: tools)
             
             return try await self.updateViewBasedOnNewMessage(conversation: conversation, newMessage: Message(
                 text: result.message.content,
@@ -172,7 +183,7 @@ class ChatViewModel: ObservableObject {
                 throw NSError(domain: "ChatViewModel", code: -3, userInfo: [NSLocalizedDescriptionKey: "OpenAI is not enabled."])
             }
             
-            let result = try await OpenAiApi().makeCompletions(model: model, messages: messagesPayload, tools: tools)
+            let result = try await OpenAiApi.makeCompletions(model: model, messages: messagesPayload, tools: tools)
             
             return try await self.updateViewBasedOnNewMessage(conversation: conversation, newMessage: Message(
                 text: result.choices.first?.message.content ?? "",
@@ -222,7 +233,7 @@ class ChatViewModel: ObservableObject {
         }
     }
     
-    func updateViewBasedOnNewMessage(conversation: Conversation, newMessage: Message) async throws -> (Message, AnyView) {
+    func updateViewBasedOnNewMessage(conversation: Conversation, newMessage: Message) async throws -> (Message, ToolResponse?) {
         switch newMessage.function {
         case "generate_image":
             //            currentView = AnyView(DalleImageCardSkeleton())
@@ -248,15 +259,11 @@ class ChatViewModel: ObservableObject {
             //                }
             //            }
             
-            return (newMessage, AnyView(TextCard(text: LocalizedStringKey("test"))))
+            return (newMessage, nil)
             
         case "get_current_weather":
             let response = try await WeatherTool.fetch(newMessage)
-            
-            newMessage.text = response.text
-            newMessage.props = response.props
-            
-            return (newMessage, response.view)
+            return (newMessage, response)
             
         case "get_hacker_news":
             //            HackerNewsTool.fetch(newMessage) { result in
@@ -275,7 +282,7 @@ class ChatViewModel: ObservableObject {
             //                self.isLoading = false
             //            }
             
-            return (newMessage, AnyView(TextCard(text: LocalizedStringKey("test"))))
+            return (newMessage, nil)
             
         case "make_recipe":
             //            if let result = try? JSONDecoder().decode(OpenAIMakeRecipeResponse.self, from: (newMessage.arguments ?? "{}").data(using: .utf8)!) {
@@ -390,7 +397,7 @@ class ChatViewModel: ObservableObject {
             //                }
             //            }
             
-            return (newMessage, AnyView(TextCard(text: LocalizedStringKey("test"))))
+            return (newMessage, nil)
             
         case "search_web":
             //            struct Response: Codable {
@@ -415,43 +422,12 @@ class ChatViewModel: ObservableObject {
             //                }
             //            }
             
-            return (newMessage, AnyView(TextCard(text: LocalizedStringKey("test"))))
+            return (newMessage, nil)
             
         case "search_wikipedia":
-            //            struct Response: Codable {
-            //                let query: String
-            //            }
-            //
-            //            if let result = try? JSONDecoder().decode(Response.self, from: (newMessage.arguments ?? "{}").data(using: .utf8)!) {
-            //                WikipediaApi().fetchSearchResults(query: result.query) { result in
-            //                    print(result)
-            //
-            //                    WikipediaApi().fetchArticle(title: result.first!.title) { result in
-            //
-            //                        DispatchQueue.main.async {
-            //                            self.currentView = AnyView(WikipediaCard(article: result!))
-            //
-            //                            newMessage.text = "Search Wikipedia"
-            //                            newMessage.props = String(data: try! JSONSerialization.data(withJSONObject: [
-            //                                "article": "Test",
-            //                            ]), encoding: .utf8)
-            //                            modelContext.insert(newMessage)
-            //
-            //                            self.isLoading = false
-            //
-            //                            if !UserDefaults.standard.bool(forKey: UserDefaults.Keys.isMuted) {
-            //                                let utterance = AVSpeechUtterance(string: result!.content)
-            //                                utterance.voice = AVSpeechSynthesisVoice(language: "en-GB")
-            //                                utterance.rate = 0.5
-            //                                utterance.volume = 1.0
-            //                                self.speechSynthesizer.speak(utterance)
-            //                            }
-            //                        }
-            //                    }
-            //                }
-            //            }
+            let response = try await WikipediaTool.fetch(newMessage)
             
-            return (newMessage, AnyView(TextCard(text: LocalizedStringKey("test"))))
+            return (newMessage, response)
             
         case "text":
             //            struct Response: Codable {
@@ -470,23 +446,10 @@ class ChatViewModel: ObservableObject {
             //                isLoading = false
             //            }
             
-            return (newMessage, AnyView(TextCard(text: LocalizedStringKey("test"))))
+            return (newMessage, nil)
             
         default:
-            //            currentView = AnyView(TextCard(text: LocalizedStringKey(newMessage.text)))
-            //
-            //            modelContext.insert(newMessage)
-            //
-            //            if !UserDefaults.standard.bool(forKey: UserDefaults.Keys.isMuted) {
-            //                let utterance = AVSpeechUtterance(string: newMessage.text)
-            //                utterance.voice = AVSpeechSynthesisVoice(language: "en-GB")
-            //                utterance.rate = 0.5
-            //                utterance.volume = 1.0
-            //                speechSynthesizer.speak(utterance)
-            //            }
-            //
-            //            isLoading = false
-            return (newMessage, AnyView(TextCard(text: LocalizedStringKey("test"))))
+            return (newMessage, nil)
         }
     }
 }

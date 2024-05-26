@@ -13,66 +13,40 @@ struct WikipediaArticleContent: Codable, Hashable {
 }
 
 class WikipediaApi {
-    func fetchSearchResults(query: String, completion: @escaping ([WikipediaSearchResult]) -> Void) {
+    static func fetchSearchResults(query: String) async throws -> [WikipediaSearchResult] {
         let urlString = "https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=\(query)&utf8=&format=json"
         
         guard let url = URL(string: urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "") else {
-            alertError("Invalid URL")
-            return
+            throw URLError(.badURL)
         }
         
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            if let data = data {
-                do {
-                    let decodedResponse = try JSONDecoder().decode(WikipediaResponse.self, from: data)
-                    let results = decodedResponse.query.search.map { result in
-                        WikipediaSearchResult(title: result.title, snippet: result.snippet, link: "https://en.wikipedia.org/wiki/\(result.title.replacingOccurrences(of: " ", with: "_"))")
-                    }
-                    DispatchQueue.main.async {
-                        completion(results)
-                    }
-                } catch {
-                    alertError("Decode failed: \(error.localizedDescription)")
-                }
-            } else {
-                alertError("Fetch failed: \(error?.localizedDescription ?? "Unknown error")")
-            }
-        }.resume()
+        let (data, _) = try await URLSession.shared.data(from: url)
+        
+        let decodedResponse = try JSONDecoder().decode(WikipediaResponse.self, from: data)
+        return decodedResponse.query.search.map { result in
+            WikipediaSearchResult(title: result.title, snippet: result.snippet, link: "https://en.wikipedia.org/wiki/\(result.title.replacingOccurrences(of: " ", with: "_"))")
+        }
     }
     
-    func fetchArticle(title: String, completion: @escaping (WikipediaArticleContent?) -> Void) {
+    static func fetchArticle(title: String) async throws -> WikipediaArticleContent? {
         let urlString = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts|pageimages&exintro=&explaintext=&titles=\(title)&format=json&pithumbsize=500"
         
         guard let url = URL(string: urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "") else {
-            print("Invalid URL")
-            return
+            throw URLError(.badURL)
         }
         
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            if let data = data {
-                do {
-                    let decodedResponse = try JSONDecoder().decode(WikipediaArticleResponse.self, from: data)
-                    if let page = decodedResponse.query.pages.values.first {
-                        let article = WikipediaArticleContent(
-                            title: page.title,
-                            content: page.extract,
-                            imageURL: page.thumbnail?.source
-                        )
-                        DispatchQueue.main.async {
-                            completion(article)
-                        }
-                    } else {
-                        DispatchQueue.main.async {
-                            completion(nil)
-                        }
-                    }
-                } catch {
-                    print("Decode failed: \(error.localizedDescription)")
-                }
-            } else {
-                print("Fetch failed: \(error?.localizedDescription ?? "Unknown error")")
-            }
-        }.resume()
+        let (data, _) = try await URLSession.shared.data(from: url)
+        
+        let decodedResponse = try JSONDecoder().decode(WikipediaArticleResponse.self, from: data)
+        if let page = decodedResponse.query.pages.values.first {
+            return WikipediaArticleContent(
+                title: page.title,
+                content: page.extract,
+                imageURL: page.thumbnail?.source
+            )
+        } else {
+            return nil
+        }
     }
 }
 

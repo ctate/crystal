@@ -34,7 +34,7 @@ struct GroqResponse: Codable {
 }
 
 class GroqApi: ObservableObject {
-    func makeCompletions(model: String, messages: [[String: String]], tools: [[String: Any]]?) async throws -> GroqResponse {
+    static func makeCompletions(model: String, messages: [[String: String]], tools: [[String: Any]]?) async throws -> GroqResponse {
         guard let url = URL(string: "https://api.groq.com/openai/v1/chat/completions") else {
             throw URLError(.badURL)
         }

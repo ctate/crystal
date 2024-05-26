@@ -17,7 +17,7 @@ struct AnthropicResponse: Codable {
 
 
 class AnthropicApi: ObservableObject {
-    func makeCompletions(model: String, messages: [[String: String]], tools: [[String: Any]]?) async throws -> AnthropicResponse {
+    static func makeCompletions(model: String, messages: [[String: String]], tools: [[String: Any]]?) async throws -> AnthropicResponse {
         guard let url = URL(string: "https://api.anthropic.com/v1/messages") else {
             throw NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])
         }

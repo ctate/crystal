@@ -73,7 +73,7 @@ class OpenAiApi: ObservableObject {
         return decodedResponse.data.map { GeneratedImage(url: $0.url) }
     }
     
-    func makeCompletions(model: String, messages: [[String: String]], tools: [[String: Any]]?) async throws -> OpenAIResponse {
+    static func makeCompletions(model: String, messages: [[String: String]], tools: [[String: Any]]?) async throws -> OpenAIResponse {
         guard let loadedData = load(key: "\(bundleIdentifier).OpenAIApiKey"),
               let apiKey = String(data: loadedData, encoding: .utf8) else {
             throw NSError(domain: "OpenAiApi", code: 1, userInfo: [NSLocalizedDescriptionKey: "API key loading failed"])

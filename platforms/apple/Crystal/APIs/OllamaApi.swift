@@ -21,7 +21,7 @@ struct OllamaResponse: Codable {
 }
 
 class OllamaApi: ObservableObject {
-    func makeCompletions(model: String, messages: [[String: String]], tools: [[String: Any]]?) async throws -> (OllamaResponse, OllamaContent?) {
+    static func makeCompletions(model: String, messages: [[String: String]], tools: [[String: Any]]?) async throws -> (OllamaResponse, OllamaContent?) {
         guard let host = UserDefaults.standard.string(forKey: "Ollama:host") else {
             throw NSError(domain: "OllamaError", code: 1, userInfo: [NSLocalizedDescriptionKey: "Host not configured"])
         }
