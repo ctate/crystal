@@ -18,10 +18,10 @@ struct Integration: Identifiable {
         }
     }
     
-    init(id: String, name: String, isEnabled: Bool = false, hasApiKey: Bool = false) {
+    init(id: String, name: String, hasApiKey: Bool = false) {
         self.id = id
         self.name = name
-        self.isEnabled = UserSettings.Providers.isEnabled(id)
+        self.isEnabled = UserSettings.Integrations.isEnabled(id)
         self.hasApiKey = hasApiKey
         self.apiKey = loadApiKey(key: "\(bundleIdentifier).\(name)ApiKey")
     }
@@ -61,7 +61,7 @@ struct ProviderWithSettings: Identifiable {
         }
     }
     
-    init(id: String, name: String, isEnabled: Bool = false, isService: Bool = false) {
+    init(id: String, name: String, isService: Bool = false) {
         self.id = id
         self.name = name
         self.isEnabled = UserSettings.Providers.isEnabled(id)
@@ -243,9 +243,9 @@ struct GeneralSettingsView: View {
 
 struct ModelsSettingsView: View {
     @State private var defaults = [
-        ProviderWithSettings(id: "Prompt", name: "Prompt", isEnabled: false),
-        ProviderWithSettings(id: "Vision", name: "Vision", isEnabled: false),
-        ProviderWithSettings(id: "Voice", name: "Voice", isEnabled: false)
+        ProviderWithSettings(id: "Prompt", name: "Prompt"),
+        ProviderWithSettings(id: "Vision", name: "Vision"),
+        ProviderWithSettings(id: "Voice", name: "Voice")
     ]
     
     @State private var providers = [
@@ -316,25 +316,21 @@ struct IntegrationsSettingsView: View {
         Integration(
             id: "Google",
             name: "Google",
-            isEnabled: false,
             hasApiKey: true
         ),
         Integration(
             id: "HackerNews",
             name: "Hacker News",
-            isEnabled: false,
             hasApiKey: false
         ),
         Integration(
             id: "WeatherGov",
             name: "Weather.gov",
-            isEnabled: false,
             hasApiKey: false
         ),
         Integration(
             id: "Wikipedia",
             name: "Wikipedia",
-            isEnabled: false,
             hasApiKey: false
         )
     ]
