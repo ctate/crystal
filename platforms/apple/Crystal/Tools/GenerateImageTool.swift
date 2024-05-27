@@ -23,6 +23,32 @@ class GenerateImageTool {
         ]
     ] as [String : Any]
     
+    static func fetch(_ newMessage: Message) async throws -> ToolResponse {
+        struct Response: Codable {
+            let subject: String
+        }
+        
+        guard let result = try? JSONDecoder().decode(Response.self, from: (newMessage.arguments ?? "{}").data(using: .utf8)!) else {
+            throw NSError(domain: "GenerateImageTool", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to decode subject"])
+        }
+        
+        guard let images = try? await OpenAiApi().generateImage(prompt: result.subject) else {
+            throw NSError(domain: "GenerateImageTool", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to generate image"])
+        }
+        
+        let propsData = try JSONSerialization.data(withJSONObject: [
+            "images": images.map { ["url": $0.url.absoluteString] }
+        ])
+        
+        return ToolResponse(
+            props: String(data: propsData, encoding: .utf8)!,
+            text: "Generate Image",
+            view: AnyView(DalleImageCard(
+                images: images
+            ))
+        )
+    }
+    
     static func render(_ message: Message) -> AnyView {
         struct Props: Codable {
             let images: [GeneratedImage]

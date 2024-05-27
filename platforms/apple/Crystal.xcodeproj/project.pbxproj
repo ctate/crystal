@@ -38,7 +38,6 @@
 		D7C9D2F52BF3166B00697DDE /* ClockCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2EC2BF3166B00697DDE /* ClockCard.swift */; };
 		D7C9D2F62BF3166B00697DDE /* DalleImageCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2ED2BF3166B00697DDE /* DalleImageCard.swift */; };
 		D7C9D2FA2BF3166B00697DDE /* TextCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2F12BF3166B00697DDE /* TextCard.swift */; };
-		D7C9D2FC2BF3166B00697DDE /* WikipediaCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2F32BF3166B00697DDE /* WikipediaCard.swift */; };
 		D7C9D3012BF3167400697DDE /* ChatHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2FD2BF3167400697DDE /* ChatHistoryView.swift */; };
 		D7C9D3022BF3167400697DDE /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2FE2BF3167400697DDE /* ChatView.swift */; };
 		D7C9D3032BF3167400697DDE /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2FF2BF3167400697DDE /* ChatViewModel.swift */; };
@@ -128,7 +127,6 @@
 		D7C9D2EC2BF3166B00697DDE /* ClockCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockCard.swift; sourceTree = "<group>"; };
 		D7C9D2ED2BF3166B00697DDE /* DalleImageCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DalleImageCard.swift; sourceTree = "<group>"; };
 		D7C9D2F12BF3166B00697DDE /* TextCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextCard.swift; sourceTree = "<group>"; };
-		D7C9D2F32BF3166B00697DDE /* WikipediaCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikipediaCard.swift; sourceTree = "<group>"; };
 		D7C9D2FD2BF3167400697DDE /* ChatHistoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatHistoryView.swift; sourceTree = "<group>"; };
 		D7C9D2FE2BF3167400697DDE /* ChatView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		D7C9D2FF2BF3167400697DDE /* ChatViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
@@ -325,7 +323,6 @@
 				D7C9D2EC2BF3166B00697DDE /* ClockCard.swift */,
 				D7C9D2ED2BF3166B00697DDE /* DalleImageCard.swift */,
 				D7C9D2F12BF3166B00697DDE /* TextCard.swift */,
-				D7C9D2F32BF3166B00697DDE /* WikipediaCard.swift */,
 			);
 			path = Cards;
 			sourceTree = "<group>";
@@ -502,7 +499,6 @@
 				D73C375A2C024D7500BD37E3 /* GenerateImageTool.swift in Sources */,
 				D73C376E2C04411F00BD37E3 /* KeychainKeys.swift in Sources */,
 				D7C9D3022BF3167400697DDE /* ChatView.swift in Sources */,
-				D7C9D2FC2BF3166B00697DDE /* WikipediaCard.swift in Sources */,
 				D7C9D3222BF3172200697DDE /* VisionModelsView.swift in Sources */,
 				D7C9D3012BF3167400697DDE /* ChatHistoryView.swift in Sources */,
 				D7C9D30F2BF316AC00697DDE /* OrbButton.swift in Sources */,

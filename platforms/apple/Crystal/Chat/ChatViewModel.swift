@@ -236,53 +236,21 @@ class ChatViewModel: ObservableObject {
     func updateViewBasedOnNewMessage(conversation: Conversation, newMessage: Message) async throws -> (Message, ToolResponse?) {
         switch newMessage.function {
         case "generate_image":
-            //            currentView = AnyView(DalleImageCardSkeleton())
-            //            isLoading = false
-            //
-            //            struct Response: Codable {
-            //                let subject: String
-            //            }
-            //
-            //            if let result = try? JSONDecoder().decode(Response.self, from: (newMessage.arguments ?? "{}").data(using: .utf8)!) {
-            //                OpenAiApi().generateImage(prompt: result.subject) { result in
-            //                    DispatchQueue.main.async {
-            //                        self.currentView = AnyView(DalleImageCard(images: result))
-            //
-            //                        newMessage.text = "Generate Image"
-            //                        newMessage.props = String(data: try! JSONSerialization.data(withJSONObject: [
-            //                            "images": [],
-            //                        ]), encoding: .utf8)
-            //                        modelContext.insert(newMessage)
-            //
-            //                        self.isLoading = false
-            //                    }
-            //                }
-            //            }
+            DispatchQueue.main.async {
+                self.currentView = AnyView(DalleImageCardSkeleton())
+                self.isLoading = false
+            }
             
-            return (newMessage, nil)
+            let response = try await GenerateImageTool.fetch(newMessage)
+            return (newMessage, response)
             
         case "get_current_weather":
             let response = try await WeatherTool.fetch(newMessage)
             return (newMessage, response)
             
         case "get_hacker_news":
-            //            HackerNewsTool.fetch(newMessage) { result in
-            //                switch result {
-            //                case .success(let response):
-            //                    self.currentView = response.view
-            //
-            //                    newMessage.text = response.text
-            //                    newMessage.props = response.props
-            //                    modelContext.insert(newMessage)
-            //
-            //                case .failure:
-            //                    self.currentView = AnyView(TextCard(text: LocalizedStringKey("Failed")))
-            //                }
-            //
-            //                self.isLoading = false
-            //            }
-            
-            return (newMessage, nil)
+            let response = try await HackerNewsTool.fetch(newMessage)
+            return (newMessage, response)
             
         case "make_recipe":
             //            if let result = try? JSONDecoder().decode(OpenAIMakeRecipeResponse.self, from: (newMessage.arguments ?? "{}").data(using: .utf8)!) {

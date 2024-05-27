@@ -9,107 +9,77 @@ struct ArticleDetail: Codable {
 }
 
 class HackerNewsApi: ObservableObject {
-    // This function fetches the IDs of the articles
-    func getNewsIds(type: String, completion: @escaping ([Int]) -> Void) {
+    func getNewsIds(type: String) async throws -> [Int] {
         guard let url = URL(string: "https://hacker-news.firebaseio.com/v0/\(type)stories.json") else {
-            alertError("Invalid URL")
-            return
+            throw URLError(.badURL)
         }
         
         var request = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy)
         request.httpMethod = "GET"
         
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                alertError(error.localizedDescription)
-                return
-            }
-            
-            guard let data = data else {
-                alertError("No data received")
-                return
-            }
-            
-            do {
-                let ids = try JSONDecoder().decode([Int].self, from: data)
-                completion(ids)
-            } catch {
-                alertError("Error parsing JSON: \(error.localizedDescription)")
-            }
+        let (data, response) = try await URLSession.shared.data(for: request)
+        guard (response as? HTTPURLResponse)?.statusCode == 200 else {
+            throw URLError(.badServerResponse)
         }
         
-        task.resume()
+        return try JSONDecoder().decode([Int].self, from: data)
     }
     
-    // This function fetches details for each article based on ID
-    func getArticleDetails(for ids: [Int], completion: @escaping ([ArticleDetail]) -> Void) {
-        let group = DispatchGroup()
-        var articles: [ArticleDetail] = []
-        
-        for id in ids.prefix(10) { // Limit to first 10 IDs for concurrency
-            group.enter()
-            guard let url = URL(string: "https://hacker-news.firebaseio.com/v0/item/\(id).json") else {
-                print("Invalid URL for ID \(id)")
-                group.leave()
-                continue
+    func getArticleDetails(for ids: [Int]) async -> [ArticleDetail] {
+        let articles = await withTaskGroup(of: ArticleDetail?.self, returning: [ArticleDetail].self) { group in
+            for id in ids.prefix(10) {
+                group.addTask {
+                    do {
+                        return try await self.fetchArticleDetail(for: id)
+                    } catch {
+                        print("Error fetching details for article \(id): \(error)")
+                        return nil
+                    }
+                }
             }
             
-            var request = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy)
-            request.httpMethod = "GET"
+            var articles: [ArticleDetail] = []
+            for await article in group {
+                if let article = article {
+                    articles.append(article)
+                }
+            }
             
-            URLSession.shared.dataTask(with: request) { data, response, error in
-                defer { group.leave() }
-                
-                if let error = error {
-                    print("Error fetching article \(id): \(error.localizedDescription)")
-                    return
-                }
-                
-                guard let data = data else {
-                    print("No data received for article \(id)")
-                    return
-                }
-                
-                do {
-                    var articleDetail = try JSONDecoder().decode(ArticleDetail.self, from: data)
-                    
-                    // Fetch the webpage to parse og tags
-                    if let articleURL = URL(string: articleDetail.url) {
-                        group.enter()
-                        URLSession.shared.dataTask(with: articleURL) { data, response, error in
-                            defer { group.leave() }
-                            
-                            if let data = data, let html = String(data: data, encoding: .utf8) {
-                                do {
-                                    let doc: Document = try SwiftSoup.parse(html)
-                                    let description: String? = try doc.select("meta[property=og:description]").first()?.attr("content")
-                                    var image: String? = try doc.select("meta[property=og:image]").first()?.attr("content")
-                                    if (image != nil && !image!.starts(with: "http")) {
-                                        image = articleURL.absoluteString + image!;
-                                    }
-                                    
-                                    articleDetail.description = description
-                                    articleDetail.image = image
-                                } catch Exception.Error(_, let message) {
-                                    print("Error parsing HTML: \(message)")
-                                } catch {
-                                    print("Unexpected error")
-                                }
-                            }
-                            articles.append(articleDetail)
-                        }.resume()
-                    } else {
-                        articles.append(articleDetail)
-                    }
-                } catch {
-                    print("Error parsing JSON for article \(id): \(error.localizedDescription)")
-                }
-            }.resume()
+            return articles
+        }
+        return articles
+    }
+    
+    private func fetchArticleDetail(for id: Int) async throws -> ArticleDetail {
+        guard let url = URL(string: "https://hacker-news.firebaseio.com/v0/item/\(id).json") else {
+            throw URLError(.badURL)
         }
         
-        group.notify(queue: .main) {
-            completion(articles)
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        
+        let (data, response) = try await URLSession.shared.data(for: request)
+        guard (response as? HTTPURLResponse)?.statusCode == 200 else {
+            throw URLError(.badServerResponse)
         }
         
+        var articleDetail = try JSONDecoder().decode(ArticleDetail.self, from: data)
+        
+        if let articleURL = URL(string: articleDetail.url) {
+            let htmlData = try await URLSession.shared.data(from: articleURL).0
+            let html = String(decoding: htmlData, as: UTF8.self)
+            let doc = try SwiftSoup.parse(html)
+            let description = try doc.select("meta[property=og:description]").first()?.attr("content")
+            var image = try doc.select("meta[property=og:image]").first()?.attr("content")
+            
+            if let img = image, !img.starts(with: "http") {
+                image = articleURL.absoluteString + img
+            }
+            
+            articleDetail.description = description
+            articleDetail.image = image
+        }
+        
+        return articleDetail
     }
 }

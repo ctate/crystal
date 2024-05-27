@@ -34,7 +34,7 @@ struct Integration: Identifiable {
         self.name = name
         self.isEnabled = UserSettings.Integrations.isEnabled(id)
         self.hasApiKey = hasApiKey
-        self.apiKey = loadApiKey(key: "\(bundleIdentifier).\(name)ApiKey")
+        self.apiKey = loadApiKey(key: id)
     }
     
     var displayApiKey: String {
@@ -99,7 +99,7 @@ struct ProviderWithSettings: Identifiable {
         self.name = name
         self.isEnabled = UserSettings.Providers.isEnabled(id)
         self.isService = isService
-        self.apiKey = loadApiKey(key: "\(bundleIdentifier).\(name)ApiKey")
+        self.apiKey = loadApiKey(key: id)
         self.host = UserSettings.Providers.host(id) ?? ""
     }
     
@@ -235,7 +235,26 @@ struct ProviderDetailView: View {
                     }
                 }
             }
+            Button(action: {
+                if let data = apiKey.data(using: .utf8) {
+                    switch provider.id {
+                    case "Anthropic":
+                        _ = save(KeychainKeys.Providers.Anthropic.apiKey, data: data)
+                    case "Groq":
+                        _ = save(KeychainKeys.Providers.Groq.apiKey, data: data)
+                    case "Ollama":
+                        _ = save(KeychainKeys.Providers.Ollama.apiKey, data: data)
+                    case "OpenAI":
+                        _ = save(KeychainKeys.Providers.OpenAI.apiKey, data: data)
+                    default:
+                        print("Unknown id")
+                    }
+                }
+            }) {
+                Text("Save")
+            }
         }
+        .padding()
         .navigationTitle(provider.name)
 #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)

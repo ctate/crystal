@@ -1,6 +1,49 @@
 import Foundation
 import SwiftUI
 
+struct WikipediaCard: View {
+    var article: WikipediaArticleContent
+    
+    var body: some View {
+        AdaptiveHeightView {
+            VStack(spacing: 10) {
+                if let imageURL = article.imageURL {
+                    AsyncImage(url: imageURL) { imagePhase in
+                        switch imagePhase {
+                        case .empty:
+                            ProgressView()
+                        case .success(let image):
+                            image.resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(maxWidth: 300, maxHeight: 200)
+                                .cornerRadius(10)
+                        case .failure:
+                            Text("Image not available")
+                                .foregroundColor(.secondary)
+                        @unknown default:
+                            EmptyView()
+                        }
+                    }
+                    .padding(.bottom, 5)
+                }
+                
+                Text(article.title)
+                    .font(.title)
+                    .foregroundColor(.white)
+                    .padding(.bottom, 5)
+                
+                Text(article.content)
+                    .font(.body)
+                    .foregroundColor(.white)
+                    .multilineTextAlignment(.leading)
+                    .padding(.horizontal)
+            }
+        }
+        .padding()
+        .cornerRadius(10)
+    }
+}
+
 class WikipediaTool {
     static let name = "search_wikipedia"
     
@@ -35,19 +78,25 @@ class WikipediaTool {
         let searchResults = try await WikipediaApi.fetchSearchResults(query: result.query)
         guard let firstResultTitle = searchResults.first?.title else {
             throw NSError(domain: "WikipediaTool", code: 0, userInfo: [NSLocalizedDescriptionKey: "No results found"])
-                    }
+        }
         
-        let article = try await WikipediaApi.fetchArticle(title: firstResultTitle)
+        guard let article = try await WikipediaApi.fetchArticle(title: firstResultTitle) else {
+            throw NSError(domain: "WikipediaTool", code: 0, userInfo: [NSLocalizedDescriptionKey: "No article found"])
+        }
         
         let propsData = try JSONSerialization.data(withJSONObject: [
-            "article": article
+            "article": [
+                "title": article.title,
+                "content": article.content,
+                "imageURL": article.imageURL?.absoluteString
+            ]
         ])
         
         return ToolResponse(
             props: String(data: propsData, encoding: .utf8)!,
             text: "Search Wikipedia",
             view: AnyView(WikipediaCard(
-                article: article!
+                article: article
             ))
         )
     }

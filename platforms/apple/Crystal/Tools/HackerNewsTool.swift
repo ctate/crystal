@@ -73,28 +73,41 @@ class HackerNewsTool {
         ]
     ] as [String: Any]
     
-    static func fetch(_ newMessage: Message, completion: @escaping (Result<ToolResponse, Error>) -> Void) {
+    static func fetch(_ newMessage: Message) async throws -> ToolResponse {
         struct Response: Codable {
             let type: String
         }
         
-        if let result = try? JSONDecoder().decode(Response.self, from: (newMessage.arguments ?? "{}").data(using: .utf8)!) {
-            HackerNewsApi().getNewsIds(type: result.type) { result in
-                HackerNewsApi().getArticleDetails(for: result) { result in
-                    print(result)
-                    
-                    DispatchQueue.main.async {
-                        completion(.success(ToolResponse(
-                            props: String(data: try! JSONSerialization.data(withJSONObject: [
-                                "articles": result,
-                            ]), encoding: .utf8)!,
-                            text:"Get Hacker News",
-                            view: render(result)
-                        )))
-                    }
-                }
-            }
+        guard let result = try? JSONDecoder().decode(Response.self, from: (newMessage.arguments ?? "{}").data(using: .utf8)!) else {
+            throw NSError(domain: "HackerNewsCard", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to decode type"])
         }
+        
+        guard let ids = try? await HackerNewsApi().getNewsIds(type: result.type) else {
+            throw NSError(domain: "HackerNewsCard", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to get news ids"])
+        }
+        
+        guard let articles = try? await HackerNewsApi().getArticleDetails(for: ids) else {
+            throw NSError(domain: "HackerNewsCard", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to get news articles"])
+        }
+        
+        let propsData = try JSONSerialization.data(withJSONObject: [
+            "articles": articles.map {
+                [
+                    "title": $0.title,
+                    "url": $0.url,
+                    "description": $0.description,
+                    "image": $0.image
+                ]
+            }
+        ])
+        
+        return ToolResponse(
+            props: String(data: propsData, encoding: .utf8)!,
+            text: "Search Wikipedia",
+            view: AnyView(HackerNewsCard(
+                articles: articles
+            ))
+        )
     }
     
     static func render(_ message: Message) -> AnyView {
