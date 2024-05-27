@@ -63,7 +63,37 @@ class GoogleTool {
         ]
     ] as [String : Any]
     
-    
+    static func fetch(_ newMessage: Message) async throws -> ToolResponse {
+        struct Response: Codable {
+            let query: String
+        }
+        
+        guard let result = try? JSONDecoder().decode(Response.self, from: (newMessage.arguments ?? "{}").data(using: .utf8)!) else {
+            throw NSError(domain: "GoogleTool", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to decode query"])
+        }
+        
+        guard let results = try? await GoogleApi().fetchSearchResults(query: result.query) else {
+            throw NSError(domain: "GoogleTool", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to find results"])
+        }
+        
+        let propsData = try JSONSerialization.data(withJSONObject: [
+            "results": results.map {
+                [
+                    "title": $0.title,
+                    "link": $0.link,
+                    "snippet": $0.snippet
+                ]
+            }
+        ])
+        
+        return ToolResponse(
+            props: String(data: propsData, encoding: .utf8)!,
+            text: "Search web",
+            view: AnyView(GoogleSearchCard(
+                results: results
+            ))
+        )
+    }
     
     static func render(_ message: Message) -> AnyView {
         struct Props: Codable {

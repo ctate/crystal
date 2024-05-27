@@ -368,33 +368,11 @@ class ChatViewModel: ObservableObject {
             return (newMessage, nil)
             
         case "search_web":
-            //            struct Response: Codable {
-            //                let query: String
-            //            }
-            //
-            //            if let result = try? JSONDecoder().decode(Response.self, from: (newMessage.arguments ?? "{}").data(using: .utf8)!) {
-            //                GoogleApi().fetchSearchResults(query: result.query) { result in
-            //                    print(result)
-            //
-            //                    DispatchQueue.main.async {
-            //                        self.currentView = AnyView(GoogleSearchCard(results: result))
-            //
-            //                        newMessage.text = "Search Web"
-            //                        newMessage.props = String(data: try! JSONSerialization.data(withJSONObject: [
-            //                            "results": [],
-            //                        ]), encoding: .utf8)
-            //                        modelContext.insert(newMessage)
-            //
-            //                        self.isLoading = false
-            //                    }
-            //                }
-            //            }
-            
-            return (newMessage, nil)
+            let response = try await GoogleTool.fetch(newMessage)
+            return (newMessage, response)
             
         case "search_wikipedia":
             let response = try await WikipediaTool.fetch(newMessage)
-            
             return (newMessage, response)
             
         case "text":
