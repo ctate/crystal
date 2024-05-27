@@ -6,7 +6,7 @@ struct Integration: Identifiable {
     var name: String
     var isEnabled: Bool {
         didSet {
-            UserDefaults.standard.set(isEnabled, forKey: "\(id):isEnabled")
+            UserSettings.Integrations.setIsEnabled(id, isEnabled: isEnabled)
         }
     }
     var hasApiKey: Bool
@@ -21,7 +21,7 @@ struct Integration: Identifiable {
     init(id: String, name: String, isEnabled: Bool = false, hasApiKey: Bool = false) {
         self.id = id
         self.name = name
-        self.isEnabled = UserDefaults.standard.bool(forKey: "\(id):isEnabled")
+        self.isEnabled = UserSettings.Providers.isEnabled(id)
         self.hasApiKey = hasApiKey
         self.apiKey = loadApiKey(key: "\(bundleIdentifier).\(name)ApiKey")
     }
@@ -45,7 +45,7 @@ struct ProviderWithSettings: Identifiable {
     var isService: Bool
     var isEnabled: Bool {
         didSet {
-            UserDefaults.standard.set(isEnabled, forKey: "\(id):isEnabled")
+            UserSettings.Providers.setIsEnabled(id, isEnabled: isEnabled)
         }
     }
     var apiKey: String {
@@ -57,17 +57,17 @@ struct ProviderWithSettings: Identifiable {
     }
     var host: String {
         didSet {
-            UserDefaults.standard.set(isEnabled, forKey: "\(id):host")
+            UserSettings.Providers.setHost(id, host: host)
         }
     }
     
     init(id: String, name: String, isEnabled: Bool = false, isService: Bool = false) {
         self.id = id
         self.name = name
-        self.isEnabled = UserDefaults.standard.bool(forKey: "\(id):isEnabled")
+        self.isEnabled = UserSettings.Providers.isEnabled(id)
         self.isService = isService
         self.apiKey = loadApiKey(key: "\(bundleIdentifier).\(name)ApiKey")
-        self.host = UserDefaults.standard.string(forKey: "\(id):host") ?? ""
+        self.host = UserSettings.Providers.host(id) ?? ""
     }
     
     var displayApiKey: String {
@@ -96,7 +96,7 @@ struct IntegrationDetailView: View {
         Form {
             Toggle("Enabled", isOn: $integration.isEnabled)
                 .onChange(of: integration.isEnabled) {
-                    UserDefaults.standard.set(integration.isEnabled, forKey: "\(integration.id):isEnabled")
+                    UserSettings.Integrations.setIsEnabled(integration.id, isEnabled: integration.isEnabled)
                 }
             HStack {
                 TextField("API Key", text: $integration.apiKey)
@@ -145,6 +145,11 @@ struct ProviderDetailView: View {
     var body: some View {
         Form {
             Toggle("Enabled", isOn: $isEnabled)
+                .onChange(of: isEnabled) {
+                    UserSettings.Providers.setIsEnabled(provider.id, isEnabled: isEnabled)
+                    
+                    provider.isEnabled = isEnabled
+                }
             HStack {
                 if provider.isService {
                     SecureField("API Key", text: $apiKey)
@@ -175,29 +180,6 @@ struct ProviderDetailView: View {
 #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
 #endif
-        .toolbar {
-            Button(action: {
-                UserDefaults.standard.set(isEnabled, forKey: "\(provider.id):isEnabled")
-                
-                provider.isEnabled = isEnabled
-                
-                if provider.isService {
-                    if let data = apiKey.data(using: .utf8) {
-                        _ = save(key: "\(bundleIdentifier).\(provider.id)ApiKey", data: data)
-                    }
-                    
-                    provider.apiKey = apiKey
-                } else {
-                    UserDefaults.standard.set(host, forKey: UserDefaults.Keys.ollamaHost)
-                    
-                    provider.host = host
-                }
-                                
-                presentationMode.wrappedValue.dismiss()
-            }) {
-                Text("Save")
-            }
-        }
         .onAppear {
             self.apiKey = provider.apiKey
             self.host = provider.host
@@ -207,12 +189,12 @@ struct ProviderDetailView: View {
 }
 
 struct GeneralSettingsView: View {
-    @State private var isMuted = UserDefaults.standard.bool(forKey: UserDefaults.Keys.isMuted)
+    @State private var isMuted = UserSettings.isMuted
     
-    @State private var selectedAppearance = UserDefaults.standard.string(forKey: UserDefaults.Keys.appearance) ?? "Option 1"
-    let appearanceOptions = ["Light Mode", "Dark Mode", "System"]
+    @State private var selectedAppearance = UserSettings.appearance
+    let appearanceOptions = [UserSettings.Appearance.system, UserSettings.Appearance.dark, UserSettings.Appearance.light]
     
-    @State private var selectedFont = UserDefaults.standard.string(forKey: UserDefaults.Keys.font) ?? "Arial"
+    @State private var selectedFont = UserSettings.font
     let fonts = [
         "San Francisco (Default)",
         "Arial",
@@ -233,11 +215,11 @@ struct GeneralSettingsView: View {
             Form {
                 Picker("Appearance", selection: $selectedAppearance) {
                     ForEach(appearanceOptions, id: \.self) { appearance in
-                        Text(appearance)
+                        Text(appearance.rawValue)
                     }
                 }
                 .onChange(of: selectedAppearance) {
-                    UserDefaults.standard.setValue(selectedAppearance, forKey: UserDefaults.Keys.appearance)
+                    UserSettings.appearance = selectedAppearance
                 }
                 
                 Picker("Primary Font", selection: $selectedFont) {
@@ -246,12 +228,12 @@ struct GeneralSettingsView: View {
                     }
                 }
                 .onChange(of: selectedFont) {
-                    UserDefaults.standard.setValue(selectedAppearance, forKey: UserDefaults.Keys.appearance)
+                    UserSettings.font = selectedFont
                 }
                 
                 Toggle("Mute", isOn: $isMuted)
                     .onChange(of: isMuted) {
-                        UserDefaults.standard.set(isMuted, forKey: UserDefaults.Keys.isMuted)
+                        UserSettings.isMuted = isMuted
                     }
             }
             .navigationTitle("General")
@@ -287,11 +269,11 @@ struct ModelsSettingsView: View {
     private func defaultModel(for id: String) -> String {
         switch id {
         case "Vision":
-            return UserDefaults.standard.string(forKey: "defaultVisionModel") ?? ""
+            return UserSettings.visionModel ?? ""
         case "Voice":
-            return UserDefaults.standard.string(forKey: "defaultVoiceModel") ?? ""
+            return UserSettings.voiceModel ?? ""
         default:
-            return UserDefaults.standard.string(forKey: "defaultPromptModel") ?? ""
+            return UserSettings.promptModel ?? ""
         }
     }
     
@@ -331,10 +313,30 @@ struct ModelsSettingsView: View {
 
 struct IntegrationsSettingsView: View {
     @State private var integrations = [
-        Integration(id: "Google", name: "Google", isEnabled: false, hasApiKey: true),
-        Integration(id: "HackerNews", name: "Hacker News", isEnabled: false, hasApiKey: false),
-        Integration(id: "WeatherGov", name: "Weather.gov", isEnabled: false, hasApiKey: false),
-        Integration(id: "Wikipedia", name: "Wikipedia", isEnabled: false, hasApiKey: false)
+        Integration(
+            id: "Google",
+            name: "Google",
+            isEnabled: false,
+            hasApiKey: true
+        ),
+        Integration(
+            id: "HackerNews",
+            name: "Hacker News",
+            isEnabled: false,
+            hasApiKey: false
+        ),
+        Integration(
+            id: "WeatherGov",
+            name: "Weather.gov",
+            isEnabled: false,
+            hasApiKey: false
+        ),
+        Integration(
+            id: "Wikipedia",
+            name: "Wikipedia",
+            isEnabled: false,
+            hasApiKey: false
+        )
     ]
     
     var body: some View {
@@ -358,7 +360,7 @@ struct IntegrationsSettingsView: View {
                                 Spacer()
                                 Toggle("", isOn: $integration.isEnabled)
                                     .onChange(of: integration.isEnabled) {
-                                        UserDefaults.standard.set(integration.isEnabled, forKey: "\(integration.id):isEnabled")
+                                        UserSettings.Integrations.setIsEnabled(integration.id, isEnabled: integration.isEnabled)
                                     }
                                 
                             }

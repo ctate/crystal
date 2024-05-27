@@ -145,9 +145,9 @@ struct WelcomeView: View {
             .padding(.horizontal)
             .frame(maxWidth: 400)
             Button("Next") {
-                UserDefaults.standard.setValue(selectedProvider!.id, forKey: "defaultPromptProvider")
-                UserDefaults.standard.setValue(model, forKey: "defaultPromptModel")
-                UserDefaults.standard.setValue(true, forKey: "hasCompletedOnboarding")
+                UserSettings.promptProvider = selectedProvider!.id
+                UserSettings.promptModel = model
+                UserSettings.hasCompletedOnboarding = true
                 
                 let data = apiKey.data(using: .utf8)!
                 _ = save(key: "\(bundleIdentifier).\(selectedProvider!.id)ApiKey", data: data)
@@ -317,9 +317,9 @@ struct WelcomeView: View {
             .padding(.horizontal)
             .frame(maxWidth: 400)
             Button("Next") {
-                UserDefaults.standard.setValue(selectedProvider!.id, forKey: "defaultPromptProvider")
-                UserDefaults.standard.setValue(model, forKey: "defaultPromptModel")
-                UserDefaults.standard.setValue(true, forKey: "hasCompletedOnboarding")
+                UserSettings.promptProvider = selectedProvider!.id
+                UserSettings.promptModel = model
+                UserSettings.hasCompletedOnboarding = true
                 
                 let data = apiKey.data(using: .utf8)!
                 _ = save(key: "\(bundleIdentifier).\(selectedProvider!.id)ApiKey", data: data)

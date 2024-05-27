@@ -25,7 +25,7 @@ struct VisionModelsView: View {
         ])
     ]
     
-    @State private var selectedModelId: String = UserDefaults.standard.string(forKey: "defaultVisionModel") ?? ""
+    @State private var selectedModelId: String = UserSettings.visionModel ?? ""
     
     var body: some View {
         List {
@@ -41,7 +41,7 @@ struct VisionModelsView: View {
                         }
                         .contentShape(Rectangle())
                         .onTapGesture {
-                            UserDefaults.standard.setValue(model.id, forKey: "defaultVisionModel")
+                            UserSettings.visionModel = model.id
                             selectedModelId = model.id
                         }
                     }

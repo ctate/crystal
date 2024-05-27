@@ -22,7 +22,7 @@ struct VoiceModelsView: View {
         ]),
     ]
     
-    @State private var selectedModelId: String = UserDefaults.standard.string(forKey: "defaultVoiceModel") ?? ""
+    @State private var selectedModelId: String = UserSettings.voiceModel ?? ""
     
     var body: some View {
         List {
@@ -38,7 +38,7 @@ struct VoiceModelsView: View {
                         }
                         .contentShape(Rectangle())
                         .onTapGesture {
-                            UserDefaults.standard.setValue(model.id, forKey: "defaultVoiceModel")
+                            UserSettings.voiceModel = model.id
                             selectedModelId = model.id
                         }
                     }

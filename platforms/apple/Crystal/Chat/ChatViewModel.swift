@@ -59,7 +59,7 @@ class ChatViewModel: ObservableObject {
                 self.currentView = result!.1?.view ?? AnyView(TextCard(text: LocalizedStringKey(result!.0.text)))
                 self.isLoading = false
                 
-                if !UserDefaults.standard.bool(forKey: UserDefaults.Keys.isMuted) {
+                if !UserSettings.isMuted {
                     let utterance = AVSpeechUtterance(string: newMessage.text)
                     utterance.voice = AVSpeechSynthesisVoice(language: "en-GB")
                     utterance.rate = 0.5
@@ -80,36 +80,36 @@ class ChatViewModel: ObservableObject {
         
         var tools: [[String: Any]]?
         
-        if !UserDefaults.standard.bool(forKey: "functionsDisabled") {
+        if !UserSettings.functionsDisabled {
             tools = [
                 GenerateImageTool.function,
                 MakeRecipeTool.function
             ]
             
-            if UserDefaults.standard.bool(forKey: "Google:isEnabled") {
+            if UserSettings.Integrations.Google.isEnabled {
                 tools!.append(GoogleTool.function)
             }
             
-            if UserDefaults.standard.bool(forKey: "HackerNews:isEnabled") {
+            if UserSettings.Integrations.HackerNews.isEnabled {
                 tools!.append(HackerNewsTool.function)
             }
             
-            if UserDefaults.standard.bool(forKey: "WeatherGov:isEnabled") {
+            if UserSettings.Integrations.WeatherGov.isEnabled {
                 tools!.append(WeatherTool.function)
             }
             
-            if UserDefaults.standard.bool(forKey: "Wikipedia:isEnabled") {
+            if UserSettings.Integrations.Wikipedia.isEnabled {
                 tools!.append(WikipediaTool.function)
             }
         }
         
-        let provider = UserDefaults.standard.string(forKey: "defaultPromptProvider") ?? ""
-        let model = UserDefaults.standard.string(forKey: "defaultPromptModel") ?? ""
+        let provider = UserSettings.promptProvider ?? ""
+        let model = UserSettings.promptModel ?? ""
         
         if provider == "Anthropic" {
             print("AnthropicApi")
             
-            if !UserDefaults.standard.bool(forKey: "Anthropic:isEnabled") {
+            if !UserSettings.Providers.Anthropic.isEnabled {
                 throw NSError(domain: "ChatViewModel", code: -3, userInfo: [NSLocalizedDescriptionKey: "Anthropic is not enabled."])
             }
             
@@ -133,7 +133,7 @@ class ChatViewModel: ObservableObject {
         } else if provider == "Groq" {
             print("GroqAPI")
             
-            if !UserDefaults.standard.bool(forKey: "Groq:isEnabled") {
+            if !UserSettings.Providers.Groq.isEnabled {
                 throw NSError(domain: "ChatViewModel", code: -3, userInfo: [NSLocalizedDescriptionKey: "Groq is not enabled."])
             }
             
@@ -155,7 +155,7 @@ class ChatViewModel: ObservableObject {
         } else if provider == "Ollama" {
             print("OllamaApi")
             
-            if !UserDefaults.standard.bool(forKey: "Ollama:isEnabled") {
+            if !UserSettings.Providers.Ollama.isEnabled {
                 throw NSError(domain: "ChatViewModel", code: -3, userInfo: [NSLocalizedDescriptionKey: "Ollama is not enabled."])
             }
             
@@ -179,7 +179,7 @@ class ChatViewModel: ObservableObject {
         } else if provider == "OpenAI" {
             print("OpenAIApi")
             
-            if !UserDefaults.standard.bool(forKey: "OpenAI:isEnabled") {
+            if !UserSettings.Providers.OpenAI.isEnabled {
                 throw NSError(domain: "ChatViewModel", code: -3, userInfo: [NSLocalizedDescriptionKey: "OpenAI is not enabled."])
             }
             

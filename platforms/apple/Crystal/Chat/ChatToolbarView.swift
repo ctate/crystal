@@ -8,8 +8,8 @@ struct ChatToolbarView: ToolbarContent {
     var settingsAction: ((_ name: String) -> Void)? = { _ in }
     var newAction: (() -> Void)? = {}
     
-    @State private var functionsDisabled = UserDefaults.standard.bool(forKey: "functionsDisabled")
-    @State private var selectedModelId: String = UserDefaults.standard.string(forKey: "defaultPromptModel") ?? "Choose Model"
+    @State private var functionsDisabled = UserSettings.functionsDisabled
+    @State private var selectedModelId: String = UserSettings.promptModel ?? "Choose Model"
     
     @State private var showHistorySheet = false
     @State private var showPopover = false
@@ -59,7 +59,7 @@ struct ChatToolbarView: ToolbarContent {
                                 Text(provider.name)
                                     .bold()
                                 
-                                if !UserDefaults.standard.bool(forKey: "\(provider.id):isEnabled") {
+                                if !UserSettings.Providers.isEnabled(provider.id) {
                                     Text("(Disabled)")
                                         .bold()
                                     Spacer()
@@ -77,21 +77,21 @@ struct ChatToolbarView: ToolbarContent {
                             
                             ForEach (provider.models) { model in
                                 Button(action: {
-                                    UserDefaults.standard.setValue(model.id, forKey: "defaultPromptModel")
-                                    UserDefaults.standard.setValue(provider.id, forKey: "defaultPromptProvider")
+                                    UserSettings.promptModel = model.id
+                                    UserSettings.promptProvider = provider.id
                                     selectedModelId = model.id
                                     showPopover = false
                                 }) {
                                     HStack {
                                         Text(model.name)
-                                            .foregroundColor(!UserDefaults.standard.bool(forKey: "\(provider.id):isEnabled") ? .gray : .primary)
+                                            .foregroundColor(!UserSettings.Providers.isEnabled(provider.id) ? .gray : .primary)
                                         Spacer()
                                         if selectedModelId == model.id {
                                             Image(systemName: "checkmark")
                                         }
                                     }
                                 }
-                                .disabled(!UserDefaults.standard.bool(forKey: "\(provider.id):isEnabled"))
+                                .disabled(!UserSettings.Providers.isEnabled(provider.id))
                                 .padding(.horizontal, 20)
                                 .padding(.vertical, 5)
                                 .buttonStyle(PlainButtonStyle())
@@ -129,7 +129,7 @@ struct ChatToolbarView: ToolbarContent {
 
             Button(action: {
                 functionsDisabled = !functionsDisabled
-                UserDefaults.standard.setValue(functionsDisabled, forKey: "functionsDisabled")
+                UserSettings.functionsDisabled = functionsDisabled
             }) {
                 Image(systemName: "function")
                     .foregroundColor(functionsDisabled ? .white : .green)

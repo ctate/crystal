@@ -33,7 +33,7 @@ struct PromptModelsView: View {
         ])
     ]
     
-    @State private var selectedModelId: String = UserDefaults.standard.string(forKey: "defaultPromptModel") ?? ""
+    @State private var selectedModelId: String = UserSettings.promptModel ?? ""
     
     var body: some View {
         List {
@@ -49,8 +49,8 @@ struct PromptModelsView: View {
                         }
                         .contentShape(Rectangle())
                         .onTapGesture {
-                            UserDefaults.standard.setValue(provider.id, forKey: "defaultPromptProvider")
-                            UserDefaults.standard.setValue(model.id, forKey: "defaultPromptModel")
+                            UserSettings.promptProvider = provider.name
+                            UserSettings.promptModel = model.id
                             selectedModelId = model.id
                         }
                     }

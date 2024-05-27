@@ -7,7 +7,7 @@ struct ContentView: View {
     
     var body: some View {
         Group {
-            if !UserDefaults.standard.bool(forKey: "hasCompletedOnboarding") {
+            if !UserSettings.hasCompletedOnboarding {
                 WelcomeView()
             } else {
                 ChatView()

@@ -32,7 +32,7 @@ struct CrystalApp: App {
 #else
         WindowGroup("Crystal", id: "main-window") {
             ContentView()
-                .environment(\.font, Font.custom(UserDefaults.standard.string(forKey: UserDefaults.Keys.font) ?? "San Francisco", size: 14))
+                .environment(\.font, Font.custom(UserSettings.font ?? "San Francisco", size: 14))
 //                .forceDarkMode()
 //                .preferredColorScheme(.dark)
         }
