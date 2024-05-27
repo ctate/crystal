@@ -1,7 +1,7 @@
 import Foundation
 import Security
 
-func delete(key: String) -> OSStatus {
+func delete(_ key: String) -> OSStatus {
     let query = [
         kSecClass as String       : kSecClassGenericPassword as String,
         kSecAttrAccount as String : key ] as [String : Any]
@@ -9,7 +9,7 @@ func delete(key: String) -> OSStatus {
     return SecItemDelete(query as CFDictionary)
 }
 
-func load(key: String) -> Data? {
+func load(_ key: String) -> Data? {
     let query = [
         kSecClass as String       : kSecClassGenericPassword,
         kSecAttrAccount as String : key,
@@ -22,7 +22,7 @@ func load(key: String) -> Data? {
     return item as? Data
 }
 
-func save(key: String, data: Data) -> OSStatus {
+func save(_ key: String, data: Data) -> OSStatus {
     let query = [
         kSecClass as String       : kSecClassGenericPassword as String,
         kSecAttrAccount as String : key,

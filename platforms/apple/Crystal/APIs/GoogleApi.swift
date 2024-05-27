@@ -8,8 +8,8 @@ struct SearchResult: Codable, Hashable {
 
 class GoogleApi {
     func fetchSearchResults(query: String, completion: @escaping ([SearchResult]) -> Void) {
-        guard let loadedDataApiKey = load(key: "\(bundleIdentifier).GoogleApiKey") else { return }
-        guard let loadedDataSearchEngineId = load(key: "\(bundleIdentifier).GoogleSearchEngineId") else { return }
+        guard let loadedDataApiKey = load(KeychainKeys.Integrations.Google.apiKey) else { return }
+        guard let loadedDataSearchEngineId = load(KeychainKeys.Integrations.Google.searchEngineId) else { return }
         
         guard let apiKey = String(data: loadedDataApiKey, encoding: .utf8) else { return }
         guard let searchEngineId = String(data: loadedDataSearchEngineId, encoding: .utf8) else { return }

@@ -322,8 +322,18 @@ struct WelcomeView: View {
                 UserSettings.hasCompletedOnboarding = true
                 
                 let data = apiKey.data(using: .utf8)!
-                _ = save(key: "\(bundleIdentifier).\(selectedProvider!.id)ApiKey", data: data)
-                
+                switch selectedProvider!.id {
+                case "Anthropic":
+                    _ = save(KeychainKeys.Providers.Anthropic.apiKey, data: data)
+                case "Groq":
+                    _ = save(KeychainKeys.Providers.Groq.apiKey, data: data)
+                case "Ollama":
+                    _ = save(KeychainKeys.Providers.Ollama.apiKey, data: data)
+                case "OpenAI":
+                    _ = save(KeychainKeys.Providers.OpenAI.apiKey, data: data)
+                default:
+                    print("Unknown id")
+                }                
                 isKeyValidated = true
             }
             .background(.black)

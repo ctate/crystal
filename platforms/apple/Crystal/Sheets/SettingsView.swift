@@ -13,7 +13,18 @@ struct Integration: Identifiable {
     var apiKey: String {
         didSet {
             if let data = apiKey.data(using: .utf8) {
-                _ = save(key: "\(bundleIdentifier).\(id)ApiKey", data: data)
+                switch id {
+                case "Anthropic":
+                    _ = save(KeychainKeys.Providers.Anthropic.apiKey, data: data)
+                case "Groq":
+                    _ = save(KeychainKeys.Providers.Groq.apiKey, data: data)
+                case "Ollama":
+                    _ = save(KeychainKeys.Providers.Ollama.apiKey, data: data)
+                case "OpenAI":
+                    _ = save(KeychainKeys.Providers.OpenAI.apiKey, data: data)
+                default:
+                    print("Unknown id")
+                }
             }
         }
     }
@@ -35,7 +46,18 @@ struct Integration: Identifiable {
     
     mutating func clearApiKey() {
         apiKey = ""
-        _ = delete(key: "\(bundleIdentifier).\(name)ApiKey")
+        switch name {
+        case "Anthropic":
+            _ = delete(KeychainKeys.Providers.Anthropic.apiKey)
+        case "Groq":
+            _ = delete(KeychainKeys.Providers.Groq.apiKey)
+        case "Ollama":
+            _ = delete(KeychainKeys.Providers.Ollama.apiKey)
+        case "OpenAI":
+            _ = delete(KeychainKeys.Providers.OpenAI.apiKey)
+        default:
+            print("Unknown id")
+        }
     }
 }
 
@@ -51,7 +73,18 @@ struct ProviderWithSettings: Identifiable {
     var apiKey: String {
         didSet {
             if let data = apiKey.data(using: .utf8) {
-                _ = save(key: "\(bundleIdentifier).\(id)ApiKey", data: data)
+                switch id {
+                case "Anthropic":
+                    _ = save(KeychainKeys.Providers.Anthropic.apiKey, data: data)
+                case "Groq":
+                    _ = save(KeychainKeys.Providers.Groq.apiKey, data: data)
+                case "Ollama":
+                    _ = save(KeychainKeys.Providers.Ollama.apiKey, data: data)
+                case "OpenAI":
+                    _ = save(KeychainKeys.Providers.OpenAI.apiKey, data: data)
+                default:
+                    print("Unknown id")
+                }
             }
         }
     }
@@ -79,12 +112,33 @@ struct ProviderWithSettings: Identifiable {
     
     mutating func clearApiKey() {
         apiKey = ""
-        _ = delete(key: "\(bundleIdentifier).\(name)ApiKey")
+        switch name {
+        case "Anthropic":
+            _ = delete(KeychainKeys.Providers.Anthropic.apiKey)
+        case "Groq":
+            _ = delete(KeychainKeys.Providers.Groq.apiKey)
+        case "Ollama":
+            _ = delete(KeychainKeys.Providers.Ollama.apiKey)
+        case "OpenAI":
+            _ = delete(KeychainKeys.Providers.OpenAI.apiKey)
+        default:
+            print("Unknown id")
+        }
     }
 }
 
 func loadApiKey(key: String) -> String {
-    guard let apiKeyData = load(key: key) else { return "" }
+    let keyMap = [
+        "Anthropic": KeychainKeys.Providers.Anthropic.apiKey,
+        "Groq": KeychainKeys.Providers.Groq.apiKey,
+        "Ollama": KeychainKeys.Providers.Ollama.apiKey,
+        "OpenAI": KeychainKeys.Providers.OpenAI.apiKey
+    ]
+    
+    guard let key = keyMap[key], let apiKeyData = load(key) else {
+        return ""
+    }
+    
     return String(decoding: apiKeyData, as: UTF8.self)
 }
 
@@ -104,7 +158,13 @@ struct IntegrationDetailView: View {
                     .onChange(of: integration.apiKey) {
                         // Save the new value to the Keychain
                         if let data = integration.apiKey.data(using: .utf8) {
-                            _ = save(key: "\(bundleIdentifier).\(integration.id)ApiKey", data: data)
+                            switch integration.id {
+                            case "Google":
+                                _ = save(KeychainKeys.Integrations.Google.apiKey, data: data)
+                            default:
+                                print("Unknown integration")
+                            }
+                            
                         }
                     }
                 

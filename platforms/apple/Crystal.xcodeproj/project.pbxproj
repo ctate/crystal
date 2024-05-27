@@ -15,6 +15,7 @@
 		D73C375A2C024D7500BD37E3 /* GenerateImageTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = D73C37592C024D7500BD37E3 /* GenerateImageTool.swift */; };
 		D73C375C2C024DAC00BD37E3 /* MakeRecipeTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = D73C375B2C024DAC00BD37E3 /* MakeRecipeTool.swift */; };
 		D73C376C2C04134D00BD37E3 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D73C376B2C04134D00BD37E3 /* UserSettings.swift */; };
+		D73C376E2C04411F00BD37E3 /* KeychainKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = D73C376D2C04411F00BD37E3 /* KeychainKeys.swift */; };
 		D76D3B102BF5D8CA0017F2BA /* ConversationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D76D3B0F2BF5D8CA0017F2BA /* ConversationManager.swift */; };
 		D7C9D2A82BF2FCC500697DDE /* CrystalApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2A72BF2FCC500697DDE /* CrystalApp.swift */; };
 		D7C9D2AA2BF2FCC500697DDE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D2A92BF2FCC500697DDE /* ContentView.swift */; };
@@ -44,7 +45,6 @@
 		D7C9D3072BF3168200697DDE /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D3042BF3168200697DDE /* Camera.swift */; };
 		D7C9D3082BF3168200697DDE /* OpenAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D3052BF3168200697DDE /* OpenAI.swift */; };
 		D7C9D3092BF3168200697DDE /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D3062BF3168200697DDE /* CameraView.swift */; };
-		D7C9D30B2BF3169900697DDE /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D30A2BF3169900697DDE /* KeychainService.swift */; };
 		D7C9D30D2BF316A600697DDE /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D30C2BF316A600697DDE /* Color.swift */; };
 		D7C9D30F2BF316AC00697DDE /* OrbButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D30E2BF316AC00697DDE /* OrbButton.swift */; };
 		D7C9D3132BF316B700697DDE /* SpeechRecognizerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D3122BF316B700697DDE /* SpeechRecognizerService.swift */; };
@@ -101,6 +101,7 @@
 		D73C37662C03DF9300BD37E3 /* CrystalTests.xcconfig.sample */ = {isa = PBXFileReference; lastKnownFileType = text; path = CrystalTests.xcconfig.sample; sourceTree = "<group>"; };
 		D73C37682C03DF9F00BD37E3 /* CrystalUITests.xcconfig.sample */ = {isa = PBXFileReference; lastKnownFileType = text; path = CrystalUITests.xcconfig.sample; sourceTree = "<group>"; };
 		D73C376B2C04134D00BD37E3 /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
+		D73C376D2C04411F00BD37E3 /* KeychainKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainKeys.swift; sourceTree = "<group>"; };
 		D76D3B0F2BF5D8CA0017F2BA /* ConversationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationManager.swift; sourceTree = "<group>"; };
 		D7C9D2A42BF2FCC500697DDE /* Crystal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Crystal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7C9D2A72BF2FCC500697DDE /* CrystalApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrystalApp.swift; sourceTree = "<group>"; };
@@ -134,7 +135,6 @@
 		D7C9D3042BF3168200697DDE /* Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		D7C9D3052BF3168200697DDE /* OpenAI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenAI.swift; sourceTree = "<group>"; };
 		D7C9D3062BF3168200697DDE /* CameraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
-		D7C9D30A2BF3169900697DDE /* KeychainService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		D7C9D30C2BF316A600697DDE /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		D7C9D30E2BF316AC00697DDE /* OrbButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrbButton.swift; sourceTree = "<group>"; };
 		D7C9D3122BF316B700697DDE /* SpeechRecognizerService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpeechRecognizerService.swift; sourceTree = "<group>"; };
@@ -242,6 +242,7 @@
 				D73C37502C02435800BD37E3 /* Tools */,
 				D7C9D2A72BF2FCC500697DDE /* CrystalApp.swift */,
 				D7C9D32E2BF345BC00697DDE /* PlainButtonStyle.swift */,
+				D73C376D2C04411F00BD37E3 /* KeychainKeys.swift */,
 				D73C376B2C04134D00BD37E3 /* UserSettings.swift */,
 				D7C9D2A92BF2FCC500697DDE /* ContentView.swift */,
 				D7C9D3362BF3A48100697DDE /* Notification.swift */,
@@ -252,7 +253,6 @@
 				D7C9D30C2BF316A600697DDE /* Color.swift */,
 				D72B02812BF512A300D5FEA4 /* CustomTextEditor.swift */,
 				D7C9D2D92BF3164300697DDE /* KeychainAccess.swift */,
-				D7C9D30A2BF3169900697DDE /* KeychainService.swift */,
 				D7C9D3282BF3224A00697DDE /* WelcomeView.swift */,
 				D7C9D3322BF3500700697DDE /* ForceDarkMode.swift */,
 				D7C9D3122BF316B700697DDE /* SpeechRecognizerService.swift */,
@@ -500,13 +500,13 @@
 				D7C9D31E2BF3172200697DDE /* DocumentPicker.swift in Sources */,
 				D7C9D3212BF3172200697DDE /* SettingsView.swift in Sources */,
 				D73C375A2C024D7500BD37E3 /* GenerateImageTool.swift in Sources */,
+				D73C376E2C04411F00BD37E3 /* KeychainKeys.swift in Sources */,
 				D7C9D3022BF3167400697DDE /* ChatView.swift in Sources */,
 				D7C9D2FC2BF3166B00697DDE /* WikipediaCard.swift in Sources */,
 				D7C9D3222BF3172200697DDE /* VisionModelsView.swift in Sources */,
 				D7C9D3012BF3167400697DDE /* ChatHistoryView.swift in Sources */,
 				D7C9D30F2BF316AC00697DDE /* OrbButton.swift in Sources */,
 				D73C376C2C04134D00BD37E3 /* UserSettings.swift in Sources */,
-				D7C9D30B2BF3169900697DDE /* KeychainService.swift in Sources */,
 				D7C9D2E52BF3165300697DDE /* GoogleApi.swift in Sources */,
 				D7C9D33B2BF3D52B00697DDE /* Conversation.swift in Sources */,
 				D7C9D2E72BF3165300697DDE /* HackerNewsApi.swift in Sources */,

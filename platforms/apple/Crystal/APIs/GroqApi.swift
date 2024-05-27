@@ -39,7 +39,7 @@ class GroqApi: ObservableObject {
             throw URLError(.badURL)
         }
         
-        guard let loadedData = load(key: "\(bundleIdentifier).GroqApiKey"),
+        guard let loadedData = load(KeychainKeys.Providers.Groq.apiKey),
               let apiKey = String(data: loadedData, encoding: .utf8) else {
             throw NSError(domain: "GroqApi", code: 1, userInfo: [NSLocalizedDescriptionKey: "API key loading failed"])
         }

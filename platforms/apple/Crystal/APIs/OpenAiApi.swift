@@ -39,7 +39,7 @@ struct OpenAIResponse: Codable {
 
 class OpenAiApi: ObservableObject {
     func generateImage(prompt: String) async throws -> [GeneratedImage] {
-        guard let loadedData = load(key: "\(bundleIdentifier).OpenAIApiKey"),
+        guard let loadedData = load(KeychainKeys.Providers.OpenAI.apiKey),
               let apiKey = String(data: loadedData, encoding: .utf8) else {
             throw NSError(domain: "OpenAiApi", code: 1, userInfo: [NSLocalizedDescriptionKey: "API key loading failed"])
         }
@@ -74,7 +74,7 @@ class OpenAiApi: ObservableObject {
     }
     
     static func makeCompletions(model: String, messages: [[String: String]], tools: [[String: Any]]?) async throws -> OpenAIResponse {
-        guard let loadedData = load(key: "\(bundleIdentifier).OpenAIApiKey"),
+        guard let loadedData = load(KeychainKeys.Providers.OpenAI.apiKey),
               let apiKey = String(data: loadedData, encoding: .utf8) else {
             throw NSError(domain: "OpenAiApi", code: 1, userInfo: [NSLocalizedDescriptionKey: "API key loading failed"])
         }

@@ -22,7 +22,7 @@ class AnthropicApi: ObservableObject {
             throw NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])
         }
         
-        guard let loadedData = load(key: "\(bundleIdentifier).AnthropicApiKey") else {
+        guard let loadedData = load(KeychainKeys.Providers.Anthropic.apiKey) else {
             throw NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "API key not found"])
         }
         
