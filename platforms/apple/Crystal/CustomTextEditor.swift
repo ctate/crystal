@@ -3,7 +3,7 @@ import SwiftUI
 struct CustomTextEditor: View {
     @Binding var text: String
     
-    @State private var textHeight: CGFloat = 16  // Explicitly set initial height to 30
+    @State private var textHeight: CGFloat = 16
     
     var body: some View {
             GeometryReader { geometry in

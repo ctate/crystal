@@ -33,8 +33,8 @@ class ChatViewModel: ObservableObject {
                 do {
                     let result = try await fetchAiResponse(text, conversation: conversationManager.selectedConversation!)
                     completion(result, nil)
-                } catch {
-                    completion(nil, NSError(domain: "ChatViewModel", code: 0, userInfo: ["error": "Error"]))
+                } catch let error {
+                    completion(nil, error)
                 }
             }
         }

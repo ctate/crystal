@@ -65,7 +65,6 @@
 		D7C9D3392BF3BE5900697DDE /* ChatToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D3382BF3BE5900697DDE /* ChatToolbarView.swift */; };
 		D7C9D33B2BF3D52B00697DDE /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D33A2BF3D52B00697DDE /* Conversation.swift */; };
 		D7C9D33D2BF3DFA900697DDE /* Mappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D33C2BF3DFA900697DDE /* Mappers.swift */; };
-		D7C9D33F2BF3ECBB00697DDE /* CommitableTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D33E2BF3ECBB00697DDE /* CommitableTextEditor.swift */; };
 		D7C9D3412BF3F20C00697DDE /* AdaptiveHeightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C9D3402BF3F20C00697DDE /* AdaptiveHeightView.swift */; };
 		D7C9D3442BF42A5E00697DDE /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = D7C9D3432BF42A5E00697DDE /* KeychainAccess */; };
 /* End PBXBuildFile section */
@@ -155,7 +154,6 @@
 		D7C9D3382BF3BE5900697DDE /* ChatToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatToolbarView.swift; sourceTree = "<group>"; };
 		D7C9D33A2BF3D52B00697DDE /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
 		D7C9D33C2BF3DFA900697DDE /* Mappers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mappers.swift; sourceTree = "<group>"; };
-		D7C9D33E2BF3ECBB00697DDE /* CommitableTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitableTextEditor.swift; sourceTree = "<group>"; };
 		D7C9D3402BF3F20C00697DDE /* AdaptiveHeightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveHeightView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -252,7 +250,6 @@
 				D7C9D3262BF31A6A00697DDE /* Globals.swift */,
 				D7C9D3242BF3177A00697DDE /* LaunchScreen.storyboard */,
 				D7C9D30C2BF316A600697DDE /* Color.swift */,
-				D7C9D33E2BF3ECBB00697DDE /* CommitableTextEditor.swift */,
 				D72B02812BF512A300D5FEA4 /* CustomTextEditor.swift */,
 				D7C9D2D92BF3164300697DDE /* KeychainAccess.swift */,
 				D7C9D30A2BF3169900697DDE /* KeychainService.swift */,
@@ -538,7 +535,6 @@
 				D7C9D3272BF31A6A00697DDE /* Globals.swift in Sources */,
 				D7C9D2D62BF3160200697DDE /* Message.swift in Sources */,
 				D7C9D2EB2BF3165300697DDE /* WikipediaApi.swift in Sources */,
-				D7C9D33F2BF3ECBB00697DDE /* CommitableTextEditor.swift in Sources */,
 				D7C9D3292BF3224A00697DDE /* WelcomeView.swift in Sources */,
 				D7C9D30D2BF316A600697DDE /* Color.swift in Sources */,
 				D7C9D2F52BF3166B00697DDE /* ClockCard.swift in Sources */,
